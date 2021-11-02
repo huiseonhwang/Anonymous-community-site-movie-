@@ -11,7 +11,7 @@
 	if(result==1){%>
 	<script>
 		alert("수정 되었습니다.");
-		window.location='main.jsp';
+		window.location='/team03/main.jsp';
 	</script>
 	<%}else{ %>
 	<script>

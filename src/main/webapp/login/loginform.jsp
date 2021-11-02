@@ -1,3 +1,4 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "team03.bean.LoginDTO" %>
@@ -31,7 +32,7 @@
     
     	
     	
-   <img src="https://t1.daumcdn.net/cfile/tistory/99BEE8465C3D7D1214"  width="150" onclick="kakaoLogin();" value = "kakao"/>
+   <img src="https://t1.daumcdn.net/cfile/tistory/99BEE8465C3D7D1214"  width="150" onclick="kakaoLogin();" value = "kid"/>
       <a href="javascript:void(0)">
           
       </a>
@@ -45,7 +46,7 @@
 
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
-Kakao.init('d33045b96b39d277326dceb9d3fe967a'); //발급받은 키 중 javascript키를 사용해준다.
+Kakao.init('fe7344bb892ab9d3081040d3d8b90568'); //발급받은 키 중 javascript키를 사용해준다.
 console.log(Kakao.isInitialized()); // sdk초기화여부판단
 //카카오로그인
 function kakaoLogin() {
@@ -55,8 +56,13 @@ function kakaoLogin() {
         Kakao.API.request({
           url: '/v2/user/me',
           success: function (response) {
-
-        	  window.location='/team03/login/loginpro.jsp?id='+response.id+'&login=kakao';  //로그인프로로 보내기 -> 프로에서 로그인 방법마다 다르게 처리하기(kakao/base)
+        	  
+        	  var kid = response.id;
+        	  var kemail = response.kakao_account.email;
+        	  var kname = response.kakao_account.profile.nickname;
+        	  
+        	  window.location.href=
+        		  '/team03/login/loginpro.jsp?kid='+kid+'&kemail='+kemail+'&kname='+encodeURIComponent(kname)+'&login=kakao';  //로그인프로로 보내기 -> 프로에서 로그인 방법마다 다르게 처리하기(kakao/base)       	  
         	  
           },
           fail: function (error) {

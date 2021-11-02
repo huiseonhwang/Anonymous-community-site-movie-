@@ -1,6 +1,7 @@
 package team03.bean;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,9 +19,9 @@ public class VisitorDAO {
 			conn = OracleDB.getConnection();
 			String sql = "insert into visitor values(visitor_seq.nextval,?,?,?,sysdate)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, dto.getid());
-			pstmt.setString(2, dto.getpw());
-			pstmt.setString(3, dto.getcontent());
+			pstmt.setString(1, dto.getId());
+			pstmt.setString(2, dto.getPw());
+			pstmt.setString(3, dto.getContent());
 	
 			result = pstmt.executeUpdate();
 			
@@ -89,11 +90,11 @@ public class VisitorDAO {
 			list = new ArrayList();
 			while(rs.next()) {
 				VisitorDTO dto = new VisitorDTO();
-				dto.setnum(rs.getInt("num"));
-				dto.setid(rs.getString("id"));
-				dto.setpw(rs.getString("pw"));
-				dto.setcontent(rs.getString("content"));
-				dto.setreg(rs.getTimestamp("reg"));
+				dto.setNum(rs.getInt("num"));
+				dto.setId(rs.getString("id"));
+				dto.setPw(rs.getString("pw"));
+				dto.setContent(rs.getString("content"));
+				dto.setReg(rs.getTimestamp("reg"));
 				list.add(dto);
 			}
 		}catch(Exception e) {
@@ -122,10 +123,10 @@ public class VisitorDAO {
 			list = new ArrayList();
 			while(rs.next()) {
 				VisitorDTO dto = new VisitorDTO();
-				dto.setnum(rs.getInt("num"));
-				dto.setid(rs.getString("id"));
-				dto.setcontent(rs.getString("string"));
-				dto.setreg(rs.getTimestamp("reg"));
+				dto.setNum(rs.getInt("num"));
+				dto.setId(rs.getString("id"));
+				dto.setContent(rs.getString("string"));
+				dto.setReg(rs.getTimestamp("reg"));
 				list.add(dto);
 			}
 		}catch(Exception e) {
@@ -137,7 +138,90 @@ public class VisitorDAO {
 		}
 		return list;
 	}
+	
+	public int VisitorDelete(String num, String pw) throws Exception {
+		String dbpw="";
+		int result = -1;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+				"select pw from visitor where num = ?");
+			pstmt.setString(1, num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dbpw = rs.getString("pw");
+				if(dbpw.equals(pw)) {
+				pstmt = conn.prepareStatement(
+					"delete from visitor where num = ?");
+				pstmt.setString(1, num);
+				pstmt.executeUpdate();
+				result = 1;
+			}else
+				result = 0;
+			}	
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+		}
+		return result;
+	}
+	
+	public VisitorDTO getContent(VisitorDTO dto) {
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement("select * from visitor where num = ?");
+			pstmt.setInt(1, dto.getNum());
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto.setNum(rs.getInt("num"));
+				dto.setId(rs.getString("id"));
+				dto.setPw(rs.getString("pw"));
+				dto.setContent(rs.getString("content"));
+				dto.setReg(rs.getTimestamp("reg"));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return dto;
+	}
+	
+	public int updateContent(VisitorDTO dto) {
+		String dbpw="";
+		int result=-1;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement("select pw from visitor where num=?");
+			pstmt.setInt(1, dto.getNum());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dbpw = rs.getString("pw");
+				if(dbpw.equals(dto.getPw())) {
+					pstmt = conn.prepareStatement("update visitor set pw=?,content=? where num=?");
+					pstmt.setString(1, dto.getPw());
+					pstmt.setString(2, dto.getContent());
+					pstmt.setInt(3, dto.getNum());
+					pstmt.executeUpdate();
+					result=1;
+				}else{
+					result=0;
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return result;
+	}
 }	
-	
-	
-	
+		

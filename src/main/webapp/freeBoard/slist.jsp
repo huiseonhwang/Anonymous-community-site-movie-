@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -21,10 +22,10 @@
 
 <%
 	request.setCharacterEncoding("UTF-8");
-	
 
 	String colum = request.getParameter("colum");
 	String search = request.getParameter("search");
+	String kid = (String)session.getAttribute("kid");
 	String id = (String)session.getAttribute("id");
 	String pageNum = request.getParameter("pageNum");
 	String my = request.getParameter("my"); //내작성글로 갈 때 대입되는 글.
@@ -50,21 +51,27 @@
 		}
 	} %>
 
-<h1 style="text-align: center;"> 게시판 </h1>
+<h1 style="text-align: center;">
+	<a href="list.jsp">게시판</a>
+</h1>
 
 <table>
 	<tr style="text-align: right;">
-		<% if(id != null){ %>
+		<% if(id != null || kid != null){ %>
 			<td colspan="7"> 
 				<input type="button" value="글쓰기"
 					onclick="window.location='writeForm.jsp'" />
 				<input type="button" value="내 작성글"
 					onclick="window.location='list.jsp?my=1'" />
+					<input type="button" value="메인으로 돌아가기"
+					onclick="window.location='/team03/main.jsp'" />
 			</td>
 		<%	} else { %>
 			<td colspan="7">
 				<input type="button" value="글쓰기"
 					onclick="window.location='writeForm.jsp'" />
+					<input type="button" value="메인으로 돌아가기"
+					onclick="window.location='/team03/main.jsp'" />
 			</td>
 	<%	} %>
 	</tr>
@@ -91,7 +98,15 @@
 						<%= dto.getSubject() %>
 					</a>
 				</td>
-				<td> <%= dto.getWriter() %> </td>
+				<td>
+					<% if(!dto.getWriter().contains("익")){ %>
+						<a href="/team03/visitor/visitorForm.jsp?writer=<%=URLEncoder.encode(dto.getWriter(), "UTF-8")%>">
+								<%= dto.getWriter() %>
+						</a>
+					<%} else { %>
+						<%= dto.getWriter() %>
+					<%}%>
+				</td>
 				<td> <%= dto.getReg() %> </td>
 				<td> <%= dto.getReadcount() %> </td>
 				<td> <%= dto.getGood() %> </td>
@@ -114,16 +129,16 @@
 		if(startPage > 10){%>
 			<a href="slist.jsp?pageNum=<%=startPage-10%>">[이전]</a>
 		<%}
-		for(int i = startPage ; i <= endPage ; i++){
-		%>	<a href="slist.jsp?pageNum=<%=i%>">[<%=i%>]</a> 	
-	  <%}
+			for(int i = startPage ; i <= endPage ; i++){
+			%>	<a href="slist.jsp?pageNum=<%=i%>">[<%=i%>]</a> 	
+	  	  <%}
 		if(endPage < pageCount){%>
 		<a href="slist.jsp?pageNum=<%=startPage + 10%>">[다음]</a>
 	  <%}	
 	}
 %>
 
-<form action="slist.jsp"  method="post">
+<form action="slist.jsp"  method="post" >
 	<select name="colum">
 		<option value="writer">작성자</option>
 		<option value="subject">제목</option>

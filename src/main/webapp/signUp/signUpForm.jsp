@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <h1>signUpForm</h1>
@@ -25,6 +26,6 @@
 		</select><br/>
 		 <input type = "submit" value = "회원가입" />
 		 <input type = "reset" value = "다시입력" />
-		 <input type = "button" value = "취소" onclick = "/team03/login/loginform.jsp" /><br/>
+		 <input type = "button" value = "취소" onclick = 'window.location ="/team03/login/loginform.jsp"' /><br/>
 </form>
 

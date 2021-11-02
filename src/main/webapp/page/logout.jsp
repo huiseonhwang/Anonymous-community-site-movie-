@@ -3,10 +3,11 @@
     
  	<script>
 			alert("로그아웃 되었습니다.");
-			window.location='main.jsp';
+			window.location='/team03/main.jsp';
 	</script>
    
     <%
+    	session.removeAttribute("kid");
     	session.removeAttribute("id");
    	 	session.removeAttribute("pw");
     	session.removeAttribute("name");

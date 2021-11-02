@@ -3,9 +3,8 @@
 <%@ page import="team03.bean.VisitorDTO" %>
 <%@ page import="team03.bean.VisitorDAO" %>
 
-
 <%
-request.setCharacterEncoding("UTF-8");
+	request.setCharacterEncoding("UTF-8");
 
 	String num = request.getParameter("num");
 	String id = request.getParameter("id");
@@ -14,9 +13,9 @@ request.setCharacterEncoding("UTF-8");
 	String content = request.getParameter("content");
 
 	VisitorDTO dto = new VisitorDTO();
-	dto.setid(id);
-	dto.setpw(pw);
-	dto.setcontent(content);
+	dto.setId(id);
+	dto.setPw(pw);
+	dto.setContent(content);
 	
 	VisitorDAO dao = new VisitorDAO();
 	int result = dao.visitorInsert(dto);

@@ -8,6 +8,7 @@
 <%@ page import="org.jsoup.nodes.Document"%>
 <%@ page import="org.jsoup.nodes.Element" %>
 <%@ page import="org.jsoup.select.Elements" %>
+<body style='background-color: #e4e4e4;'>
 <style>
 		 .front{
 			text-align: center;
@@ -15,6 +16,10 @@
 		 .login{
 		 	text-align: right;
 		 }
+		 .bg{
+			background-color: #aaa;
+		}
+<style>
 		
 </style>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -25,25 +30,47 @@
 <%
 	String id = (String)session.getAttribute("id");
 	String kid = (String)session.getAttribute("kid");
+	// 세션 정보에서 id, kid 가져온 후 각각 id, kid에 대입
 	
-								
-	if(id == null && kid == null) {%>
+	
+	if(kid == null) {
+		// 카카오 아이디가 null 값일 떄
+		if(id == null){ 
+			// 카카오 아이디와 아이디가 null 값일 때
+			// 로그인 버튼과, 회원가입 창을 입력받게 해서 로그인 가능하게 만들어 준다
+		%>
+			<div class="login">
+				<input type="button" value="로그인" onclick="window.location='/team03/login/loginform.jsp'"/>
+				<input type="button" value="회원가입" onclick="window.location='/team03/signUp/signUpForm.jsp'"/>
+				<input type="button" value="게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
+				<input type="button" value="방명록"    onclick="window.location='/team03/visitor/visitorForm.jsp'"/> 
+			</div>
+		<%}else{
+			// 카카오 아이디가 null 값이면서 id 는 null 값이 아닐 떄
+		%>
 	<div class="login">
-	<input type="button" value="로그인" onclick="window.location='/team03/login/loginform.jsp'"/>
-	<input type="button" value="회원가입" onclick="window.location='/team03/signUp/signUpForm.jsp'"/>
-	<input type="button" value="게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
+		<h3> [<%=id %>] 님.</h3>
+		<input type="button" value="로그아웃" onclick=" window.location='/team03/page/logout.jsp'" /> 
+		<input type="button" value="마이페이지" onclick="window.location='/team03/page/mypage.jsp'"/>
+		<input type="button" value="게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
+		<input type="button" value="방명록"    onclick="window.location='/team03/visitor/visitorForm.jsp'"/> 
 	</div>
-	<%}else{ %>
+	<%}%>
+	<%}else{ 
+		// 카카오 아이디가 null 값이 아니면서 id 가 null 값일 때
+	%>
 	<div class="login">
-	<h3> [<%=id %>] 님.</h3>
-	<input type="button" value="로그아웃" onclick=" window.location='/team03/page/logout.jsp'" /> 
-	<input type="button" value="마이페이지" onclick="window.location='/team03/page/mypage.jsp'"/>
-	<input type="button" value="게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
-	</div>									
+	<h3> [<%=kid %>] 님.</h3>
+		<input type="button" value="로그아웃" onclick=" window.location='/team03/page/logout.jsp'" /> 
+		<input type="button" value="마이페이지" onclick="window.location='/team03/page/mypage.jsp'"/>
+		<input type="button" value="게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
+		<input type="button" value="방명록"    onclick="window.location='/team03/visitor/visitorForm.jsp'"/> 
+	</div>												
 <%}%>
 <br />
 <br />
 <br />
+
 <% 
 	Document doc2 = Jsoup.connect("http://www.cgv.co.kr/movies/").get();
 	Elements posts = doc2.body().getElementsByClass("sect-movie-chart");
@@ -55,7 +82,7 @@
 	text : <%= e.select(".txt-info").text()%>
 	<br />
 <%}%>
-			
+</body>
 
 
 

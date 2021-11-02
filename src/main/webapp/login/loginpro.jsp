@@ -2,38 +2,55 @@
     pageEncoding="UTF-8"%>
 <%@ page import = "team03.bean.LoginDAO" %>
 <%@ page import = "team03.bean.LoginDTO" %>
+<%@ page import = "team03.bean.KloginDTO" %>
+<%@ page import = "team03.bean.KloginDAO" %>
 
-    
- 
  
  <jsp:useBean class = "team03.bean.LoginDTO" id ="dto"/>
  <jsp:setProperty property = "*" name ="dto"/>
+ <jsp:useBean class = "team03.bean.KloginDTO" id ="kdto"/>
+ <jsp:setProperty property = "*" name ="kdto"/>
  
  
  
 <% 
 	
+
 LoginDAO manager = LoginDAO.getInstance();
 boolean result = manager.logincheck(dto);
-String kid = request.getParameter("id");
+String kid = request.getParameter("kid");
+String kemail = request.getParameter("kemail");
+String kname = request.getParameter("kname");
 
-	if(kid != null){
-	session.setAttribute("id", dto.getKid()); 
-	response.sendRedirect("/team03/main.jsp"); 
-    }%>
-    <h2> 로그인 되었습니다 </h2>
-
-	<%
-	if(result == true){
-	session.setAttribute("id", dto.getId()); 
+if(kid != null){
+	kdto.setKid(kid);
+	kdto.setEmail(kemail);
+	kdto.setName(kname);
+	
+	KloginDAO kdao = KloginDAO.getInstance();
+	int kresult = kdao.insertKid(kdto);
+	
+    session.setAttribute("kid", kdto.getKid());
     %>
     <script>
-    window.location.href='/team03/main.jsp';
+        alert("로그인 되었습니다.");
     </script>
-    <h2> 로그인 되었습니다 </h2>
-    <%}else{ %>
-    <script>
-    alert("아이디/비밀번호를 확인하세요");
-    history.go(-1);
-    </script>
-    <% } %>
+    <%
+    response.sendRedirect("/team03/main.jsp");
+    
+} else {
+       if(result == true){
+           session.setAttribute("id", dto.getId()); 
+           %>
+           <script>
+                  alert("로그인 되었습니다.");
+           </script>
+           <%
+           response.sendRedirect("/team03/main.jsp");
+
+       }else{ %>
+        <script>
+            alert("아이디/비밀번호를 확인하세요");
+            history.go(-1);
+        </script>
+    <% } }%>

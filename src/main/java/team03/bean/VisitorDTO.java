@@ -9,19 +9,19 @@ public class VisitorDTO {
 	private String content;	
 	private Timestamp reg;	
 	
-	public void setnum(int num) { this.num = num; }
-	public int getnum() { return num; }
+	public void setNum(int num) { this.num = num; }
+	public int getNum() { return num; }
 	
-	public void setid(String id) { this.id = id;}
-	public String getid() { return id; }
+	public void setId(String id) { this.id = id;}
+	public String getId() { return id; }
 	
-	public void setpw(String pw) { this.pw = pw; }
-	public String getpw() { return pw; }
+	public void setPw(String pw) { this.pw = pw; }
+	public String getPw() { return pw; }
 	
-	public void setcontent(String content) { this.content = content; }
-	public String getcontent() { return content; }
+	public void setContent(String content) { this.content = content; }
+	public String getContent() { return content; }
 	
-	public void setreg(Timestamp reg) { this.reg = reg; }
-	public Timestamp getreg() { return reg; }
+	public void setReg(Timestamp reg) { this.reg = reg; }
+	public Timestamp getReg() { return reg; }
 }
 

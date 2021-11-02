@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -21,6 +22,8 @@
 </style>
 
 <%
+	String kid = (String)session.getAttribute("kid");
+	
 	String id = (String)session.getAttribute("id");
 	String pageNum = request.getParameter("pageNum"); // null 값 대입
 	String my = request.getParameter("my");
@@ -45,39 +48,55 @@
 			list = dao.getAllList(start, end);
 		}
 	} else {
-		count = dao.getMyCount(id);
-		if(count > 0){
-			list = dao.getMyList(id, start, end);
+		
+		if(id != null){
+			count = dao.getMyCount(id);
+			if(count > 0){
+				list = dao.getMyList(id, start, end);
+			}
+		}
+		
+		if(kid != null){
+			count = dao.getMyCount("카카오"+kid);
+			if(count > 0){
+				list = dao.getMyList("카카오"+kid, start, end);
+			}
 		}
 	}
-	
 %>
-<h1 style="text-align: center;"> 게시판 </h1>
+
+<h1 style="text-align: center;">
+	<a href="list.jsp">게시판</a>
+</h1>
 
 <table>
 	<tr style="text-align: right;">
-		<% if(id != null){ %>
+		<% if(id != null || kid != null){ %>
 			<td colspan="7"> 
 				<input type="button" value="글쓰기"
 					onclick="window.location='writeForm.jsp'" />
 				<input type="button" value="내 작성글"
 					onclick="window.location='list.jsp?my=1'" />
+					<input type="button" value="메인으로 돌아가기"
+					onclick="window.location='/team03/main.jsp'" />
 			</td>
-		<%	} else { %>
+		<%} else { %>
 			<td colspan="7">
 				<input type="button" value="글쓰기"
 					onclick="window.location='writeForm.jsp'" />
+					<input type="button" value="메인으로 돌아가기"
+					onclick="window.location='/team03/main.jsp'" />
 			</td>
-	<%	} %>
+	 <%	 } %>
 	</tr>
 	<tr>
-		<th>글 번호</th>
-		<th>제목</th>
-		<th>작성자</th>
-		<th>작성일</th>
-		<th>조회</th>
-		<th>공감</th>
-		<th>비공감</th>
+		<th> 글 번호 </th>
+		<th> 제목 </th>
+		<th> 작성자 </th>
+		<th> 작성일 </th>
+		<th> 조회 </th>
+		<th> 공감 </th>
+		<th> 비공감 </th>
 	</tr>
 <%	if(count == 0){ %>
 		<tr>
@@ -93,13 +112,21 @@
 						<%= dto.getSubject() %>
 					</a>
 				</td>
-				<td> <%= dto.getWriter() %> </td>
+				<td> 
+					<% if(!dto.getWriter().contains("익")){ %>
+						<a href="/team03/visitor/visitorForm.jsp?writer=<%=URLEncoder.encode(dto.getWriter(), "UTF-8")%>">
+								<%= dto.getWriter() %>
+						</a>
+					<%} else { %>
+						<%= dto.getWriter() %>
+					<%}%>
+				</td>
 				<td> <%= dto.getReg() %> </td>
 				<td> <%= dto.getReadcount() %> </td>
 				<td> <%= dto.getGood() %> </td>
 				<td> <%= dto.getBad() %> </td>
 			</tr>
-	<%	}%>
+	<%	} %>
 <%	} %>
 	
 </table>
@@ -126,7 +153,7 @@
 	}
 %>
 	
-<form action="slist.jsp"  method="post">
+<form action="slist.jsp"  method="post" >
 	<select name="colum">
 		<option value="writer">작성자</option>
 		<option value="subject">제목</option>

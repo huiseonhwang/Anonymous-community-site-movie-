@@ -420,4 +420,44 @@ public class BoardDAO {
 		}
 		return result;
 	}
+	
+	// 게시글 공감 증가
+	public int goodCountUp(BoardDTO dto) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"update teamBoard set good = good + 1 where num = ?");
+			pstmt.setInt(1, dto.getNum());
+			
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return result;
+	}
+	
+	// 게시글 비공감 증가
+	public int badCountUp(BoardDTO dto) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"update teamBoard set bad = bad + 1 where num = ?");
+			pstmt.setInt(1, dto.getNum());
+			
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return result;
+	}
 }
