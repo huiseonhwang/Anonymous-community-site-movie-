@@ -10,6 +10,7 @@
 	String pageNum = request.getParameter("pageNum");
 	
 	BoardDAO dao = BoardDAO.getInstance();
+	// 객체생성 대신 dao 의 인스턴스 메서드를 호출하고있따 .
 	int result = dao.deleteContent(num, pw);
 			
 	if(result == 1){ 

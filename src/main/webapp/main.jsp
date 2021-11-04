@@ -43,6 +43,7 @@
 				<input type="button" value="로그인" onclick="window.location='/team03/login/loginform.jsp'"/>
 				<input type="button" value="회원가입" onclick="window.location='/team03/signUp/signUpForm.jsp'"/>
 				<input type="button" value="게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
+				<input type="button" value="영화 게시판"	onclick="window.location='/team03/movieBoard/list.jsp'"/>
 				<input type="button" value="방명록"    onclick="window.location='/team03/visitor/visitorForm.jsp'"/> 
 			</div>
 		<%}else{
@@ -53,6 +54,7 @@
 		<input type="button" value="로그아웃" onclick=" window.location='/team03/page/logout.jsp'" /> 
 		<input type="button" value="마이페이지" onclick="window.location='/team03/page/mypage.jsp'"/>
 		<input type="button" value="게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
+		<input type="button" value="영화 게시판"	onclick="window.location='/team03/movieBoard/list.jsp'"/>
 		<input type="button" value="방명록"    onclick="window.location='/team03/visitor/visitorForm.jsp'"/> 
 	</div>
 	<%}%>
@@ -64,6 +66,7 @@
 		<input type="button" value="로그아웃" onclick=" window.location='/team03/page/logout.jsp'" /> 
 		<input type="button" value="마이페이지" onclick="window.location='/team03/page/mypage.jsp'"/>
 		<input type="button" value="게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
+		<input type="button" value="영화 게시판"	onclick="window.location='/team03/movieBoard/list.jsp'"/>
 		<input type="button" value="방명록"    onclick="window.location='/team03/visitor/visitorForm.jsp'"/> 
 	</div>												
 <%}%>

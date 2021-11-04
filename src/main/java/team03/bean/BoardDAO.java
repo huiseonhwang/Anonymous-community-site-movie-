@@ -11,11 +11,12 @@ public class BoardDAO {
 	ResultSet rs = null;
 	
 	// dao의 객체를 dao 클래스에서 미리 생성한 후 메소드를 호출하는 형식으로 dao 클래스를 사용하는 코드
+	// 객체생성을 하지 않고 dao 클래스를 사용한다
 	private static BoardDAO instance = new BoardDAO();
 	public static BoardDAO getInstance() {
 		return instance;
 	}
-	private BoardDAO() {}
+	private BoardDAO() {} // 메서드 호출
 
 	// 익명 글 작성
 	public int insertContent(BoardDTO dto) {
@@ -25,6 +26,8 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(
 					"insert into teamBoard values(" 
 					+ " teamBoard_seq.nextval, ?, ?, ?, ?, ?, sysdate, 0, 0, 0)");
+			// 시퀀스 추가 - 글 갯수 자동으로 1씩 추가
+			// 시퀀스, 작성자, 비밀번호, 제목, 내용, 파일, 글작성시간, 
 			pstmt.setString(1, dto.getWriter());
 			pstmt.setString(2, dto.getPw());
 			pstmt.setString(3, dto.getSubject());
