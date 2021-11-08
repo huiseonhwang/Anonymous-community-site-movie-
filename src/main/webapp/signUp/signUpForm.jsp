@@ -13,7 +13,7 @@
 	}
 </script>
 
-<form action ="signUpPro.jsp" method = "get">
+<form action ="signUpPro.jsp" method = "post">
 	id : <input type = "text" name = "id" />
 		 <input type = "button" value = "id중복확인" onclick="confirm();" /><br/>
 	pw : <input type = "password" name = "pw" /><br/>
