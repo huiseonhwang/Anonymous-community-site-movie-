@@ -99,7 +99,7 @@
 	</td>
 	<%} else {%>
 		<td>
-		<input type = "button" value = "글쓰기" onclick = "window.location='writeFprm.jsp'"/>
+		<input type = "button" value = "글쓰기" onclick = "window.location='writeForm.jsp'"/>
 		<input type = "button" value = "메인" onclick = "window.location='/team03/main.jsp'"/>
 		</td>
 		<%} %>

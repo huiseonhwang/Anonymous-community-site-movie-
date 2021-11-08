@@ -158,4 +158,115 @@ public class MovieDAO {
 		}
 		return list;
 	}
+	
+	// 게시글 조회수 증가
+	public void readCountUp(MovieDTO dto) {
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement("update movieBoard set readcount = readcount+1 where num = ?;");
+			pstmt.setInt(1, dto.getNum());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+	}
+	
+	// 게시글 페이지 (내용 출력)
+	public MovieDTO getContent(MovieDTO dto) {
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement("select * from movieBoard where num = ?");
+			pstmt.setInt(1, dto.getNum());
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				dto.setNum(rs.getInt("num"));
+				dto.setWriter(rs.getString("writer"));
+				dto.setPw(rs.getString("pw"));
+				dto.setSubject(rs.getString("subject"));
+				dto.setContent(rs.getString("content"));
+				dto.setFilename(rs.getString("filename"));
+				dto.setReg(rs.getTimestamp("reg"));
+				dto.setReadcount(rs.getInt("readcount"));
+				dto.setGood(rs.getInt("good"));
+				dto.setBad(rs.getInt("bad"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return dto;
+	}
+	
+	//  회원 게시글 수정
+	public int updateMemContent(MovieDTO dto) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement("update MovieBoard set subject = ?, content = ?, filename = ? where num = ?");
+			pstmt.setString(1, dto.getSubject());
+			pstmt.setString(2, dto.getContent());
+			pstmt.setString(3, dto.getFilename());
+			pstmt.setInt(4, dto.getNum());
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+		}
+		return result;
+	} 
+	
+	// 회원 게시글 삭제
+	public int deleteMemContent(MovieDTO dto) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement("delete from movieBoard where num =?");
+			pstmt.setInt(1, dto.getNum());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+		}
+		return result;
+	} 
+	
+	// 익명 글 작성
+	public int insertContent(MovieDTO dto) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement("insert into movieBoard values(" 
+					+ " movieBoard_seq.nextval, ?, ?, ?, ?, ?, sysdate, 0, 0, 0)");
+			pstmt.setString(1, dto.getWriter());
+			pstmt.setString(2, dto.getPw());
+			pstmt.setString(3, dto.getSubject());
+			pstmt.setString(4, dto.getContent());
+			pstmt.setString(5, dto.getFilename());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return result;
+	}
+	
+	
+	
 }
