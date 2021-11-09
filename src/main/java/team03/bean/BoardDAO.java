@@ -12,13 +12,14 @@ public class BoardDAO {
 	
 	// dao의 객체를 dao 클래스에서 미리 생성한 후 메소드를 호출하는 형식으로 dao 클래스를 사용하는 코드
 	// 객체생성을 하지 않고 dao 클래스를 사용한다
+	// dao의 객체를 dao 클래스에서 미리 생성한 후 메소드를 호출하는 형식으로 dao 클래스를 사용하는 코드
 	private static BoardDAO instance = new BoardDAO();
 	public static BoardDAO getInstance() {
 		return instance;
 	}
-	private BoardDAO() {} // 메서드 호출
+	private BoardDAO() {}
 
-	// 익명 글 작성
+	// 익명, 회원 글 작성
 	public int insertContent(BoardDTO dto) {
 		int result = 0;
 		try {
@@ -26,34 +27,6 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(
 					"insert into teamBoard values(" 
 					+ " teamBoard_seq.nextval, ?, ?, ?, ?, ?, sysdate, 0, 0, 0)");
-			// 시퀀스 추가 - 글 갯수 자동으로 1씩 추가
-			// 시퀀스, 작성자, 비밀번호, 제목, 내용, 파일, 글작성시간, 
-			pstmt.setString(1, dto.getWriter());
-			pstmt.setString(2, dto.getPw());
-			pstmt.setString(3, dto.getSubject());
-			pstmt.setString(4, dto.getContent());
-			pstmt.setString(5, dto.getFilename());
-			
-			result = pstmt.executeUpdate();
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
-			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
-			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
-		}
-		return result;
-	}
-	
-	// 회원 글 작성
-	public int insertContentMem(BoardDTO dto) {
-		int result = 0;
-		try {
-			conn = OracleDB.getConnection();
-			pstmt = conn.prepareStatement(
-					"insert into teamBoard values("
-					+ "teamBoard_seq.nextval, ?, ?, ?, ?, ?, sysdate, 0, 0, 0)");
 			pstmt.setString(1, dto.getWriter());
 			pstmt.setString(2, dto.getPw());
 			pstmt.setString(3, dto.getSubject());
@@ -452,6 +425,26 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(
 					"update teamBoard set bad = bad + 1 where num = ?");
 			pstmt.setInt(1, dto.getNum());
+			
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return result;
+	}
+	
+	// 회원 탈퇴 할 시 해당 작성자가 작성한 글 삭제
+	public int deleteWriter(String writer) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"delete from teamBoard where writer = ?");
+			pstmt.setString(1, writer);
 			
 			result = pstmt.executeUpdate();
 		} catch(Exception e) {

@@ -1,3 +1,4 @@
+
 <%@page import="java.net.URLEncoder"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -38,6 +39,7 @@
 	int start = (currentPage - 1) * pageSize + 1; // 결과 = 11
 	int end = currentPage * pageSize; // 결과 = 20
 	int count = 0;
+	int number = 0;
 	
 	List<BoardDTO> list = null;
 	BoardDAO dao = BoardDAO.getInstance();
@@ -63,6 +65,8 @@
 			}
 		}
 	}
+	
+	number = count-(currentPage-1)*pageSize;
 %>
 
 <h1 style="text-align: center;">
@@ -106,7 +110,10 @@
 
 	<%	for(BoardDTO dto : list) { %>
 			<tr>
-				<td> <%= dto.getNum() %> </td>
+				<td>
+					<%= number-- %>
+					<input type="hidden" name="num" value="<%=dto.getNum() %>" />
+				</td>
 				<td>
 					<a href="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>">
 						<%= dto.getSubject() %>
@@ -114,9 +121,11 @@
 				</td>
 				<td> 
 					<% if(!dto.getWriter().contains("익")){ %>
-						<a href="/team03/visitor/visitorForm.jsp?writer=<%=URLEncoder.encode(dto.getWriter(), "UTF-8")%>">
+						<a href="/team03/visitor/visitorForm.jsp?owner=<%=URLEncoder.encode(dto.getWriter(), "UTF-8")%>">
 								<%= dto.getWriter() %>
 						</a>
+						
+						
 					<%} else { %>
 						<%= dto.getWriter() %>
 					<%}%>

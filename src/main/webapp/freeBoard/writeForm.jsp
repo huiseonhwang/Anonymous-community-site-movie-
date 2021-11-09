@@ -64,7 +64,7 @@
 			</table>
 		</form>
 	<%	} else { %>
-		<form action="memWritePro.jsp" method="post" enctype="multipart/form-data">
+		<form action="writePro.jsp" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
 					<th colspan="3"> <h1> 게시글 작성 </h1> </th>
@@ -98,7 +98,7 @@
 	<%}
 		
 	} else { %>
-		<form action="memWritePro.jsp" method="post" enctype="multipart/form-data">
+		<form action="writePro.jsp" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
 					<th colspan="3"> <h1> 게시글 작성 </h1> </th>

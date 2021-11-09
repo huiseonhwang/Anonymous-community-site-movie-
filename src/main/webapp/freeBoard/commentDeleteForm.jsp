@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="team03.bean.BoardDAO"%>
+<%@ page import="team03.bean.CommentDAO" %>
 
-<jsp:useBean class="team03.bean.BoardDTO" id="dto" />
+<jsp:useBean class="team03.bean.CommentDTO" id="dto" />
+<jsp:setProperty property="boardNum" name="dto" />
 <jsp:setProperty property="num" name="dto" />
 
 <style>
@@ -19,18 +20,20 @@
 
 <%
 	String pageNum = request.getParameter("pageNum");
-	
-	BoardDAO dao = BoardDAO.getInstance();
+
+	CommentDAO dao = CommentDAO.getInstance();
 	dto = dao.getContent(dto);
 %>
 
-<form action="deletePro.jsp" method="post">
-	<input type="hidden" name="num" value="<%= dto.getNum() %>" />
-	<input type="hidden" name="pageNum" value="<%= pageNum %>" />
+<form action="commentDeletePro.jsp" method="post">
+
+	<input type="hidden" name="boardNum" value="<%=dto.getBoardNum()%>" />
+	<input type="hidden" name="num" value="<%=dto.getNum()%>" />
+	<input type="hidden" name="pageNum" value="<%=pageNum%>" />
 	
 	<table>
 		<tr>
-			<th colspan="2"> 게시글 삭제 </th>
+			<th colspan="2"> 댓글 삭제 </th>
 		</tr>
 		<%if(dto.getPw() != null){ %>
 			<tr>
@@ -46,9 +49,19 @@
 				<input type="submit" value="삭제" />
 			</td>
 			<td style="text-align:center;">
-				<input type="button" value="글 목록"
-					onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
+				<input type="button" value="창 닫기"
+					onclick="windowClose();" />
 			</td>
 		</tr>
 	</table>
 </form>
+
+<script type="text/javascript">
+	
+	// 삭제 팝업을 끄면서 기존 게시글 페이지를 새로고침 하는 함수
+	function windowClose(){
+		opener.location.reload();
+		window.close();
+	}
+	
+</script>

@@ -106,13 +106,16 @@ public class MovieDAO {
 	}
 	
 	// 본인의 게시글 갯수
-	public int getMycount(String writer) {
+	public int getMyCount(String writer) {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement("select count(*) from movieBoard where writer = ?");
 			pstmt.setString(1, writer);
 			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -126,9 +129,10 @@ public class MovieDAO {
 		List<MovieDTO> list = null;
 		try {
 			conn = OracleDB.getConnection();
-			pstmt = conn.prepareStatement("select * from " 
+			pstmt = conn.prepareStatement(
+					"select * from " 
 					+ " (select num, writer, subject, pw, content, filename, reg, readcount, good, bad, rownum r from " 
-					+ " (select * from movieBoard where writer = ? order by num desc)) "
+					+ " (select * from teamBoard where writer = ? order by num desc)) "
 					+ " where r >=? and r <=?");
 			pstmt.setString(1, writer);
 			pstmt.setInt(2, start);
@@ -163,7 +167,7 @@ public class MovieDAO {
 	public void readCountUp(MovieDTO dto) {
 		try {
 			conn = OracleDB.getConnection();
-			pstmt = conn.prepareStatement("update movieBoard set readcount = readcount+1 where num = ?;");
+			pstmt = conn.prepareStatement("update movieBoard set readcount = readcount+1 where num = ?");
 			pstmt.setInt(1, dto.getNum());
 			pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -267,6 +271,45 @@ public class MovieDAO {
 		return result;
 	}
 	
+	// 게시글 비공강 증감
+	public int badCountUp(MovieDTO dto) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"update movieBoard set bad = bad + 1 where num = ?");
+			pstmt.setInt(1, dto.getNum());
+			
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return result;
+	}
+	
+	// 게시글 공감 증가
+	public int goodCountUp(MovieDTO dto) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"update movieBoard set good = good + 1 where num = ?");
+			pstmt.setInt(1, dto.getNum());
+			
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return result;
+	}
 	
 	
 }

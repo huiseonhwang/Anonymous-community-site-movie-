@@ -61,12 +61,14 @@
 				<%	}%>
 				</td>
 			</tr>
-			<tr>
-				<td>비밀번호</td>
-				<td>
-					<input type="password" name="pw" />
-				</td>
-			</tr>
+			<%if(dto.getPw() != null){ %>
+				<tr>
+					<td>비밀번호</td>
+					<td>
+						<input type="password" name="pw" />
+					</td>
+				</tr>
+			<% } %>
 			<tr>
 				<th colspan="3">
 					<input type="submit" value="수정"/>

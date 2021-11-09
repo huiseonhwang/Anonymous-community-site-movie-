@@ -25,16 +25,15 @@
 <%! 
 	// 선언문 안에 작성
 	// main 메서드라고 생각, 인스턴스 변수가 아닌 class 변수가 된다.
-	int pageSize = 10;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	// 날짜 생성 class 
 %>
 
 <%
-	String my = request.getParameter("my");
-	String kid = request.getParameter("kid");
-	String id = request.getParameter("id");
+	String kid = (String)session.getAttribute("kid");
+	String id = (String)session.getAttribute("id");
 	String pageNum = request.getParameter("pageNum");
+	String my = request.getParameter("my");
 	// Parameter값을 받아 오기, request(dto.get)
 	// request("");
 	int pageSize = 10;
@@ -65,7 +64,7 @@
 	} else {
 		if ( id != null) {
 			// id값이 존재할 경우 (id 세션이 존재할 경우)
-			count = dao.getMycount(id);
+			count = dao.getMyCount(id);
 			// 내 게시글에서 갯수 확인
 			if ( count > 0) {
 				// 게시글이 존재할 경우
@@ -75,30 +74,33 @@
 		}
 		if (kid != null) {
 			// kid 값이 존재할 경우
-			count = dao.getMycount("카카오"+kid); {
+			count = dao.getMyCount("카카오"+kid); 
 				// kid로 쓰여진 게시글 갯수 확인
 				if ( count > 0 ) {
 					// 게시글이 존재할 경우
 					list = dao.getMyList("카카오"+kid, start, end);
 					// 내 게시글 정렬
-				}
 			}
 		}
 	}
+	
+	number = count - (currentPage-1)*pageSize;
 %>
 <h1 style="text-align: center;"> 게시판 </h1>
 
 <table>
-
-<tr>
-<% if (id != null) { %>
-	<td> 
-	<input type = "button" value = "글쓰기" onclick = "window.location='writeForm.jsp'"/>
-	<input type = "button" value = "내 작성글" onclick = "window.location='list.jsp?my=1'"/>
-	<input type = "button" value = "메인" onclick = "window.location='/team03/main.jsp'"/>
+<tr style="text-align: right;">
+<% if(id != null || kid != null){ %>
+	<td colspan = "7"> 
+	<input type = "button" value = "글쓰기" 
+		onclick = "window.location='writeForm.jsp'"/>
+	<input type = "button" value = "내 작성글" 
+		onclick = "window.location='list.jsp?my=1'"/>
+	<input type = "button" value = "메인" 
+		onclick = "window.location='/team03/main.jsp'"/>
 	</td>
 	<%} else {%>
-		<td>
+		<td colspan = "7">
 		<input type = "button" value = "글쓰기" onclick = "window.location='writeForm.jsp'"/>
 		<input type = "button" value = "메인" onclick = "window.location='/team03/main.jsp'"/>
 		</td>
@@ -115,13 +117,16 @@
 	</tr>
 <% if (count == 0) { %>
 		<tr> 
-		<td colspan="7">작성된 글이 없습니다...</td>
+			<td colspan="7">작성된 글이 없습니다...</td>
 		</tr>
 	<%}else{ %>	
 		<% for (MovieDTO dto : list) { %>
 			<tr>
-			<td> <%= dto.getNum() %> </td>
-			<td>
+				<td>
+					<%= number -- %>
+					<input type = "hidden" name = "num" value = "<%=dto.getNum() %>"/>
+				</td>
+				<td>
 					<a href = "content.jsp?num=<%=dto.getNum() %>&pageNum=<%=pageNum%>">
 					<%=dto.getSubject()%>
 				</a>
@@ -176,14 +181,3 @@
 	<input type = "text" name = "search" />
 	<input type = "submit" value = "검색" />
 </form>
-
-
-
-
-	
-			
-
-
-
-
-
