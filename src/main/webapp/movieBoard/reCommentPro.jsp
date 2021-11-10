@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "team03.bean.CommentDAO" %>
+<%@ page import = "team03.bean.MovieCommentDAO" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 
-<jsp:useBean class = "team03.bean.CommentDTO" id = "dto" />
+<jsp:useBean class = "team03.bean.MovieCommentDTO" id = "dto" />
 <jsp:setProperty property = "*" name = "dtd" />
 
 <%
 	int MovieNum = Integer.parseInt(request.getParameter("MovieNum"));
-	CommentDAO dao = CommentDAO.getInstance();
+	MovieCommentDAO dao = MovieCommentDAO.getInstance();
 	int result = dao.insertComment(dto, MovieNum);
 	
 	if (result == 1) { %>
