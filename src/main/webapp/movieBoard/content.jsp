@@ -129,6 +129,35 @@
 		// id 가 null 일 때
 		if (id == null) {
 			Random r = new Random();
+			writer = "익명" + r.nextInt(10000);
+		} else {
+			// id 가 null 이 아닐 떄
+			// writer 에 id 대입
+			writer = id;
 		}
+	} else {
+		// kid 가 null 이 아닐 때
+		// writer 에 kid 대입
+		writer = "카카오" + kid2;
 	}
+	
+	// 페이징 처리
+	int pageSize = 20;
+	int currentPage = Integer.parseInt(pageNum);
+	int start = (currentPage -1) * pageSize + 1; // 결과 = 11
+	int end = currentPage * pageSize; // 결과 = 20
+	int count = 0;
+	
+	String num = request.getParameter("num");
+	
+	List<CommentDTO> list = null;
+	
+	
+	
+	
+	
+	
+	
+	
+	
 %>
