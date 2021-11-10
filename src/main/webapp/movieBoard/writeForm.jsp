@@ -115,7 +115,7 @@
 					<td> 작성자 </td>
 					<td>
 						 카카오<%= kid %>
-						<input type="hidden" name="writer" value="<%= kid %> "/>
+						<input type="hidden" name="writer" value="카카오<%= kid %> "/>
 					</td>
 				</tr>
 				<tr>

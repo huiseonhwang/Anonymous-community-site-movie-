@@ -44,7 +44,6 @@ public class MovieDTO {
 	public void setBad(int bad) {
 		this.bad = bad;
 	}
-	
 	public int getNum() {
 		return num;
 	}

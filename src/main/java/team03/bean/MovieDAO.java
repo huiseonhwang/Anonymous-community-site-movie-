@@ -36,7 +36,6 @@ public class MovieDAO {
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				MovieDTO dto = new MovieDTO();
-				System.out.println(rs.getString("subject"));
 				dto.setNum(rs.getInt("Num"));
 				dto.setWriter(rs.getString("writer"));
 				dto.setPw(rs.getString("pw"));
