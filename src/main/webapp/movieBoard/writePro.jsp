@@ -15,6 +15,7 @@
 	DefaultFileRenamePolicy dp = new DefaultFileRenamePolicy(); // 파일명 중복방지
 	MultipartRequest mr = new MultipartRequest(request,path,size,enc,dp); //업로드
 
+	String kategorie = mr.getParameter("kategorie");
 	String writer = mr.getParameter("writer");
 	String subject = mr.getParameter("subject");
 	String content = mr.getParameter("content");
@@ -23,6 +24,7 @@
 	
 	MovieDTO dto = new MovieDTO();
 	dto.setWriter(writer);
+	dto.setKategorie(kategorie);
 	dto.setSubject(subject);
 	dto.setContent(content);
 	dto.setFilename(filename);

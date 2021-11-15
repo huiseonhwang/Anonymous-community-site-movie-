@@ -7,6 +7,7 @@ public class MovieDTO {
 	private String writer;
 	private String pw;
 	private String subject;
+	private String kategorie;
 	private String content;
 	private String filename;
 	private Timestamp reg;
@@ -25,6 +26,9 @@ public class MovieDTO {
 	}
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+	public void setKategorie(String kategorie) {
+		this.kategorie = kategorie;
 	}
 	public void setContent(String content) {
 		this.content = content;
@@ -55,6 +59,9 @@ public class MovieDTO {
 	}
 	public String getSubject() {
 		return subject;
+	}
+	public String getKategorie() {
+		return kategorie;
 	}
 	public String getContent() {
 		return content;	

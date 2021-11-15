@@ -1,4 +1,4 @@
-
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -17,12 +17,15 @@
 		border: 2px solid black;
 		padding: 10px;
 	}
-	*{
+	#center{
 		text-align: center;
 	}
 </style>
 
 <%
+	SimpleDateFormat sdf = 
+		new SimpleDateFormat("yy-MM-dd HH:mm");
+
 	String kid = (String)session.getAttribute("kid");
 	
 	String id = (String)session.getAttribute("id");
@@ -73,7 +76,7 @@
 	<a href="list.jsp">게시판</a>
 </h1>
 
-<table>
+<table style="width: 90%;">
 	<tr style="text-align: right;">
 		<% if(id != null || kid != null){ %>
 			<td colspan="7"> 
@@ -95,8 +98,8 @@
 	</tr>
 	<tr>
 		<th> 글 번호 </th>
-		<th> 제목 </th>
 		<th> 작성자 </th>
+		<th> 제목 </th>
 		<th> 작성일 </th>
 		<th> 조회 </th>
 		<th> 공감 </th>
@@ -110,16 +113,11 @@
 
 	<%	for(BoardDTO dto : list) { %>
 			<tr>
-				<td>
+				<td id="center">
 					<%= number-- %>
 					<input type="hidden" name="num" value="<%=dto.getNum() %>" />
 				</td>
-				<td>
-					<a href="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>">
-						<%= dto.getSubject() %>
-					</a>
-				</td>
-				<td> 
+				<td style="width: 20%;"> 
 					<% if(!dto.getWriter().contains("익")){ %>
 						<a href="/team03/visitor/visitorForm.jsp?owner=<%=URLEncoder.encode(dto.getWriter(), "UTF-8")%>">
 								<%= dto.getWriter() %>
@@ -130,7 +128,12 @@
 						<%= dto.getWriter() %>
 					<%}%>
 				</td>
-				<td> <%= dto.getReg() %> </td>
+				<td style="width: 40%;">
+					<a href="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>">
+						<%= dto.getSubject() %>
+					</a>
+				</td>
+				<td> <%= sdf.format(dto.getReg()) %> </td>
 				<td> <%= dto.getReadcount() %> </td>
 				<td> <%= dto.getGood() %> </td>
 				<td> <%= dto.getBad() %> </td>
@@ -140,34 +143,38 @@
 	
 </table>
 
-<%
-	// 페이지 정렬
-	if(count > 0){
-		int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
-		int startPage = (currentPage / 10) * 10 + 1;
-		int pageBlock = 10;
-		int endPage = startPage + pageBlock-1;
-		if(endPage > pageCount){
-			endPage = pageCount;
-		}	
-		if(startPage > 10){%>
-			<a href="list.jsp?pageNum=<%=startPage-10%>">[이전]</a>
-		<%}
-		for(int i = startPage ; i <= endPage ; i++){
-		%>	<a href="list.jsp?pageNum=<%=i%>">[<%=i%>]</a> 	
-	  <%}
-		if(endPage < pageCount){%>
-		<a href="list.jsp?pageNum=<%=startPage + 10%>">[다음]</a>
-	  <%}	
-	}
-%>
-	
-<form action="slist.jsp"  method="post" >
-	<select name="colum">
-		<option value="writer">작성자</option>
-		<option value="subject">제목</option>
-		<option value="content">내용</option>
-	</select>
-	<input type="text" name="search" />
-	<input type="submit" value="검색" />
-</form>
+<div id="center">
+	<%
+		// 페이지 정렬
+		if(count > 0){
+			int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+			int startPage = (currentPage / 10) * 10 + 1;
+			int pageBlock = 10;
+			int endPage = startPage + pageBlock-1;
+			if(endPage > pageCount){
+				endPage = pageCount;
+			}	
+			if(startPage > 10){%>
+				<a href="list.jsp?pageNum=<%=startPage-10%>">[이전]</a>
+			<%}
+			for(int i = startPage ; i <= endPage ; i++){
+			%>	<a href="list.jsp?pageNum=<%=i%>">[<%=i%>]</a> 	
+		  <%}
+			if(endPage < pageCount){%>
+			<a href="list.jsp?pageNum=<%=startPage + 10%>">[다음]</a>
+		  <%}	
+		}
+	%>
+</div>
+
+<div id="center">
+	<form action="slist.jsp"  method="post">
+		<select name="colum">
+			<option value="writer">작성자</option>
+			<option value="subject">제목</option>
+			<option value="content">내용</option>
+		</select>
+		<input type="text" name="search" />
+		<input type="submit" value="검색" />
+	</form>
+</div>

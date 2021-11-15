@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MovieCommentDAO {
@@ -11,7 +12,7 @@ public class MovieCommentDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	// dao객체를 dao 클래스에서 미리 생성 후 메서드 호출
+	// dao의 객체를 dao 클래스에서 미리 생성한 후 메소드를 호출하는 형식으로 dao 클래스를 사용하는 코드
 	public static MovieCommentDAO instance = new MovieCommentDAO();
 	public static MovieCommentDAO getInstance( ) {
 		return instance;
@@ -24,8 +25,9 @@ public class MovieCommentDAO {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
-			pstmt = conn.prepareStatement("insert into movieComment values(?,movieComment_seq.nextval,?,?,?,sysdate,0,0)");
-			pstmt.setInt(1, dto.getBoardNum());
+			pstmt = conn.prepareStatement
+				("insert into movieComment values(?, boardComment_seq.nextval, ?, ?, ?, sysdate, 0, 0)");
+			pstmt.setInt(1, boardNum);
 			pstmt.setString(2, dto.getWriter());
 			pstmt.setString(3, dto.getPw());
 			pstmt.setString(4, dto.getContent());
@@ -40,12 +42,12 @@ public class MovieCommentDAO {
 		return result;
 	}
 	
-	// 댓글 갯수 카운드
+	// 댓글 갯수 카운트
 	public int countComment(int boardNum) {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
-			pstmt = conn.prepareStatement("selset count (*) from movieComment where boardNum=?");
+			pstmt = conn.prepareStatement("select count (*) from movieComment where boardNum=?");
 			pstmt.setInt(1, boardNum);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -75,6 +77,19 @@ public class MovieCommentDAO {
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);
 			rs = pstmt.executeQuery();
+			list = new ArrayList();
+			while(rs.next()) {
+				MovieCommentDTO dto = new MovieCommentDTO();
+				dto.setBoardNum(rs.getInt("boardNum"));
+				dto.setNum(rs.getInt("num"));
+				dto.setWriter(rs.getString("writer"));
+				dto.setPw(rs.getString("pw"));
+				dto.setContent(rs.getString("content"));
+				dto.setReg(rs.getTimestamp("reg"));
+				dto.setRe_step(rs.getInt("re_step"));
+				dto.setRe_level(rs.getInt("re_level"));
+				list.add(dto);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -85,7 +100,7 @@ public class MovieCommentDAO {
 		return list;
 	}
 	
-	// 작성 되어있는 댓글 출력
+	// 이미 작성된 댓글 정보 출력
 	public MovieCommentDTO getContent(MovieCommentDTO dto) {
 		try {
 			conn = OracleDB.getConnection();
@@ -137,16 +152,26 @@ public class MovieCommentDAO {
 	
 	// 익명 댓글 수정
 	public int updateComment(MovieCommentDTO dto) {
+		String pw;
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement
-					("update MovieComment set pw = ?, content = ? where boardNum=? and num=? ");
-			pstmt.setString(1, dto.getPw());
-			pstmt.setString(2, dto.getContent());
-			pstmt.setInt(3, dto.getBoardNum());
-			pstmt.setInt(4, dto.getNum());
-			
+					("update MovieComment set pw where boardNum=? and num=?");
+			pstmt.setInt(1, dto.getBoardNum());
+			pstmt.setInt(2, dto.getNum());
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				pw = rs.getString("pw");
+				if(pw.equals(dto.getPw())) {
+					pstmt = conn.prepareStatement("update MovieComment set pw =?, content =? where boardNum =? and num =?");
+					pstmt.setString(1, dto.getPw());
+					pstmt.setString(2, dto.getContent());
+					pstmt.setInt(3, dto.getBoardNum());
+					pstmt.setInt(4, dto.getNum());
+					result = pstmt.executeUpdate();
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

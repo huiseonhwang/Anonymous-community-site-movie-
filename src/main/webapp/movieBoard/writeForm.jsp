@@ -23,8 +23,10 @@
 	String kid = (String)session.getAttribute("kid");
 	String id = (String)session.getAttribute("id");
 	
-	if ( kid == null) { 
-		if (id == null) { %>
+	if ( kid == null) {
+		// kid == null kid 로그인 정보값이 없을 경우
+		if (id == null) { 
+		// kid와 id값이 null일 경우, 익명일 경우 %>
 		<form action = "writePro.jsp" method = "post" enctype="multipart/form-data">
 			<table>
 				<tr>
@@ -37,6 +39,20 @@
 						<input type="hidden" name="writer" value="<%= writer %> "/>
 					</td>
 				</tr>
+				<tr>
+					<td> 장르 </td>
+					<td>
+						<select name = "kategorie">
+							<option value ="romance"> 로맨스/멜로 </option>
+							<option value = "comic"> 코미디 </option>
+							<option value = "acthion"> 액션 </option>
+							<option value = "sf"> SF </option>
+							<option value = "fantasy"> 판타지 </option>
+							<option value = "thriller"> 스릴러/공포 </option>
+							<option value = "adventure"> 어드벤쳐 </option>
+							<option value = "drama"> 드라마 </option>
+						</select>
+					</td>
 				<tr>
 					<td> 제목 </td>
 					<td> 
@@ -78,6 +94,21 @@
 					</td>
 				</tr>
 				<tr>
+					<td> 장르 </td>
+					<td>
+						<select name = "kategorie">
+							<option value ="romance"> 로맨스/멜로 </option>
+							<option value = "comic"> 코미디 </option>
+							<option value = "acthion"> 액션 </option>
+							<option value = "sf"> SF </option>
+							<option value = "fantasy"> 판타지 </option>
+							<option value = "thriller"> 스릴러/공포 </option>
+							<option value = "adventure"> 어드벤쳐 </option>
+							<option value = "drama"> 드라마 </option>
+						</select>
+					</td>
+				<tr>
+				<tr>
 					<td> 제목 </td>
 					<td> 
 						<input type = "text" name = "subject" />
@@ -118,6 +149,21 @@
 						<input type="hidden" name="writer" value="카카오<%= kid %> "/>
 					</td>
 				</tr>
+				<tr>
+					<td> 장르 </td>
+					<td>
+						<select name = "kategorie">
+							<option value ="romance"> 로맨스/멜로 </option>
+							<option value = "comic"> 코미디 </option>
+							<option value = "acthion"> 액션 </option>
+							<option value = "sf"> SF </option>
+							<option value = "fantasy"> 판타지 </option>
+							<option value = "thriller"> 스릴러/공포 </option>
+							<option value = "adventure"> 어드벤쳐 </option>
+							<option value = "drama"> 드라마 </option>
+						</select>
+					</td>
+				<tr>
 				<tr>
 					<td> 제목 </td>
 					<td> 

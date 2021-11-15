@@ -14,6 +14,30 @@
 	}
 </style>
 
+<script>
+	
+	// 제목, 내용, 비밀번호 입력값이 없을 시 띄우는 경고창 (유효성 검사)
+	function nullCheck(){
+		subjectVal = document.getElementsByName("subject")[0].value;
+		contentVal = document.getElementsByName("content")[0].value;
+		pwVal = document.getElementsByName("pw")[0].value;
+		
+		if(subjectVal == ""){
+			alert("제목을 작성해주세요.");
+			return false;
+		}
+		if(contentVal == ""){
+			alert("내용을 작성해주세요.");
+			return false;
+		}
+		if(pwVal == ""){
+			alert("비밀번호를 입력해주세요.");
+			return false;
+		}
+	}
+	
+</script>
+
 <%
 	// 익명 작성자명 랜덤 부여
 	Random r = new Random();
@@ -26,7 +50,7 @@
 		
 		if(id == null) { %>
 		
-		<form action="writePro.jsp" method="post" enctype="multipart/form-data">
+		<form action="writePro.jsp" method="post" enctype="multipart/form-data" onsubmit="return nullCheck();">
 			<table>
 				<tr>
 					<th colspan="3"> <h1> 게시글 작성 </h1> </th>

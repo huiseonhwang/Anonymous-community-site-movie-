@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="team03.bean.BoardDAO" %>
+<%@ page import="team03.bean.MovieDAO" %>
 
-<jsp:useBean class="team03.bean.BoardDTO" id="dto" />
+<jsp:useBean class="team03.bean.MovieDTO" id="dto" />
 <jsp:setProperty property="num" name="dto" />
 
 <style>
@@ -17,34 +17,10 @@
 	}
 </style>
 
-<script>
-	
-	// 입력된 값이 없을 때 띄우는 경고창 (유효성 검사)
-	function nullCheck(){
-		subjectVal = document.getElementsByName("subject")[0].value;
-		contentVal = document.getElementsByName("content")[0].value;
-		pwVal = document.getElementsByName("pw")[0].value;
-		
-		if(subjectVal == ""){
-			alert("제목을 작성해주세요.");
-			return false;
-		}
-		if(contentVal == ""){
-			alert("내용을 작성해주세요.");
-			return false;
-		}
-		if(pwVal == ""){
-			alert("비밀번호를 입력해주세요.");
-			return false;
-		}
-	}
-	
-</script>
-
 <%
 	String pageNum = request.getParameter("pageNum");
 	
-	BoardDAO dao = BoardDAO.getInstance();
+	MovieDAO dao = MovieDAO.getInstance();
 	dto = dao.getContent(dto);
  %>
  	
@@ -61,6 +37,21 @@
 					<%= dto.getWriter() %>
 				</td>
 			</tr>
+			<tr>
+				<td> 장르 </td>
+				<td>
+					<select name = "kategorie">
+						<option value ="romance"> 로맨스/멜로 </option>
+						<option value = "comic"> 코미디 </option>
+						<option value = "acthion"> 액션 </option>
+						<option value = "sf"> SF </option>
+						<option value = "fantasy"> 판타지 </option>
+						<option value = "thriller"> 스릴러/공포 </option>
+						<option value = "adventure"> 어드벤쳐 </option>
+						<option value = "drama"> 드라마 </option>
+					</select>
+				</td>
+			<tr>
 			<tr>
 				<td>제목</td>
 				<td>

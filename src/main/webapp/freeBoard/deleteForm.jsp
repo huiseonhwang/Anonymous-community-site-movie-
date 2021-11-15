@@ -17,6 +17,20 @@
 	}
 </style>
 
+<script>
+
+	//삭제 시 비밀번호에 입력된 값이 없을 때 띄우는 경고창 (유효성 검사)
+	function nullCheck(){
+		pwVal = document.getElementsByName("pw")[0].value;
+		
+		if(pwVal == ""){
+			alert("비밀번호를 입력해주세요.");
+			return false;
+		}
+	}
+	
+</script>
+
 <%
 	String pageNum = request.getParameter("pageNum");
 	
@@ -24,7 +38,7 @@
 	dto = dao.getContent(dto);
 %>
 
-<form action="deletePro.jsp" method="post">
+<form action="deletePro.jsp" method="post" onsubmit="return nullCheck();">
 	<input type="hidden" name="num" value="<%= dto.getNum() %>" />
 	<input type="hidden" name="pageNum" value="<%= pageNum %>" />
 	

@@ -24,7 +24,7 @@ public class MovieDAO {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement(
 					"select * from "
-					+ " (select num,writer,subject,pw,content,filename,reg,readcount, good, bad, rownum r from " 
+					+ " (select num,writer,kategorie,subject,pw,content,filename,reg,readcount, good, bad, rownum r from " 
 					+ " (select * from movieBoard order by num desc))"
 					+ " where r >= ? and r <= ?");
 			// sql문 작성
@@ -39,6 +39,7 @@ public class MovieDAO {
 				dto.setNum(rs.getInt("Num"));
 				dto.setWriter(rs.getString("writer"));
 				dto.setPw(rs.getString("pw"));
+				dto.setKategorie(rs.getString("kategorie"));
 				dto.setSubject(rs.getString("subject"));
 				dto.setContent(rs.getString("content"));
 				dto.setFilename(rs.getString("filename"));
@@ -87,12 +88,13 @@ public class MovieDAO {
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement("insert into movieboard values"
-					+ "(movieboard_seq.nextval,?,?,?,?,?,sysdate,0,0,0);");
+					+ "(movieboard_seq.nextval,?,?,?,?,?,?,sysdate,0,0,0);");
 			pstmt.setString(1, dto.getWriter());
 			pstmt.setString(2, dto.getPw());
-			pstmt.setString(3, dto.getSubject());
-			pstmt.setString(4, dto.getContent());
-			pstmt.setString(5, dto.getFilename());
+			pstmt.setString(3, dto.getKategorie());
+			pstmt.setString(4, dto.getSubject());
+			pstmt.setString(5, dto.getContent());
+			pstmt.setString(6, dto.getFilename());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -123,6 +125,7 @@ public class MovieDAO {
 			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
 		} return result;
 	}
+	
 	// 본인의 게시글 페이지 정렬, 출력
 	public List<MovieDTO> getMyList(String writer, int start, int end){
 		List<MovieDTO> list = null;
@@ -130,8 +133,8 @@ public class MovieDAO {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement(
 					"select * from " 
-					+ " (select num, writer, subject, pw, content, filename, reg, readcount, good, bad, rownum r from " 
-					+ " (select * from teamBoard where writer = ? order by num desc)) "
+					+ " (select num, writer, kategorie, subject, pw, content, filename, reg, readcount, good, bad, rownum r from " 
+					+ " (select * from movieBoard where writer = ? order by num desc)) "
 					+ " where r >=? and r <=?");
 			pstmt.setString(1, writer);
 			pstmt.setInt(2, start);
@@ -141,6 +144,7 @@ public class MovieDAO {
 			while(rs.next()) {
 				MovieDTO dto = new MovieDTO();
 				dto.setNum(rs.getInt("num"));
+				dto.setKategorie(rs.getString("kategorie"));
 				dto.setSubject(rs.getString("subject"));
 				dto.setContent(rs.getString("content"));
 				dto.setWriter(rs.getString("writer"));
@@ -189,6 +193,7 @@ public class MovieDAO {
 				dto.setNum(rs.getInt("num"));
 				dto.setWriter(rs.getString("writer"));
 				dto.setPw(rs.getString("pw"));
+				dto.setKategorie(rs.getString("kategorie"));
 				dto.setSubject(rs.getString("subject"));
 				dto.setContent(rs.getString("content"));
 				dto.setFilename(rs.getString("filename"));
@@ -212,11 +217,12 @@ public class MovieDAO {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
-			pstmt = conn.prepareStatement("update MovieBoard set subject = ?, content = ?, filename = ? where num = ?");
-			pstmt.setString(1, dto.getSubject());
-			pstmt.setString(2, dto.getContent());
-			pstmt.setString(3, dto.getFilename());
-			pstmt.setInt(4, dto.getNum());
+			pstmt = conn.prepareStatement("update MovieBoard set kategorie =?, subject = ?, content = ?, filename = ? where num = ?");
+			pstmt.setString(1, dto.getKategorie());
+			pstmt.setString(2, dto.getSubject());
+			pstmt.setString(3, dto.getContent());
+			pstmt.setString(4, dto.getFilename());
+			pstmt.setInt(5, dto.getNum());
 			result = pstmt.executeUpdate();
 			
 		} catch (Exception e) {
@@ -253,12 +259,13 @@ public class MovieDAO {
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement("insert into movieBoard values(" 
-					+ " movieBoard_seq.nextval, ?, ?, ?, ?, ?, sysdate, 0, 0, 0)");
+					+ " movieBoard_seq.nextval, ?, ?, ?, ?, ?, ?, sysdate, 0, 0, 0)");
 			pstmt.setString(1, dto.getWriter());
 			pstmt.setString(2, dto.getPw());
 			pstmt.setString(3, dto.getSubject());
-			pstmt.setString(4, dto.getContent());
-			pstmt.setString(5, dto.getFilename());
+			pstmt.setString(4, dto.getKategorie());
+			pstmt.setString(5, dto.getContent());
+			pstmt.setString(6, dto.getFilename());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -266,6 +273,43 @@ public class MovieDAO {
 			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
 			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
 			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return result;
+	}
+	
+	// 익명 게시글 수정
+	
+	public int updateContent(MovieDTO dto) {
+		int result = -1;
+		String dbpasswd="";
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"select pw from teamBoard where num = ?");
+			pstmt.setInt(1, dto.getNum());
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				dbpasswd= rs.getString("pw"); 
+				if(dbpasswd.equals(dto.getPw())){
+					pstmt = conn.prepareStatement(
+							"update movieBoard set subject = ?, pw = ?, content = ?, filename = ? where num = ?");
+					pstmt.setString(1, dto.getSubject());
+					pstmt.setString(2, dto.getPw());
+					pstmt.setString(3, dto.getContent());
+					pstmt.setString(4, dto.getFilename());
+					pstmt.setInt(5, dto.getNum());
+					pstmt.executeUpdate();
+					result = 1;
+				}else{
+					result = 0;
+				}
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
 		}
 		return result;
 	}
@@ -310,5 +354,119 @@ public class MovieDAO {
 		return result;
 	}
 	
+	// 검색한 게시글 갯수
+	public int getSearchCount(String colum, String search) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement
+					("select count (*) from MovieBoard where "+colum+" like '%"+search+"%'");
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return result;
+	}
 	
+	// 게시글 검색
+	public List<MovieDTO> getSearchList (String colum, String search, int start, int end) {
+		List<MovieDTO> list = null; // 객체가 없으면 값은 안들어감
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement("select * from "
+					+ " (select num,writer,subject,pw,content,filename,reg,readcount, good, bad, rownum r from " 
+					+ " (select * from movieBoard where "+colum+" like '%"+search+"%' order by num desc)) "
+					+ " where r >=? and r <=?");
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rs = pstmt.executeQuery();
+			list = new ArrayList<MovieDTO>();
+			while (rs.next()) {
+				MovieDTO dto = new MovieDTO();
+				dto.setNum(rs.getInt("num"));
+				dto.setWriter(rs.getString("writer"));
+				dto.setContent(rs.getString("content"));
+				dto.setSubject(rs.getString("subject"));
+				dto.setPw(rs.getString("pw"));
+				dto.setFilename(rs.getString("filename"));
+				dto.setReg(rs.getTimestamp("reg"));
+				dto.setReadcount(rs.getInt("readcount"));
+				dto.setGood(rs.getInt("good"));
+				dto.setBad(rs.getInt("bad"));
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return list;
+	}
+	
+	// 카테고리 게시글 개수
+	public int getKategorieSearchCount(String colum, String search) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement
+					("select count (*) from MovieBoard where "+colum+" like '%"+search+"%'");
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return result;
+	}
+	
+	// 카테고리 게시글 검색
+	public List<MovieDTO> getKategorieSearchList (String colum, String search, int start, int end) {
+		List<MovieDTO> list = null; // 객체가 없으면 값은 안들어감
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement("select * from "
+					+ " (select num,writer,subject,pw,content,filename,reg,readcount, good, bad, rownum r from " 
+					+ " (select * from movieBoard where kategorie "+colum+" like '%"+search+"%' order by num desc)) "
+					+ " where r >=? and r <=?");
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rs = pstmt.executeQuery();
+			list = new ArrayList<MovieDTO>();
+			while (rs.next()) {
+				MovieDTO dto = new MovieDTO();
+				dto.setNum(rs.getInt("num"));
+				dto.setWriter(rs.getString("writer"));
+				dto.setContent(rs.getString("content"));
+				dto.setSubject(rs.getString("subject"));
+				dto.setPw(rs.getString("pw"));
+				dto.setFilename(rs.getString("filename"));
+				dto.setReg(rs.getTimestamp("reg"));
+				dto.setReadcount(rs.getInt("readcount"));
+				dto.setGood(rs.getInt("good"));
+				dto.setBad(rs.getInt("bad"));
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return list;
+	}
 }

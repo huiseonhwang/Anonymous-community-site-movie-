@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -15,12 +16,15 @@
 		border: 2px solid black;
 		padding: 10px;
 	}
-	*{
+	#center{
 		text-align: center;
 	}
 </style>
 
 <%
+	SimpleDateFormat sdf = 
+		new SimpleDateFormat("yy-MM-dd HH:mm");
+
 	request.setCharacterEncoding("UTF-8");
 
 	String colum = request.getParameter("colum");
@@ -40,6 +44,7 @@
 	int start = (currentPage - 1) * pageSize + 1;
 	int end = currentPage * pageSize;
 	int count = 0;
+	int number = 0;
 	
 	List<BoardDTO> list = null;
 	BoardDAO dao = BoardDAO.getInstance();
@@ -49,13 +54,15 @@
 		if(count > 0){
 			list = dao.getSearchList(colum, search, start, end);
 		}
-	} %>
+	} 
+	number = count-(currentPage-1)*pageSize;
+	%>
 
 <h1 style="text-align: center;">
 	<a href="list.jsp">게시판</a>
 </h1>
 
-<table>
+<table style="width: 90%;">
 	<tr style="text-align: right;">
 		<% if(id != null || kid != null){ %>
 			<td colspan="7"> 
@@ -66,23 +73,23 @@
 					<input type="button" value="메인으로 돌아가기"
 					onclick="window.location='/team03/main.jsp'" />
 			</td>
-		<%	} else { %>
+		<%} else { %>
 			<td colspan="7">
 				<input type="button" value="글쓰기"
 					onclick="window.location='writeForm.jsp'" />
 					<input type="button" value="메인으로 돌아가기"
 					onclick="window.location='/team03/main.jsp'" />
 			</td>
-	<%	} %>
+	 <%	 } %>
 	</tr>
 	<tr>
-		<th>글 번호</th>
-		<th>제목</th>
-		<th>작성자</th>
-		<th>작성일</th>
-		<th>조회</th>
-		<th>공감</th>
-		<th>비공감</th>
+		<th> 글 번호 </th>
+		<th> 작성자 </th>
+		<th> 제목 </th>
+		<th> 작성일 </th>
+		<th> 조회 </th>
+		<th> 공감 </th>
+		<th> 비공감 </th>
 	</tr>
 <%	if(count == 0){ %>
 		<tr>
@@ -92,58 +99,67 @@
 
 	<%	for(BoardDTO dto : list) { %>
 			<tr>
-				<td> <%= dto.getNum() %> </td>
-				<td>
-					<a href="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>">
-						<%= dto.getSubject() %>
-					</a>
+				<td id="center">
+					<%= number-- %>
+					<input type="hidden" name="num" value="<%=dto.getNum() %>" />
 				</td>
-				<td>
+				<td style="width: 20%;"> 
 					<% if(!dto.getWriter().contains("익")){ %>
-						<a href="/team03/visitor/visitorForm.jsp?writer=<%=URLEncoder.encode(dto.getWriter(), "UTF-8")%>">
+						<a href="/team03/visitor/visitorForm.jsp?owner=<%=URLEncoder.encode(dto.getWriter(), "UTF-8")%>">
 								<%= dto.getWriter() %>
 						</a>
+						
+						
 					<%} else { %>
 						<%= dto.getWriter() %>
 					<%}%>
 				</td>
-				<td> <%= dto.getReg() %> </td>
+				<td style="width: 40%;">
+					<a href="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>">
+						<%= dto.getSubject() %>
+					</a>
+				</td>
+				<td> <%= sdf.format(dto.getReg()) %> </td>
 				<td> <%= dto.getReadcount() %> </td>
 				<td> <%= dto.getGood() %> </td>
 				<td> <%= dto.getBad() %> </td>
 			</tr>
-	<%	}%>
+	<%	} %>
 <%	} %>
 	
 </table>
 
-<%
-	if(count > 0){
-		int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
-		int startPage = (currentPage / 10) * 10 + 1;
-		int pageBlock = 10;
-		int endPage = startPage + pageBlock-1;
-		if(endPage > pageCount){
-			endPage = pageCount;
-		}	
-		if(startPage > 10){%>
-			<a href="slist.jsp?pageNum=<%=startPage-10%>">[이전]</a>
-		<%}
-			for(int i = startPage ; i <= endPage ; i++){
-			%>	<a href="slist.jsp?pageNum=<%=i%>">[<%=i%>]</a> 	
-	  	  <%}
-		if(endPage < pageCount){%>
-		<a href="slist.jsp?pageNum=<%=startPage + 10%>">[다음]</a>
-	  <%}	
-	}
-%>
+<div id="center">
+	<%
+		if(count > 0){
+			int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+			int startPage = (currentPage / 10) * 10 + 1;
+			int pageBlock = 10;
+			int endPage = startPage + pageBlock-1;
+			if(endPage > pageCount){
+				endPage = pageCount;
+			}	
+			if(startPage > 10){%>
+				<a href="slist.jsp?pageNum=<%=startPage-10%>">[이전]</a>
+			<%}
+				for(int i = startPage ; i <= endPage ; i++){
+				%>	<a href="slist.jsp?pageNum=<%=i%>">[<%=i%>]</a> 	
+		  	  <%}
+			if(endPage < pageCount){%>
+			<a href="slist.jsp?pageNum=<%=startPage + 10%>">[다음]</a>
+		  <%}	
+		}
+	%>
+</div>
 
-<form action="slist.jsp"  method="post" >
-	<select name="colum">
-		<option value="writer">작성자</option>
-		<option value="subject">제목</option>
-		<option value="content">내용</option>
-	</select>
-	<input type="text" name="search" />
-	<input type="submit" value="검색" />
-</form>
+<div id="center">
+	<form action="slist.jsp"  method="post" >
+		<select name="colum">
+			<option value="writer">작성자</option>
+			<option value="subject">제목</option>
+			<option value="content">내용</option>
+		</select>
+		<input type="text" name="search" />
+		<input type="submit" value="검색" />
+	</form>
+</div>

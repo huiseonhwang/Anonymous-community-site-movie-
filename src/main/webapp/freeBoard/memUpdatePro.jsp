@@ -18,7 +18,6 @@
 	String pageNum = mr.getParameter("pageNum");
 	String subject = mr.getParameter("subject");
 	String content = mr.getParameter("content");
-	String kategorie = mr.getParameter("kategorie");
 	
 	String org = mr.getParameter("org");
 	String filename = mr.getParameter("filename");
@@ -27,7 +26,6 @@
 	dto.setNum(num);
 	dto.setSubject(subject);
 	dto.setContent(content);
-	dto.setKategorie(kategorie);
 	
 	
 	if (filename == null) {

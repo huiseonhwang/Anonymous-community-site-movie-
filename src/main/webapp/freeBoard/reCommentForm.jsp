@@ -17,6 +17,30 @@
 	}
 </style>
 
+<script type="text/javascript">
+	
+	function windowClose(){
+		opener.location.reload();
+		window.close();
+	}
+	
+	// 입력된 값이 없을 때 띄우는 경고창 (유효성 검사)
+	function nullCheck(){
+		contentVal = document.getElementsByName("content")[0].value;
+		pwVal = document.getElementsByName("pw")[0].value;
+		
+		if(contentVal == ""){
+			alert("내용을 작성해주세요.");
+			return false;
+		}
+		if(pwVal == ""){
+			alert("비밀번호를 입력해주세요.");
+			return false;
+		}
+	}
+	
+</script>
+
 <%
 	request.setCharacterEncoding("UTF-8");
 
@@ -48,7 +72,7 @@
 	}
 %>
 
-<form action="reCommentPro.jsp" method="post">
+<form action="reCommentPro.jsp" method="post" onsubmit="return nullCheck();">
 
 	<input type="hidden" name="num" value="<%=num%>" />
 	<input type="hidden" name="pageNum" value="<%=pageNum%>" />
@@ -87,12 +111,3 @@
 			</tr>
 	</table>
 </form>
-
-<script type="text/javascript">
-	
-	function windowClose(){
-		opener.location.reload();
-		window.close();
-	}
-	
-</script>

@@ -18,6 +18,26 @@
 	}
 </style>
 
+<script type="text/javascript">
+	
+	// 삭제 팝업을 끄면서 기존 게시글 페이지를 새로고침 하는 함수
+	function windowClose(){
+		opener.location.reload();
+		window.close();
+	}
+	
+	// 삭제 시 비밀번호에 입력된 값이 없을 때 띄우는 경고창 (유효성 검사)
+	function nullCheck(){
+		pwVal = document.getElementsByName("pw")[0].value;
+		
+		if(pwVal == ""){
+			alert("비밀번호를 입력해주세요.");
+			return false;
+		}
+	}
+	
+</script>
+
 <%
 	String pageNum = request.getParameter("pageNum");
 
@@ -25,7 +45,7 @@
 	dto = dao.getContent(dto);
 %>
 
-<form action="commentDeletePro.jsp" method="post">
+<form action="commentDeletePro.jsp" method="post" onsubmit="return nullCheck();">
 
 	<input type="hidden" name="boardNum" value="<%=dto.getBoardNum()%>" />
 	<input type="hidden" name="num" value="<%=dto.getNum()%>" />
@@ -55,13 +75,3 @@
 		</tr>
 	</table>
 </form>
-
-<script type="text/javascript">
-	
-	// 삭제 팝업을 끄면서 기존 게시글 페이지를 새로고침 하는 함수
-	function windowClose(){
-		opener.location.reload();
-		window.close();
-	}
-	
-</script>

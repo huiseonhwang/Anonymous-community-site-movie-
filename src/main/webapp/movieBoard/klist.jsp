@@ -23,12 +23,13 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 
+	String kategorie = request.getParameter("kategorie");
 	String colum = request.getParameter("colum");
 	String search = request.getParameter("search");
 	String kid = request.getParameter("kid");
 	String id = request.getParameter("id");
 	String pageNum = request.getParameter("pageNum");
-	String my = request.getParameter("my"); // 내 작성글로 갈 때 대입되는 글
+	String searchkate = request.getParameter("searchkate"); // 내 작성글로 갈 때 대입되는 글
 	
 	int pageSize = 10;
 	
@@ -44,10 +45,10 @@
 	List<MovieDTO> list = null;
 	MovieDAO dao = MovieDAO.getInstance();
 	
-	if (my == null) {
-		count = dao.getSearchCount(colum, search);
+	if (searchkate == null) {
+		count = dao.getKategorieSearchCount(colum, search);
 		if (count > 0) {
-			list = dao.getSearchList(colum, search, start, end);
+			list = dao.getKategorieSearchList(colum, search, start, end);
 		}
 	}
 %>	
@@ -58,38 +59,35 @@
 
 <table>
 	<tr style="text-align: right;">
-	<% if(id != null || kid != null){ %>
-		<td colspan = "7"> 
-		<input type = "button" value = "글쓰기" 
-			onclick = "window.location='writeForm.jsp'"/>
-		<input type = "button" value = "내 작성글" 
-			onclick = "window.location='list.jsp?my=1'"/>
-		<input type = "button" value = "메인" 
-			onclick = "window.location='/team03/main.jsp'"/>
-
-		</td>
-		<%} else {%>
-			<td colspan = "8">
-			<input type = "button" value = "글쓰기" onclick = "window.location='writeForm.jsp'"/>
-			<input type = "button" value = "메인" onclick = "window.location='/team03/main.jsp'"/>
-			</td>
-			<%} %>
+		<% if ( id != null || kid != null ) {
+			// id가 kid가 null이라면 (로그인 정보가 있다면) %>
+				<td colspan = "7" >
+					<input type = "button" value = "글 쓰기" 
+						onclick = "window.location='writerForm.jsp'" />
+					<input type = "button" value = "내 작성글"
+						onclick = "window.location='list.jsp?my=1'" />
+					<input type = "button" value = "메인으로 돌아가기"
+						onclick = "window.location='/team03/main.jsp'" />
+				</td>
+			<% } else { 
+			// 로그인 정보가 없다면 (익명이라면) %>
+				<td colspan = "7" >
+										<input type = "button" value = "글 쓰기" 
+						onclick = "window.location='writerForm.jsp'" />
+					<input type = "button" value = "메인으로 돌아가기"
+						onclick = "window.location='/team03/main.jsp'" />
+				</td>
+			<% } %>
 		</tr>
 		<tr>
-		<th> 글 번호</th>
-		<td> 
-			<select onchange = "if(this.value) location.href=(this.value);" >
-				<option value ="klist.jsp?kategorie=romance"> 로맨스 </option>
-				<option value = "klist.jsp?kategorie=sf"> SF </option>
-			</select> 
-		</td>
-	<th> 제목 </th>
-	<th> 작성자 </th>
-	<th> 작성일 </th>
-	<th> 조회 </th>
-	<th> 공감 </th>
-	<th> 비공감 </th>
-	</tr>
+			<th>글 번호</th>
+			<th>제목</th>
+			<th>작성자</th>
+			<th>작성일</th>
+			<th>조회</th>
+			<th>공감</th>
+			<th>비공감</th>
+		</tr>
 		<% if ( count == 0) { %>
 			<tr>
 				<td colspan = "7" > 작정된 글이 없습니다.. </td>
