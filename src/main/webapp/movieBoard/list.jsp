@@ -71,7 +71,6 @@
 				list = dao.getMyList(id, start, end);
 				// 내 게시글을 정렬
 			}
-			System.out.println(count);
 		}
 		if (kid != null) {
 			// kid 값이 존재할 경우

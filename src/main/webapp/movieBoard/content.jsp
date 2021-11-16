@@ -24,6 +24,49 @@
 		text-align: center;
 	}
 </style>
+
+<script type="text/javascript">
+	
+	//댓글 수정 함수
+	function updateComment(boardNum, num, pageNum){
+		window.name = "ParentForm";
+		window.open("commentUpdateForm.jsp?boardNum="+boardNum+"&num="+num+"&pageNum="+pageNum,
+					"updateForm", "width=570, height=350, resizable = no, scrollbars = no");
+	}
+	
+	// 댓글 삭제 함수
+	function deleteComment(boardNum, num, pageNum){
+		window.name = "ParentForm";
+		window.open("commentDeleteForm.jsp?boardNum="+boardNum+"&num="+num+"&pageNum="+pageNum,
+					"deleteForm", "width=570, height=350, resizable = no, scrollbars = no");
+	}
+	
+	// 대댓글 함수
+	function reComment(boardNum, num, re_step, re_level){
+		window.name = "ParentForm";
+		window.open("reCommentForm.jsp?boardNum="+boardNum+"&num="+num+"&re_step="+re_step+"&re_level="+re_level,
+					"reCommentForm", "width=570, height=350, resizable = no, scrollbars = no");
+		
+	}
+	
+	// 댓글 작성시 내용, 비밀번호 입력값이 없을 시 띄우는 경고창 (유효성 검사)
+	function nullCheck(){
+		pwVal = document.getElementsByName("pw")[0].value;
+		contentVal = document.getElementsByName("content")[0].value;
+		
+		if(pwVal == ""){
+			alert("비밀번호를 입력해주세요.");
+			return false;
+		}
+		if(contentVal == ""){
+			alert("내용을 작성해주세요.");
+			return false;
+		}
+	}
+	
+</script>
+
+
 <%
 	request.setCharacterEncoding("UTF-8");
 
@@ -32,6 +75,9 @@
 	kid = "카카오"+kid;
 
 	String pageNum = request.getParameter("pageNum");
+	if (pageNum == null) {
+		pageNum = "1";
+	}
 	
 	MovieDAO dao = MovieDAO.getInstance();
 	dao.readCountUp(dto);
