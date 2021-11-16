@@ -20,7 +20,7 @@
 	String subject = mr.getParameter("subject");
 	String content = mr.getParameter("content");
 	String filename = mr.getParameter("filename");
-	String pw = mr.getParameter("pw");
+	String pw = mr.getParameter("password");
 	
 	MovieDTO dto = new MovieDTO();
 	dto.setWriter(writer);

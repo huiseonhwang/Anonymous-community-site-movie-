@@ -23,6 +23,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 
+	String kategorie = request.getParameter("kategorie");
 	String colum = request.getParameter("colum");
 	String search = request.getParameter("search");
 	String kid = request.getParameter("kid");
@@ -59,7 +60,7 @@
 <table>
 	<tr style="text-align: right;">
 	<% if(id != null || kid != null){ %>
-		<td colspan = "7"> 
+		<td colspan = "8"> 
 		<input type = "button" value = "글쓰기" 
 			onclick = "window.location='writeForm.jsp'"/>
 		<input type = "button" value = "내 작성글" 
@@ -77,12 +78,19 @@
 		</tr>
 		<tr>
 		<th> 글 번호</th>
-		<td> 
-			<select onchange = "if(this.value) location.href=(this.value);" >
-				<option value ="klist.jsp?kategorie=romance"> 로맨스 </option>
-				<option value = "klist.jsp?kategorie=sf"> SF </option>
-			</select> 
-		</td>
+	<td> 
+		<select name = "kategorie" onchange = "if(this.value) location.href=(this.value);" >
+		<option value = "kategorie" > 카테고리 </option>
+		<option value ="klist.jsp?kategorie=romance"> 로맨스/멜로 </option>
+		<option value = "klist.jsp?kategorie=comic"> 코미디 </option>
+		<option value = "klist.jsp?kategorie=action"> 액션 </option>
+		<option value = "klist.jsp?kategorie=sf"> SF </option>
+		<option value = "klist.jsp?kategorie=fantasy"> 판타지 </option>
+		<option value = "klist.jsp?kategorie=thriller"> 스릴러/공포 </option>
+		<option value = "klist.jsp?kategorie=adventure"> 어드벤쳐 </option>
+		<option value = "klist.jsp?kategorie=drama"> 드라마 </option>
+		</select> 
+	</td>
 	<th> 제목 </th>
 	<th> 작성자 </th>
 	<th> 작성일 </th>
@@ -90,14 +98,17 @@
 	<th> 공감 </th>
 	<th> 비공감 </th>
 	</tr>
-		<% if ( count == 0) { %>
+		<% if (count == 0) { %>
 			<tr>
-				<td colspan = "7" > 작정된 글이 없습니다.. </td>
+				<td colspan = "8" > 작성된 글이 없습니다.. </td>
 			</tr>
 		<% } else { %>
 			<% for (MovieDTO dto : list) { %>
 				<tr>
 					<td> <%= dto.getNum() %> </td>
+					<td>
+						<%= dto.getKategorie() %>
+					</td>
 					<td>
 						<a href = "content.jsp?num=<%=dto.getNum() %>&pageNum=<%=pageNum %>">
 							<%=dto.getSubject() %>
@@ -131,14 +142,12 @@
 		if(endPage > pageCount){
 			endPage = pageCount;
 		}
-		if (startPage > 10) { %>
-			<a href = "slist.jsp?pageNum=<%=startPage-10 %>"> [이전] </a>
-		<% } 
-		 	for (int i = startPage; i <= endPage; i++) { %>
-		 		<a href = "slist.jsp?pageNum=<%=i%>" > [<%=i %>] </a>
-		 	<% }
-		 	if (endPage < pageCount) { %>
-		 	<a href="slist.jsp?pageNum=<%=startPage + 10%>"> [다음] </a>
+		if(startPage > 10) { %>
+			<a href = "slist.jsp?pageNum=<%=startPage-10 %>&colum=<%=colum%>&search=<%=search%>">[이전]</a> <%}
+		for(int i = startPage; i<=endPage; i++) { %> 	
+			<a href = "slist.jsp?pageNum=<%=i %>&colum=<%=colum%>&search=<%=search%>">[<%=i %>]</a> <% } 
+		if (endPage < pageCount) {%>
+			<a href = "slist.jsp?pageNum=<%=startPage+10 %>&colum=<%=colum%>&search=<%=search%>">[다음]</a>
 	 <% }
 	}
 %>

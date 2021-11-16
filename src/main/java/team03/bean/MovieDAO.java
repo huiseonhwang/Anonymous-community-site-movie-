@@ -139,6 +139,7 @@ public class MovieDAO {
 			pstmt.setString(1, writer);
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);
+			
 			rs = pstmt.executeQuery();
 			list = new ArrayList();
 			while(rs.next()) {
@@ -156,7 +157,7 @@ public class MovieDAO {
 				dto.setBad(rs.getInt("bad"));
 				list.add(dto);
 			}
-		} catch (Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
@@ -381,7 +382,7 @@ public class MovieDAO {
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement("select * from "
-					+ " (select num,writer,subject,pw,content,filename,reg,readcount, good, bad, rownum r from " 
+					+ " (select num,writer, kategorie, subject,pw,content,filename,reg,readcount, good, bad, rownum r from " 
 					+ " (select * from movieBoard where "+colum+" like '%"+search+"%' order by num desc)) "
 					+ " where r >=? and r <=?");
 			pstmt.setInt(1, start);
@@ -392,6 +393,7 @@ public class MovieDAO {
 				MovieDTO dto = new MovieDTO();
 				dto.setNum(rs.getInt("num"));
 				dto.setWriter(rs.getString("writer"));
+				dto.setKategorie(rs.getString("kategorie"));
 				dto.setContent(rs.getString("content"));
 				dto.setSubject(rs.getString("subject"));
 				dto.setPw(rs.getString("pw"));
@@ -413,12 +415,13 @@ public class MovieDAO {
 	}
 	
 	// 카테고리 게시글 개수
-	public int getKategorieSearchCount(String colum, String search) {
+	public int getKategorieSearchCount(String colum) {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement
-					("select count (*) from MovieBoard where "+colum+" like '%"+search+"%'");
+					("select count (*) from MovieBoard where kategorie = ?");
+			pstmt.setString(1, colum);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				result = rs.getInt(1);
@@ -434,22 +437,25 @@ public class MovieDAO {
 	}
 	
 	// 카테고리 게시글 검색
-	public List<MovieDTO> getKategorieSearchList (String colum, String search, int start, int end) {
+	public List<MovieDTO> getKategorieSearchList (String colum, int start, int end) {
 		List<MovieDTO> list = null; // 객체가 없으면 값은 안들어감
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement("select * from "
-					+ " (select num,writer,subject,pw,content,filename,reg,readcount, good, bad, rownum r from " 
-					+ " (select * from movieBoard where kategorie "+colum+" like '%"+search+"%' order by num desc)) "
+					+ " (select num,writer,kategorie, subject,pw,content,filename,reg,readcount, good, bad, rownum r from " 
+					+ " (select * from movieBoard where kategorie = ? order by num desc)) "
 					+ " where r >=? and r <=?");
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
+	
+			pstmt.setString(1, colum);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			rs = pstmt.executeQuery();
 			list = new ArrayList<MovieDTO>();
 			while (rs.next()) {
 				MovieDTO dto = new MovieDTO();
 				dto.setNum(rs.getInt("num"));
 				dto.setWriter(rs.getString("writer"));
+				dto.setKategorie(rs.getString("kategorie"));
 				dto.setContent(rs.getString("content"));
 				dto.setSubject(rs.getString("subject"));
 				dto.setPw(rs.getString("pw"));

@@ -30,7 +30,6 @@
 %>
 
 <%
-	String kategorie = request.getParameter("kategorie");
 	String kid = (String)session.getAttribute("kid");
 	String id = (String)session.getAttribute("id");
 	String pageNum = request.getParameter("pageNum");
@@ -72,6 +71,7 @@
 				list = dao.getMyList(id, start, end);
 				// 내 게시글을 정렬
 			}
+			System.out.println(count);
 		}
 		if (kid != null) {
 			// kid 값이 존재할 경우
@@ -85,6 +85,7 @@
 		}
 	}
 	
+	
 	number = count - (currentPage-1)*pageSize;
 %>
 <h1 style="text-align: center;"> 게시판 </h1>
@@ -95,8 +96,8 @@
 	<td colspan = "8"> 
 	<input type = "button" value = "글쓰기" 
 		onclick = "window.location='writeForm.jsp'"/>
-	<input type = "button" value = "내 작성글" 
-		onclick = "window.location='list.jsp?my=1'"/>
+	<input type="button" value="내 작성글"
+		onclick="window.location='list.jsp?my=1'" />
 	<input type = "button" value = "메인" 
 		onclick = "window.location='/team03/main.jsp'"/>
 
@@ -110,18 +111,19 @@
 	</tr>
 	<tr>
 	<th> 글 번호</th>
-	<td> 
+	<th> 
 		<select name = "kategorie" onchange = "if(this.value) location.href=(this.value);" >
+		<option value = "kategorie" > 카테고리 </option>
 		<option value ="klist.jsp?kategorie=romance"> 로맨스/멜로 </option>
 		<option value = "klist.jsp?kategorie=comic"> 코미디 </option>
-		<option value = "klist.jsp?kategorie=acthion"> 액션 </option>
+		<option value = "klist.jsp?kategorie=action"> 액션 </option>
 		<option value = "klist.jsp?kategorie=sf"> SF </option>
 		<option value = "klist.jsp?kategorie=fantasy"> 판타지 </option>
 		<option value = "klist.jsp?kategorie=thriller"> 스릴러/공포 </option>
 		<option value = "klist.jsp?kategorie=adventure"> 어드벤쳐 </option>
 		<option value = "klist.jsp?kategorie=drama"> 드라마 </option>
 		</select> 
-	</td>
+	</th>
 	<th> 제목 </th>
 	<th> 작성자 </th>
 	<th> 작성일 </th>
@@ -147,7 +149,7 @@
 					<a href = "content.jsp?num=<%=dto.getNum() %>&pageNum=<%=pageNum%>">
 					<%=dto.getSubject()%>
 				</a>
-			</td>
+				</td>
 			<td>
 				<% if (!dto.getWriter().contains("익")) { %>
 					<a href="/team03/visitor/visitorForm.jsp?writer=<%=URLEncoder.encode(dto.getWriter(), "UTF-8")%>">
@@ -199,10 +201,3 @@
 	<input type = "text" name = "search" />
 	<input type = "submit" value = "검색" />
 </form>
-
-
-
-<select onchange = "if(this.value) location.href=(this.value);" >
-	<option value = ""> 네이버 </option>
-	<option value = "http://www.daum.net" > 다음 </option>
-</select>

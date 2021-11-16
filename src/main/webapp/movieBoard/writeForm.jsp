@@ -45,7 +45,7 @@
 						<select name = "kategorie">
 							<option value ="romance"> 로맨스/멜로 </option>
 							<option value = "comic"> 코미디 </option>
-							<option value = "acthion"> 액션 </option>
+							<option value = "action"> 액션 </option>
 							<option value = "sf"> SF </option>
 							<option value = "fantasy"> 판타지 </option>
 							<option value = "thriller"> 스릴러/공포 </option>
@@ -90,7 +90,7 @@
 					<td> 작성자 </td>
 					<td>
 						<%= id %>
-						<input type="hidden" name="writer" value="<%= id %> "/>
+						<input type="hidden" name="writer" value="<%= id %>"/>
 					</td>
 				</tr>
 				<tr>
@@ -99,7 +99,7 @@
 						<select name = "kategorie">
 							<option value ="romance"> 로맨스/멜로 </option>
 							<option value = "comic"> 코미디 </option>
-							<option value = "acthion"> 액션 </option>
+							<option value = "action"> 액션 </option>
 							<option value = "sf"> SF </option>
 							<option value = "fantasy"> 판타지 </option>
 							<option value = "thriller"> 스릴러/공포 </option>
@@ -155,7 +155,7 @@
 						<select name = "kategorie">
 							<option value ="romance"> 로맨스/멜로 </option>
 							<option value = "comic"> 코미디 </option>
-							<option value = "acthion"> 액션 </option>
+							<option value = "action"> 액션 </option>
 							<option value = "sf"> SF </option>
 							<option value = "fantasy"> 판타지 </option>
 							<option value = "thriller"> 스릴러/공포 </option>

@@ -81,4 +81,24 @@ public class KloginDAO {
 		}
 		return result;
 	}
+
+	public int KmemberDataDelete(KloginDTO dto) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement("delete from kmember where kid=?");
+			pstmt.setString(1, dto.getKid());
+			result = pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return result;
+	}
+
+
 }

@@ -43,7 +43,7 @@
 					<select name = "kategorie">
 						<option value ="romance"> 로맨스/멜로 </option>
 						<option value = "comic"> 코미디 </option>
-						<option value = "acthion"> 액션 </option>
+						<option value = "action"> 액션 </option>
 						<option value = "sf"> SF </option>
 						<option value = "fantasy"> 판타지 </option>
 						<option value = "thriller"> 스릴러/공포 </option>
