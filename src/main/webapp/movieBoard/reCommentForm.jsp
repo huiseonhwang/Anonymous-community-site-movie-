@@ -43,7 +43,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String pageNum = request.getParameter("pageNum");
-	int movieNum = Integer.parseInt(request.getParameter("movieNum"));
+	int boardNum = Integer.parseInt(request.getParameter("boardNum"));
 	int num = Integer.parseInt(request.getParameter("num"));
 	int re_step = Integer.parseInt(request.getParameter("re_step"));
 	int re_level = Integer.parseInt(request.getParameter("re_level"));
@@ -71,10 +71,10 @@
 	}
 %>
 
-<form action = "CommentPro.jsp" method = "post" >
+<form action = "reCommentPro.jsp" method = "post" >
 	<input type = "hidden" name = "num" value = "<%=num %>"/>
 	<input type = "hidden" name = "pageNum" value = "<%=pageNum %>"/>
-	<input type = "hidden" name = "MovieNum" value = "<%=movieNum %>" />
+	<input type = "hidden" name = "boardNum" value = "<%=boardNum %>" />
 	<input type = "hidden" name = "re_step" value = "<%=re_step %>" />
 	<input type = "hidden" name = "re_level" value = "<%=re_level %>" />
 	
@@ -96,7 +96,7 @@
 			<tr>
 				<td> 비밀번호 </td>
 				<td colspan = "3">
-				<input type = "password" name = "password" />
+				<input type = "password" name = "pw" />
 				</td>
 			</tr>
 		<% } %>
@@ -104,7 +104,7 @@
 				<td colspan = "5" >
 					<textarea rows = "4" cols = "60" name = "content"
 					placeholder = "내용을 작성해 주세요" >
-				</textarea > </br>
+				</textarea > <br/>
 					<input type = "submit" value = "답글 작성" />
 					<input type = "button" value = "창 닫기"
 						onclick = "windowClose();" />
@@ -113,10 +113,5 @@
 	</table>
 </form>
 
-	<script type="text/javascript">
-		function windowColse() {
-			opener.location.reload();
-			window.close();
-		}
-	</script>
+
 

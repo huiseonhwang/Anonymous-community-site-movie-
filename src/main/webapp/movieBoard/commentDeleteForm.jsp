@@ -23,7 +23,7 @@
 	dto = dao.getContent(dto);
 %>
 
-<form action = "commentDleletePro.jsp" method = "post">
+<form action = "commentDeletePro.jsp" method = "post">
 	<input type = "hidden" name = "boardNum" value = "<%=dto.getBoardNum() %>" />
 	<input type = "hidden" name = "num" value = "<%=dto.getNum() %>" />
 	<input type = "hidden" name = "pageNum" value = "<%=pageNum %>" />

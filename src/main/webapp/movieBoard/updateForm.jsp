@@ -87,6 +87,8 @@
 			<tr>
 				<th colspan="3">
 					<input type="submit" value="수정"/>
+					<input type="button" value="닫기"
+							onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
 				</th>
 			</tr>
 		</table>

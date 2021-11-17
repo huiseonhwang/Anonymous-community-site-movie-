@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "team03.bean.SignUpDAO" %>
-<h1>signUpPro</h1>
+
 <jsp:useBean class = "team03.bean.SignUpDTO" id = "dto" />
 <jsp:setProperty property = "*" name ="dto" />
 

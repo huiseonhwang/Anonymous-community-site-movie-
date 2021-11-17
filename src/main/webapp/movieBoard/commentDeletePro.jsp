@@ -7,7 +7,7 @@
 
 <%
 	String pw = request.getParameter("pw");
-	String psgeNum = request.getParameter("pageNum");
+	String pageNum = request.getParameter("pageNum");
 	
 	if ( pw == null ) {
 		MovieCommentDAO dao = MovieCommentDAO.getInstance();
@@ -26,7 +26,8 @@
 		if (result ==1 ) { %>
 			<script>
 				alert("삭제되었습니다.");
-				op
+				opener.location.reload();
+				window.close();
 			</script>
 			
 		<% } else { %>

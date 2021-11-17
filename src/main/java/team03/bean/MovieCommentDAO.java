@@ -12,7 +12,7 @@ public class MovieCommentDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	// daoì˜ ê°ì²´ë¥¼ dao í´ë˜ìŠ¤ì—ì„œ ë¯¸ë¦¬ ìƒì„±í•œ í›„ ë©”ì†Œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” í˜•ì‹ìœ¼ë¡œ dao í´ë˜ìŠ¤ë¥¼ ì‚¬ìš©í•˜ëŠ” ì½”ë“œ
+	// daoÀÇ °´Ã¼¸¦ dao Å¬·¡½º¿¡¼­ ¹Ì¸® »ı¼ºÇÑ ÈÄ ¸Ş¼Òµå¸¦ È£ÃâÇÏ´Â Çü½ÄÀ¸·Î dao Å¬·¡½º¸¦ »ç¿ëÇÏ´Â ÄÚµå
 	public static MovieCommentDAO instance = new MovieCommentDAO();
 	public static MovieCommentDAO getInstance( ) {
 		return instance;
@@ -20,7 +20,7 @@ public class MovieCommentDAO {
 	private MovieCommentDAO() {
 	}
 	
-	// ëŒ“ê¸€ ì‘ì„±
+	// ´ñ±Û ÀÛ¼º
 	public int insertComment(MovieCommentDTO dto, int boardNum) {
 		int result = 0;
 		try {
@@ -42,7 +42,7 @@ public class MovieCommentDAO {
 		return result;
 	}
 	
-	// ëŒ“ê¸€ ê°¯ìˆ˜ ì¹´ìš´íŠ¸
+	// ´ñ±Û °¹¼ö Ä«¿îÆ®
 	public int countComment(int boardNum) {
 		int result = 0;
 		try {
@@ -63,7 +63,7 @@ public class MovieCommentDAO {
 		return result;
 	}
 	
-	// ëŒ“ê¸€ ë‚´ìš© ì¶œë ¥
+	// ´ñ±Û ³»¿ë Ãâ·Â
 	public List<MovieCommentDTO> getAllComment(int boardNum, int start, int end) {
 		List<MovieCommentDTO> list = null;
 		try {
@@ -100,7 +100,7 @@ public class MovieCommentDAO {
 		return list;
 	}
 	
-	// ì´ë¯¸ ì‘ì„±ëœ ëŒ“ê¸€ ì •ë³´ ì¶œë ¥
+	// ÀÌ¹Ì ÀÛ¼ºµÈ ´ñ±Û Á¤º¸ Ãâ·Â
 	public MovieCommentDTO getContent(MovieCommentDTO dto) {
 		try {
 			conn = OracleDB.getConnection();
@@ -130,7 +130,7 @@ public class MovieCommentDAO {
 		return dto;
 	} 
 	
-	// íšŒì› ëŒ“ê¸€ ìˆ˜ì •
+	// È¸¿ø ´ñ±Û ¼öÁ¤
 	public int updateMemComment(MovieCommentDTO dto) {
 		int result = 0;
 		try {
@@ -150,7 +150,7 @@ public class MovieCommentDAO {
 		return result;
 	}
 	
-	// ìµëª… ëŒ“ê¸€ ìˆ˜ì •
+	// ÀÍ¸í ´ñ±Û ¼öÁ¤
 	public int updateComment(MovieCommentDTO dto) {
 		String pw;
 		int result = 0;
@@ -182,7 +182,7 @@ public class MovieCommentDAO {
 		return result;
 	}
 	
-	// íšŒì› ëŒ“ê¸€ ì‚­ì œ
+	// È¸¿ø ´ñ±Û »èÁ¦
 	public int deleteMemComment(MovieCommentDTO dto) {
 		int result = 0;
 		try {
@@ -201,7 +201,7 @@ public class MovieCommentDAO {
 		return result;
 	}
 	
-	// ìµëª… ëŒ“ê¸€ ì‚­ì œ
+	// ÀÍ¸í ´ñ±Û »èÁ¦
 	public int deleteComment(MovieCommentDTO dto) {
 		String pw;
 		int result = 0;
@@ -230,7 +230,7 @@ public class MovieCommentDAO {
 		return result;
 	}
 	
-	// ëŒ“ê¸€ì— ëŒ€í•œ ë‹µê¸€ ì‘ì„±
+	// ´ñ±Û¿¡ ´ëÇÑ ´ä±Û ÀÛ¼º
 	public int insertReComment(MovieCommentDTO dto, int boardNum) {
 		int result = 0;
 		int re_step = dto.getRe_step();
@@ -238,7 +238,7 @@ public class MovieCommentDAO {
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement
-					("update MovieComment set re_step + 1 where re_step > ?");
+					("update movieComment set re_step = re_step + 1 where re_step > ?");
 			pstmt.setInt(1, re_level);
 			pstmt.executeUpdate();
 			
@@ -246,7 +246,7 @@ public class MovieCommentDAO {
 			re_level = re_level +1;
 			
 			pstmt = conn.prepareStatement
-					("insert into MovieComment values(?, MovieComment_seq.nextval,?,?,?, sysdate,?,?");
+					("insert into movieComment values(?, movieComment_seq.nextval, ?, ?, ?, sysdate, ?, ?)");
 			pstmt.setInt(1, boardNum);
 			pstmt.setString(2, dto.getWriter());
 			pstmt.setString(3, dto.getPw());

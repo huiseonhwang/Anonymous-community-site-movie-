@@ -4,45 +4,68 @@
 <%@ page import = "team03.bean.LoginDTO" %>
     
    <script>
-   function check(){
-	   idv = document.getElementsByName("id")[0].value;
-	   pwv = document.getElementsByName("pw")[0].value;
-	   if(idv == ""){
-		   alert("아이디를 입력해주세요");
-		   return false;
+	   function check(){
+		   idv = document.getElementsByName("id")[0].value;
+		   pwv = document.getElementsByName("pw")[0].value;
+		   if(idv == ""){
+			   alert("아이디를 입력해주세요");
+			   return false;
+		   }
+		   if(pwv == ""){
+			   alert("비밀번호를 입력하세요");
+			   return false;
+		   }
 	   }
-	   if(pwv == ""){
-		   alert("비밀번호를 입력하세요");
-		   return false;
-	   }
-   }
-   
-   
    </script>
    
-   
+   <style>
+   		table {
+		margin: 0 auto;
+		border: 2px solid black;
+		border-collapse: collapse;
+		}
+		
+		tr, td, th {
+			border: 2px solid black;
+			padding: 10px;
+		}
+		#center{
+			margin: 0 auto;
+			text-align: center;
+		}
+   </style>
     
     <form action = "loginpro.jsp" method = "post" onsubmit = "return check();" >
-    id : <input type = "text" name = "id"/><br/>
-    pw : <input type = "password" name = "pw"/><br/>
-    		<input type="hidden" name="login" value="base" />
-    	<input type = "submit" value = "로그인"/>
+    	<table>
+    		<tr>
+    			<th colspan="2" style="background-color: #B0C4DE;"> 로그인 </th>
+    		</tr>
+    		<tr>
+    			<th> 아이디 </th>
+    			<td> <input type = "text" name = "id"/> </td>
+    		</tr>
+    		<tr>
+    			<th> 비밀번호 </th>
+    			<td>
+    				<input type = "password" name = "pw"/>
+    				<input type="hidden" name="login" value="base" />
+    			</td>
+    		</tr>
+    		<tr>
+    			<th colspan="2">
+    				<input type = "submit" value = "로그인"/>
+    				<input type = "button" value = "회원가입" onclick = "window.location = '/team03/signUp/signUpForm.jsp'"/>
+    			</th>
+    		</tr>
+    	</table>
+    	
     </form>
-    	<input type = "button" value = "회원가입" onclick = "window.location = '/team03/signUp/signUpForm.jsp'"/><br/>
+    	
+    <div id="center">
+   		<img src="https://t1.daumcdn.net/cfile/tistory/99BEE8465C3D7D1214"  width="230" onclick="kakaoLogin();" value = "kid"/>
+    </div>
     
-    	
-    	
-   <img src="https://t1.daumcdn.net/cfile/tistory/99BEE8465C3D7D1214"  width="150" onclick="kakaoLogin();" value = "kid"/>
-      <a href="javascript:void(0)">
-          
-      </a>
-	</li>
-	<li onclick="kakaoLogout();">
-      <a href="javascript:void(0)">
-          <span>카카오 로그아웃</span>
-      </a>
-	</li>
-</ul>
+    <a href="javascript:void(0)"> </a>
 
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>

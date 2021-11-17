@@ -10,16 +10,14 @@ public class BoardDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	// daoì˜ ê°ì²´ë¥¼ dao í´ë˜ìŠ¤ì—ì„œ ë¯¸ë¦¬ ìƒì„±í•œ í›„ ë©”ì†Œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” í˜•ì‹ìœ¼ë¡œ dao í´ë˜ìŠ¤ë¥¼ ì‚¬ìš©í•˜ëŠ” ì½”ë“œ
-	// ê°ì²´ìƒì„±ì„ í•˜ì§€ ì•Šê³  dao í´ë˜ìŠ¤ë¥¼ ì‚¬ìš©í•œë‹¤
-	// daoì˜ ê°ì²´ë¥¼ dao í´ë˜ìŠ¤ì—ì„œ ë¯¸ë¦¬ ìƒì„±í•œ í›„ ë©”ì†Œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” í˜•ì‹ìœ¼ë¡œ dao í´ë˜ìŠ¤ë¥¼ ì‚¬ìš©í•˜ëŠ” ì½”ë“œ
+	// daoÀÇ °´Ã¼¸¦ dao Å¬·¡½º¿¡¼­ ¹Ì¸® »ı¼ºÇÑ ÈÄ ¸Ş¼Òµå¸¦ È£ÃâÇÏ´Â Çü½ÄÀ¸·Î dao Å¬·¡½º¸¦ »ç¿ëÇÏ´Â ÄÚµå
 	private static BoardDAO instance = new BoardDAO();
 	public static BoardDAO getInstance() {
 		return instance;
 	}
 	private BoardDAO() {}
 
-	// ìµëª…, íšŒì› ê¸€ ì‘ì„±
+	// ÀÍ¸í, È¸¿ø ±Û ÀÛ¼º
 	public int insertContent(BoardDTO dto) {
 		int result = 0;
 		try {
@@ -45,7 +43,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// ê²Œì‹œê¸€ í˜ì´ì§€ ì •ë ¬, ì¶œë ¥
+	// °Ô½Ã±Û ÆäÀÌÁö Á¤·Ä, Ãâ·Â
 	public List<BoardDTO> getAllList(int start, int end){
 		List<BoardDTO> list = null;
 		try {
@@ -84,7 +82,7 @@ public class BoardDAO {
 		return list;
 	}
 	
-	// ê²Œì‹œê¸€ ê°¯ìˆ˜
+	// °Ô½Ã±Û °¹¼ö
 	public int getCount() {
 		int result = 0;
 		try {
@@ -107,7 +105,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// ë³¸ì¸ì˜ ê²Œì‹œê¸€ í˜ì´ì§€ ì •ë ¬, ì¶œë ¥
+	// º»ÀÎÀÇ °Ô½Ã±Û ÆäÀÌÁö Á¤·Ä, Ãâ·Â
 	public List<BoardDTO> getMyList(String writer, int start, int end){
 		List<BoardDTO> list = null;
 		try {
@@ -147,7 +145,7 @@ public class BoardDAO {
 		return list;
 	}
 	
-	// ë³¸ì¸ì˜ ê²Œì‹œê¸€ ê°¯ìˆ˜
+	// º»ÀÎÀÇ °Ô½Ã±Û °¹¼ö
 	public int getMyCount(String writer) {
 		int result = 0;
 		try {
@@ -171,7 +169,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// ê²Œì‹œê¸€ í˜ì´ì§€ (ë‚´ìš© ì¶œë ¥)
+	// °Ô½Ã±Û ÆäÀÌÁö (³»¿ë Ãâ·Â)
 	public BoardDTO getContent(BoardDTO dto) {
 		try {
 			conn = OracleDB.getConnection();
@@ -204,7 +202,7 @@ public class BoardDAO {
 		return dto;
 	}
 	
-	// ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€
+	// °Ô½Ã±Û Á¶È¸¼ö Áõ°¡
 	public void readcountUp(BoardDTO dto) {
 		try {
 			conn = OracleDB.getConnection();
@@ -222,7 +220,7 @@ public class BoardDAO {
 		}
 	}
 	
-	// ìµëª… ê²Œì‹œê¸€ ìˆ˜ì •
+	// ÀÍ¸í °Ô½Ã±Û ¼öÁ¤
 	public int updateContent(BoardDTO dto) {
 		String dbpasswd="";
 		int x=-1;
@@ -258,7 +256,7 @@ public class BoardDAO {
 		return x;
 	}
 	
-	// ìµëª… ê²Œì‹œê¸€ ì‚­ì œ
+	// ÀÍ¸í °Ô½Ã±Û »èÁ¦
 	public int deleteContent(int num, String pw) {
 		String DBpw;
 		int result = 0;
@@ -293,7 +291,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// íšŒì› ê²Œì‹œê¸€ ìˆ˜ì •
+	// È¸¿ø °Ô½Ã±Û ¼öÁ¤
 	public int updateMemContent(BoardDTO dto) {
 		int result = 0;
 		try {
@@ -316,7 +314,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// íšŒì› ê²Œì‹œê¸€ ì‚­ì œ
+	// È¸¿ø °Ô½Ã±Û »èÁ¦
 	public int deleteMemContent(BoardDTO dto) {
 		int result = 0;
 		try {
@@ -337,9 +335,9 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// ê°œì‹œê¸€ ê²€ìƒ‰
+	// °³½Ã±Û °Ë»ö
 	public List<BoardDTO> getSearchList (String colum, String search, int start, int end){
-		List<BoardDTO> list = null;//ê°ì²´ ì—†ìœ¼ë©´ ê°’ ì•ˆë“¤ì–´ê°
+		List<BoardDTO> list = null;//°´Ã¼ ¾øÀ¸¸é °ª ¾Èµé¾î°¨
 		try {
 			conn=OracleDB.getConnection();
 			pstmt=conn.prepareStatement("select * from "
@@ -375,7 +373,7 @@ public class BoardDAO {
 		return list;
 		}
 	
-	// ê²€ìƒ‰í•œ ê°œì‹œê¸€ ê°¯ìˆ˜
+	// °Ë»öÇÑ °³½Ã±Û °¹¼ö
 	public int getSearchCount(String colum, String search) {
 		int result = 0;
 		try {
@@ -397,7 +395,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// ê²Œì‹œê¸€ ê³µê° ì¦ê°€
+	// °Ô½Ã±Û °ø°¨ Áõ°¡
 	public int goodCountUp(BoardDTO dto) {
 		int result = 0;
 		try {
@@ -417,7 +415,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// ê²Œì‹œê¸€ ë¹„ê³µê° ì¦ê°€
+	// °Ô½Ã±Û ºñ°ø°¨ Áõ°¡
 	public int badCountUp(BoardDTO dto) {
 		int result = 0;
 		try {
@@ -437,7 +435,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// íšŒì› íƒˆí‡´ í•  ì‹œ í•´ë‹¹ ì‘ì„±ìê°€ ì‘ì„±í•œ ê¸€ ì‚­ì œ
+	// È¸¿ø Å»Åğ ÇÒ ½Ã ÇØ´ç ÀÛ¼ºÀÚ°¡ ÀÛ¼ºÇÑ ±Û »èÁ¦
 	public int deleteWriter(String writer) {
 		int result = 0;
 		try {

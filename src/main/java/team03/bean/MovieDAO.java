@@ -15,11 +15,11 @@ public class MovieDAO {
 	}
 	private MovieDAO() {}
 	
-	// í˜ì´ì§€ ì •ë ¬, ì²˜ë¦¬
+	// ÆäÀÌÁö Á¤·Ä, Ã³¸®
 	public List<MovieDTO> getAllList(int start, int end) throws Exception {
 		List<MovieDTO> list = new  ArrayList<MovieDTO>();
-		// <> ì œë„¤ë¦­, íƒ€ì…ì§€ì • (íƒ€ì…í†µì¼)
-		// MovieDTOì•ˆì— ë“¤ì–´ê°„ ì •ë³´ë“¤ë§Œ ë°›ëŠ”ë‹¤.
+		// <> Á¦³×¸¯, Å¸ÀÔÁöÁ¤ (Å¸ÀÔÅëÀÏ)
+		// MovieDTO¾È¿¡ µé¾î°£ Á¤º¸µé¸¸ ¹Ş´Â´Ù.
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement(
@@ -27,10 +27,10 @@ public class MovieDAO {
 					+ " (select num,writer,kategorie,subject,pw,content,filename,reg,readcount, good, bad, rownum r from " 
 					+ " (select * from movieBoard order by num desc))"
 					+ " where r >= ? and r <= ?");
-			// sqlë¬¸ ì‘ì„±
-			// rownnum ê²Œì‹œê¸€ ìˆœì„œ
-			// num ì€ ë‚¨ëŠ”ë‹¤, ì™œ? => ì—´ë²ˆí˜¸ì´ê¸° ë•Œë¬¸ì— 
-			// ì—´ì˜ ì²˜ìŒë¶€í„° ëê¹Œì§€ ë‹¤ ê²€ìƒ‰í•œë‹¤.
+			// sql¹® ÀÛ¼º
+			// rownnum °Ô½Ã±Û ¼ø¼­
+			// num Àº ³²´Â´Ù, ¿Ö? => ¿­¹øÈ£ÀÌ±â ¶§¹®¿¡ 
+			// ¿­ÀÇ Ã³À½ºÎÅÍ ³¡±îÁö ´Ù °Ë»öÇÑ´Ù.
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
 			rs = pstmt.executeQuery();
@@ -59,7 +59,7 @@ public class MovieDAO {
 		return list;
 	}
 	
-	// ê²Œì‹œê¸€ ê°¯ìˆ˜ (DBê°’ì´ ìˆëŠ”ì§€ ì—†ëŠ”ì§€ í™•ì¸ ë©”ì„œë“œ)
+	// °Ô½Ã±Û °¹¼ö (DB°ªÀÌ ÀÖ´ÂÁö ¾ø´ÂÁö È®ÀÎ ¸Ş¼­µå)
 	public int getCount() {
 		int result = 0;
 		try {
@@ -82,7 +82,7 @@ public class MovieDAO {
 		return result;
 	}
 	
-	// íšŒì› ê¸€ ì‘ì„±
+	// È¸¿ø ±Û ÀÛ¼º
 	public int insertContentMemver(MovieDTO dto) {
 		int result = 0;
 		try {
@@ -106,7 +106,7 @@ public class MovieDAO {
 	return result;
 	}
 	
-	// ë³¸ì¸ì˜ ê²Œì‹œê¸€ ê°¯ìˆ˜
+	// º»ÀÎÀÇ °Ô½Ã±Û °¹¼ö
 	public int getMyCount(String writer) {
 		int result = 0;
 		try {
@@ -126,7 +126,7 @@ public class MovieDAO {
 		} return result;
 	}
 	
-	// ë³¸ì¸ì˜ ê²Œì‹œê¸€ í˜ì´ì§€ ì •ë ¬, ì¶œë ¥
+	// º»ÀÎÀÇ °Ô½Ã±Û ÆäÀÌÁö Á¤·Ä, Ãâ·Â
 	public List<MovieDTO> getMyList(String writer, int start, int end){
 		List<MovieDTO> list = null;
 		try {
@@ -167,7 +167,7 @@ public class MovieDAO {
 		return list;
 	}
 	
-	// ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€
+	// °Ô½Ã±Û Á¶È¸¼ö Áõ°¡
 	public void readCountUp(MovieDTO dto) {
 		try {
 			conn = OracleDB.getConnection();
@@ -183,7 +183,7 @@ public class MovieDAO {
 		}
 	}
 	
-	// ê²Œì‹œê¸€ í˜ì´ì§€ (ë‚´ìš© ì¶œë ¥)
+	// °Ô½Ã±Û ÆäÀÌÁö (³»¿ë Ãâ·Â)
 	public MovieDTO getContent(MovieDTO dto) {
 		try {
 			conn = OracleDB.getConnection();
@@ -213,7 +213,7 @@ public class MovieDAO {
 		return dto;
 	}
 	
-	//  íšŒì› ê²Œì‹œê¸€ ìˆ˜ì •
+	//  È¸¿ø °Ô½Ã±Û ¼öÁ¤
 	public int updateMemContent(MovieDTO dto) {
 		int result = 0;
 		try {
@@ -236,7 +236,7 @@ public class MovieDAO {
 		return result;
 	} 
 	
-	// íšŒì› ê²Œì‹œê¸€ ì‚­ì œ
+	// È¸¿ø °Ô½Ã±Û »èÁ¦
 	public int deleteMemContent(MovieDTO dto) {
 		int result = 0;
 		try {
@@ -254,7 +254,7 @@ public class MovieDAO {
 		return result;
 	} 
 	
-	// ìµëª… ê¸€ ì‘ì„±
+	// ÀÍ¸í ±Û ÀÛ¼º
 	public int insertContent(MovieDTO dto) {
 		int result = 0;
 		try {
@@ -278,7 +278,7 @@ public class MovieDAO {
 		return result;
 	}
 	
-	// ìµëª… ê²Œì‹œê¸€ ìˆ˜ì •
+	// ÀÍ¸í °Ô½Ã±Û ¼öÁ¤
 	
 	public int updateContent(MovieDTO dto) {
 		int result = -1;
@@ -315,7 +315,7 @@ public class MovieDAO {
 		return result;
 	}
 	
-	// ê²Œì‹œê¸€ ë¹„ê³µê°• ì¦ê°
+	// °Ô½Ã±Û ºñ°ø°­ Áõ°¨
 	public int badCountUp(MovieDTO dto) {
 		int result = 0;
 		try {
@@ -335,7 +335,7 @@ public class MovieDAO {
 		return result;
 	}
 	
-	// ê²Œì‹œê¸€ ê³µê° ì¦ê°€
+	// °Ô½Ã±Û °ø°¨ Áõ°¡
 	public int goodCountUp(MovieDTO dto) {
 		int result = 0;
 		try {
@@ -355,7 +355,7 @@ public class MovieDAO {
 		return result;
 	}
 	
-	// ê²€ìƒ‰í•œ ê²Œì‹œê¸€ ê°¯ìˆ˜
+	// °Ë»öÇÑ °Ô½Ã±Û °¹¼ö
 	public int getSearchCount(String colum, String search) {
 		int result = 0;
 		try {
@@ -376,9 +376,9 @@ public class MovieDAO {
 		return result;
 	}
 	
-	// ê²Œì‹œê¸€ ê²€ìƒ‰
+	// °Ô½Ã±Û °Ë»ö
 	public List<MovieDTO> getSearchList (String colum, String search, int start, int end) {
-		List<MovieDTO> list = null; // ê°ì²´ê°€ ì—†ìœ¼ë©´ ê°’ì€ ì•ˆë“¤ì–´ê°
+		List<MovieDTO> list = null; // °´Ã¼°¡ ¾øÀ¸¸é °ªÀº ¾Èµé¾î°¨
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement("select * from "
@@ -414,7 +414,7 @@ public class MovieDAO {
 		return list;
 	}
 	
-	// ì¹´í…Œê³ ë¦¬ ê²Œì‹œê¸€ ê°œìˆ˜
+	// Ä«Å×°í¸® °Ô½Ã±Û °³¼ö
 	public int getKategorieSearchCount(String colum) {
 		int result = 0;
 		try {
@@ -436,9 +436,9 @@ public class MovieDAO {
 		return result;
 	}
 	
-	// ì¹´í…Œê³ ë¦¬ ê²Œì‹œê¸€ ê²€ìƒ‰
+	// Ä«Å×°í¸® °Ô½Ã±Û °Ë»ö
 	public List<MovieDTO> getKategorieSearchList (String colum, int start, int end) {
-		List<MovieDTO> list = null; // ê°ì²´ê°€ ì—†ìœ¼ë©´ ê°’ì€ ì•ˆë“¤ì–´ê°
+		List<MovieDTO> list = null; // °´Ã¼°¡ ¾øÀ¸¸é °ªÀº ¾Èµé¾î°¨
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement("select * from "

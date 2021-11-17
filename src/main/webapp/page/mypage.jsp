@@ -1,3 +1,7 @@
+
+
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import ="team03.bean.MemberDAO" %>
@@ -50,7 +54,7 @@
        <tr>
       		<td>
       			<input type="button" value="정보수정" onclick="window.location='updateForm.jsp'"/>
-      			<input type="button" value="정보수정" onclick="window.location='updateForm.jsp'"/>
+      			<input type="button" value="비밀번호수정" onclick="window.location='updatePwForm.jsp'"/>
       		</td>
        </tr>
 		<tr>
@@ -83,8 +87,6 @@
        </table>
  	</div>
    </div><%} %>
- 	
-
 
 
 

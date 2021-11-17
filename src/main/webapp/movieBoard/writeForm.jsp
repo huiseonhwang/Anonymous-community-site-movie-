@@ -148,10 +148,6 @@
 					<td> <input type = "file" name = "filename" /> </td>
 				</tr>
 				<tr>
-					<td> 비밀번호 </td>
-					<td> <input type = "password" name = "password" /> </td>
-				</tr>
-				<tr>
 					<th colspan = "3">
 						<input type = "submit" value = "작성" />
 					</th>
@@ -202,10 +198,6 @@
 				<tr>
 					<td> 첨부파일 </td>
 					<td> <input type = "file" name = "filename" /> </td>
-				</tr>
-				<tr>
-					<td> 비밀번호 </td>
-					<td> <input type = "password" name = "password" /> </td>
 				</tr>
 				<tr>
 					<th colspan = "3">

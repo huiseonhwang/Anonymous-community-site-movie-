@@ -4,12 +4,12 @@
 <% request.setCharacterEncoding("UTF-8"); %>
 
 <jsp:useBean class = "team03.bean.MovieCommentDTO" id = "dto" />
-<jsp:setProperty property = "*" name = "dtd" />
+<jsp:setProperty property = "*" name = "dto" />
 
 <%
-	int MovieNum = Integer.parseInt(request.getParameter("MovieNum"));
+	int boardNum = Integer.parseInt(request.getParameter("boardNum"));
 	MovieCommentDAO dao = MovieCommentDAO.getInstance();
-	int result = dao.insertComment(dto, MovieNum);
+	int result = dao.insertReComment(dto, boardNum);
 	
 	if (result == 1) { %>
 		<script>

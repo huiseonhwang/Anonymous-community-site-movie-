@@ -15,21 +15,28 @@
 	KloginDAO manager = KloginDAO.getInstance();
 	int kresult = manager.KmemberDataUpdate(kdto);
 		
-	if(kresult==1 || result==0){%>
+	if(kresult != 1){
+		if(result==1){%>
+		<script>
+			alert("수정 되었습니다.");
+			window.location='/team03/main.jsp';
+		</script>
+		<%}else{ %>
+		<script>
+			alert("잘못된 입력이 있습니다. 확인하세요.");
+			history.go(-1);
+		</script>
+		<%}} 
+		if(result!=1){
+		if(kresult ==1){%>
 		<script>
 		alert("수정 되었습니다.");
 		window.location='/team03/main.jsp';
 	</script>
-		
-	<%}else{ 
-	if(result==1){%>
-	<script>
-		alert("수정 되었습니다.");
-		window.location='/team03/main.jsp';
-	</script>
-	<%}else{ %>
-	<script>
+		<%}else {%>
+		<script>
 		alert("잘못된 입력이 있습니다. 확인하세요.");
 		history.go(-1);
 	</script>
-	<%}} %>
+	<%}}%>
+	

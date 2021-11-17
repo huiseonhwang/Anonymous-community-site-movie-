@@ -1,6 +1,7 @@
+<%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
 <style>
 	table {
 		margin: 0 auto;
@@ -14,17 +15,18 @@
 </style>
 
 <% 
+	request.setCharacterEncoding("UTF-8");
+
 	String num = request.getParameter("num");
 	String pageNum=request.getParameter("pageNum");
+	String owner = request.getParameter("owner");
+	
 %>
 
 <br />
 
 <table>
 	<form action="deletePro.jsp" method="post" >
-	
-		<input type="hidden" name="num" value="<%=num%>">
-		<input type="hidden" name="pageNum" value="<%=pageNum%>">
 			
 		<tr>	
 			<td width="300">
@@ -45,10 +47,16 @@
 		<tr>
 			<td width="300">
 				<div style="text-align: center;">
-					<input type="button" value="이전페이지로" style="width : 280" onclick="window.location='/team03/visitor/visitorForm.jsp'">
+					<input type="button" value="이전페이지로" style="width : 280" onclick="window.location='/team03/visitor/visitorForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>'">
 				</div>	
 			</td>
 		</tr>
-		
+		<tr>
+			<td>
+				<input type="hidden" name="owner" value="<%=owner%>" />
+				<input type="hidden" name="pageNum" value="<%=pageNum%>" />
+				<input type="hidden" name="num" value="<%=num%>" />
+			</td>
+		</tr>
 	</form>
 </table> 

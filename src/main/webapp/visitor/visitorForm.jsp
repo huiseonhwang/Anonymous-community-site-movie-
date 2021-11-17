@@ -1,3 +1,5 @@
+<%@page import="java.net.URLEncoder"%>
+<%@page import="java.sql.ResultSet"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="team03.bean.VisitorDTO" %>
@@ -42,16 +44,25 @@
 <%
 	String kid = (String)session.getAttribute("kid");
 	String id = (String)session.getAttribute("id");
-
-	if(id == null){
-		Random r = new Random();
-		String writer = "익명"+r.nextInt(100000);	
-		id = writer;
+	
+	if(kid == null){
+		if(id == null){
+			Random r = new Random();
+			String writer = "익명"+r.nextInt(100000);	
+			id = writer;
+		} else {
+			id = id;
+		}
+	} else {
+		id = "카카오" + kid;
 	}
 %>
 
 <%
+	request.setCharacterEncoding("UTF-8");
+
 	String content = request.getParameter("content");
+	String owner = request.getParameter("owner");
 %>
 
 <% 
@@ -66,16 +77,19 @@
 	int currentPage = Integer.parseInt(pageNum); 
 	int start = (currentPage-1) * pageSize+1;  
 	int end = currentPage * pageSize;
+	int number = 0;
 	
 	VisitorDAO dao = new VisitorDAO();
 	
 	int count = 0;
 	List<VisitorDTO> list = null;
 	
-	count = dao.getCount();
+	count = dao.getCount(owner);
 	if(count > 0){
-		list = dao.getAllList(start, end);
+		list = dao.getAllList(owner, start, end);
 	}
+	
+	number = count-(currentPage-1)*pageSize;
 %>
 
 <br />
@@ -83,7 +97,10 @@
 <form action="visitorPro.jsp" method="post" onsubmit="return check();">
 	<table border="1" width="700" align="center">
 		<tr>
-			<th colspan="4"><h1>방명록</h1></th>
+			<th colspan="4"><h1><%= owner %> 방명록</h1>
+				<input type="hidden" name="owner" value=<%= owner %> />
+				<input type="hidden" name="pageNum" value="<%=pageNum%>"/>
+			</th>
 		</tr>					
 		<tr>
 			<td>아이디</td>
@@ -108,6 +125,7 @@
 			<td colspan="4" align="center">
 				<input type="submit" value="등록">
 				<input type="reset" value="다시입력">
+				<input type="button" value="게시판" onclick="window.location='/team03/freeBoard/list.jsp'">
 				<input type="button" value="메인으로" onclick="window.location='/team03/main.jsp'">
 			</td>
 		</tr>
@@ -123,24 +141,25 @@
 					<% if(count == 0){ %> 
 					<td colspan="4"> 방명록이 없습니다! </td>
 				</tr>
-					<% }else{ %>
-						<% for(VisitorDTO dto : list) { %>
+					<% }else{ 
 						
-				<tr>
-					<td width="100" align="center">
-						<h5><%=dto.getReg()%></h5>
-						<strong><font color="red"><h5>No.<%=dto.getNum()%></h5></font></strong>
-						<h3><font color="blue"><%=dto.getId()%></font></h3>
-					</td>
-					<th align="left"> <%=dto.getContent()%> </th>
-					<th width="90">
-						<input type="button" value="삭제하기" onclick="window.location='deleteForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" >
-						<br /><br />
-						<input type="button" value="수정하기" onclick="window.location='updateForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" >
-					</th>
-				 </tr>
+						 for(VisitorDTO dto : list) { %>
+									<tr>
+									<td width="100" align="center">
+										<h5><%=dto.getReg()%></h5>
+										<strong><font color="red"><h5>No.<%=number--%></h5></font></strong>
+										<h3><font color="blue"><%=dto.getId()%></font></h3>
+									</td>
+									<th align="left"> <%=dto.getContent()%> </th>
+									<th width="90">
+										<input type="button" value="삭제하기" onclick="window.location='deleteForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" >
+										<br /><br />
+										<input type="button" value="수정하기" onclick="window.location='updateForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" >
+										<input type="hidden" name="owner" value="<%= dto.getOwner() %>" />
+									</th>
+								 </tr>
 						<% } %>	
-					<% } %>
+					<% } %>0
 					
 				 <tr>
 					<td width="90" align="center"><strong>페이지</strong></td>
@@ -156,13 +175,13 @@
 									endPage = pageCount;
 								} 
 								if(startPage > 10){ %>
-									<a href="visitorForm.jsp?pageNum=<%=startPage-10%>">[이전]</a>
+									<a href="visitorForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&pageNum=<%=startPage-10%>">[이전]</a>
 							   	<% }
 								for(int i = startPage ; i <= endPage ; i++){ %>
-							   		<a href="visitorForm.jsp?pageNum=<%=i%>">[<%=i%>]</a>
+							   		<a href="visitorForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&pageNum=<%=i%>">[<%=i%>]</a>
 							    <% }
 								if(endPage < pageCount){ %>
-									<a href="visitorForm.jsp?pageNum=<%=startPage+10%>">[다음]</a>
+									<a href="visitorForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&pageNum=<%=startPage+10%>">[다음]</a>
 								<% }
 							 } %>
 						</td>

@@ -87,7 +87,8 @@
 	
 	number = count - (currentPage-1)*pageSize;
 %>
-<h1 style="text-align: center;"> 게시판 </h1>
+<h1 style="text-align: center;">
+<a href = "list.jsp"> 게시판 </a> </h1>
 
 <table>
 <tr style="text-align: right;">
@@ -137,7 +138,7 @@
 	<%}else{ %>	
 		<% for (MovieDTO dto : list) { %>
 			<tr>
-				<td>
+				<td id = "center">
 					<%= number -- %>
 					<input type = "hidden" name = "num" value = "<%=dto.getNum() %>"/>
 				</td>
@@ -145,7 +146,7 @@
 					<%=dto.getKategorie() %>
 				</td>
 				<td>
-					<a href = "content.jsp?num=<%=dto.getNum() %>&pageNum=<%=pageNum%>">
+					<a href = "content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>">
 					<%=dto.getSubject()%>
 				</a>
 				</td>
@@ -167,6 +168,7 @@
 	<%} %>
 	
 </table>
+<div id = "center">
 
 	<%
 		// 페이지 정렬
@@ -189,6 +191,7 @@
 			<%}
 		}
 %>
+</div>
 
 <form action = "slist.jsp" method = "post">
 	<select name = "colum">

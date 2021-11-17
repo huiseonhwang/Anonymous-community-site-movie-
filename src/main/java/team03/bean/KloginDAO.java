@@ -10,7 +10,7 @@ public class KloginDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	// daoì˜ ê°ì²´ë¥¼ dao í´ë˜ìŠ¤ì—ì„œ ë¯¸ë¦¬ ìƒì„±í•œ í›„ ë©”ì†Œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” í˜•ì‹ìœ¼ë¡œ dao í´ë˜ìŠ¤ë¥¼ ì‚¬ìš©í•˜ëŠ” ì½”ë“œ
+	// daoÀÇ °´Ã¼¸¦ dao Å¬·¡½º¿¡¼­ ¹Ì¸® »ı¼ºÇÑ ÈÄ ¸Ş¼Òµå¸¦ È£ÃâÇÏ´Â Çü½ÄÀ¸·Î dao Å¬·¡½º¸¦ »ç¿ëÇÏ´Â ÄÚµå
 	private static KloginDAO instance = new KloginDAO();
 	public static KloginDAO getInstance() {
 		return instance;

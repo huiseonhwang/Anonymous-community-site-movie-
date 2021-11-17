@@ -10,14 +10,14 @@ public class GoodbadDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	// daoì˜ ê°ì²´ë¥¼ dao í´ë˜ìŠ¤ì—ì„œ ë¯¸ë¦¬ ìƒì„±í•œ í›„ ë©”ì†Œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” í˜•ì‹ìœ¼ë¡œ dao í´ë˜ìŠ¤ë¥¼ ì‚¬ìš©í•˜ëŠ” ì½”ë“œ
+	// daoÀÇ °´Ã¼¸¦ dao Å¬·¡½º¿¡¼­ ¹Ì¸® »ı¼ºÇÑ ÈÄ ¸Ş¼Òµå¸¦ È£ÃâÇÏ´Â Çü½ÄÀ¸·Î dao Å¬·¡½º¸¦ »ç¿ëÇÏ´Â ÄÚµå
 	private static GoodbadDAO instance = new GoodbadDAO();
 	public static GoodbadDAO getInstance() {
 		return instance;
 	}
 	private GoodbadDAO() {}
 	
-	// ê³µê°, ë¹„ê³µê° ì¤‘ë³µ ì²´í¬
+	// °ø°¨, ºñ°ø°¨ Áßº¹ Ã¼Å©
 	public int check(int num, String ip, String writer) {
 		int result = 0;
 		try {

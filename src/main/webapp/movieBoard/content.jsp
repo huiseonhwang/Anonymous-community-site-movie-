@@ -72,9 +72,14 @@
 
 	String id = (String)session.getAttribute("id");
 	String kid = (String)session.getAttribute("kid");
-	kid = "카카오"+kid;
+	
+	if(kid != null) {
+		// kid에 값이 존재할 때
+		kid = "카카오" + kid;
+	}
 
 	String pageNum = request.getParameter("pageNum");
+	
 	if (pageNum == null) {
 		pageNum = "1";
 	}
@@ -94,6 +99,10 @@
 		<td> <%= dto.getWriter() %> </td>
 		<td> 조회수 </td>
 		<td> <%= dto.getReadcount() %> </td>
+	</tr>
+	<tr>
+		<td> 카테고리 </td>
+		<td colspan = "4"> <%=dto.getKategorie() %></td>
 	</tr>
 	<tr>
 		<td> 제목 </td>
@@ -127,52 +136,91 @@
 				onclick="window.location='badPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" /> </td>
 		<td> <%= dto.getBad() %> </td>
 	</tr>
-	<tr>
-		<%
-		if(kid != null){
-			if(kid.equals(dto.getWriter())){ %>
-				<td> <input type="button" value="글 수정"
-						onclick="window.location='updateForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" /> </td>
-				<td> <input type="button" value="글 삭제"
-						onclick="window.location='deleteForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" /> </td>
-		<%	}
-			
-			if(id != null){
-				if(id.equals(dto.getWriter())){ %>
-					<td> <input type="button" value="글 수정"
-							onclick="window.location='updateForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" /> </td>
-					<td> <input type="button" value="글 삭제"
-							onclick="window.location='deleteForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" /> </td>
-		<%		}
-			} 
+	
+<%
+	if(kid == null){
+		if(id == null){
+			// 개시글 작성자가 익명일 때 표시되는 항목
 			if(dto.getPw() != null){ %>
-				<td> <input type="button" value="글 수정"
-						onclick="window.location='updateForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" /> </td>
-				<td> <input type="button" value="글 삭제"
-						onclick="window.location='deleteForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" />
-				</td>
-		<%	} 
+				<tr id="center">
+					<td style="width: 5%;" colspan="2">
+						<input type="button" value="글 수정"
+							onclick="window.location='updateForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" />
+						<input type="button" value="글 삭제"
+							onclick="window.location='deleteForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" />
+					</td>
+					<td style="width: 90%;" colspan="2" >
+						<input type="button" value="글 목록"
+							onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
+					</td>
+				</tr>
+			<%}
+			
+		} else {
+			// 게시글 작성자가 회원이고, 회원의 id세션이 작성자와 같을 때 표시되는 항목
+			if(id.equals(dto.getWriter())){ %>
+					<tr id="center">
+						<td style="width: 5%;" colspan="2">
+							<input type="button" value="글 수정"
+								onclick="window.location='updateForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" />
+							<input type="button" value="글 삭제"
+								onclick="window.location='deleteForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" />
+						</td>
+						<td style="width: 90%;" colspan="2">
+							<input type="button" value="글 목록"
+								onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
+						</td>
+					</tr>
+			<%} else { 
+			// 게시글 작성자가 회원이지만, 회원의 id세션이 작성자와 같이 않을 때 표시되는 항목 %>
+				<tr id="center">
+					<td colspan="4">
+						<input type="button" value="글 목록"
+							onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
+					</td>
+				</tr>
+			<%}
+		}
+	} else {
+		// 게시글 작성자가 카카오 회원이고, 카카오 회원의 kid세션이 작성자와 같을 때 표시되는 항목
+		if(kid.equals(dto.getWriter())){ %>
+		<tr id="center">
+			<td style="width: 5%;" colspan="2">
+				<input type="button" value="글 수정"
+					onclick="window.location='updateForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" />
+				<input type="button" value="글 삭제"
+					onclick="window.location='deleteForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" />
+			</td>
+			<td style="width: 90%;" colspan="2">
+				<input type="button" value="글 목록"
+					onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
+			</td>
+		</tr>
+	<%} else { 
+	// 게시글 작성자가 카카오 회원이지만, 카카오 회원의 kid세션이 작성자와 같이 않을 때 표시되는 항목 %>
+		<tr id="center">
+			<td colspan="4">
+				<input type="button" value="글 목록"
+					onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
+			</td>
+		</tr>
+	<%}
+}%>
+
 		
-		} %>
-		
-		<td style="text-align: right;" colspan="4">
-					<input type="button" value="글 목록"
-						onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
-		</td>
-	</tr>
+
 </table>
 
-</br>
+<br/>
 <%-- 댓글 작성 --%>
 <%
-	// 위에 이미 kid 라는 변수에 "카카오" 라는 String 문자가 대입되어 있으므로 새로운 변수를 만들어서 대입해준다.
-	String kid2 = (String)session.getAttribute("kid");
 	
 	// 댓글 작성자 writer 변수 선언
 	String writer;
-	
+
+
 	// kid 가 null 일 때
-	if (kid2 == null) {
+	if (kid == null) {
 		// id 가 null 일 때
 		if (id == null) {
 			Random r = new Random();
@@ -185,13 +233,13 @@
 	} else {
 		// kid 가 null 이 아닐 때
 		// writer 에 kid 대입
-		writer = "카카오" + kid2;
+		writer = kid;
 	}
 	
 	// 페이징 처리
 	int pageSize = 20;
 	int currentPage = Integer.parseInt(pageNum);
-	int start = (currentPage -1) * pageSize + 1; // 결과 = 11
+	int start = (currentPage - 1) * pageSize + 1; // 결과 = 11
 	int end = currentPage * pageSize; // 결과 = 20
 	int count = 0;
 	
@@ -207,13 +255,13 @@
 %>
 
 <%-- 게시글에서 댓글을 작성할 수 있는 폼을 작성하고 값(피아미터)를 넘김 --%>
-<form action = "commentPro.jsp" method = "post">
+<form action = "commentPro.jsp" method = "post" onsubmit="return nullCheck();">
 	<table id = "center">
 		<tr>
 			<th colspan = "5">
 				댓글 작성
 				<input type = "hidden" name = "num" value = "<%=num %>" />
-				<input type = "hidden" name = "pageNum" value = "<%= pageNum %>"/>
+				<input type = "hidden" name = "pageNum" value = "<%=pageNum %>"/>
 			</th>
 		</tr>
 		<tr>
@@ -224,11 +272,11 @@
 			</td>
 		</tr>
 		<%-- kid랑 id가 null 일때 처리(익명사용자) --%>
-		<% if (kid2 == null && id == null ) { %>
+		<% if (kid == null && id == null ) { %>
 			<tr>
 				<td> 비밀번호 </td>
 				<td colspan = "3" >
-				<input type = "password" name = "password" /> 
+				<input type = "password" name = "pw" /> 
 				</td>
 			</tr>
 		<% } %>
@@ -251,8 +299,10 @@
 	</tr>
 		<% } else { %>
 	<tr>
+		<th colspan = "5"> 댓글 </th>
+	</tr>
+	<tr>
 		<% for (MovieCommentDTO MCdto : list) { %>
-			<tr>
 				<td>
 					<div>
 							<% if(MCdto.getRe_level() > 0){ %>

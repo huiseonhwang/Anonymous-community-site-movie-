@@ -12,14 +12,14 @@ public class CommentDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	// daoì˜ ê°ì²´ë¥¼ dao í´ë˜ìŠ¤ì—ì„œ ë¯¸ë¦¬ ìƒì„±í•œ í›„ ë©”ì†Œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” í˜•ì‹ìœ¼ë¡œ dao í´ë˜ìŠ¤ë¥¼ ì‚¬ìš©í•˜ëŠ” ì½”ë“œ
+	// daoÀÇ °´Ã¼¸¦ dao Å¬·¡½º¿¡¼­ ¹Ì¸® »ı¼ºÇÑ ÈÄ ¸Ş¼Òµå¸¦ È£ÃâÇÏ´Â Çü½ÄÀ¸·Î dao Å¬·¡½º¸¦ »ç¿ëÇÏ´Â ÄÚµå
 	private static CommentDAO instance = new CommentDAO();
 	public static CommentDAO getInstance() {
 		return instance;
 	}
 	private CommentDAO() {}
 	
-	// ëŒ“ê¸€ ì‘ì„±
+	// ´ñ±Û ÀÛ¼º
 	public int insertComment(CommentDTO dto, int boardNum) {
 		int result = 0;
 		try {
@@ -43,7 +43,7 @@ public class CommentDAO {
 		return result;
 	}
 	
-	// ëŒ“ê¸€ ê°¯ìˆ˜ ì¹´ìš´íŠ¸
+	// ´ñ±Û °¹¼ö Ä«¿îÆ®
 	public int countComment(int boardNum) {
 		int result = 0;
 		try {
@@ -67,7 +67,7 @@ public class CommentDAO {
 		return result;
 	}
 	
-	// ëŒ“ê¸€ ë‚´ìš© ì¶œë ¥
+	// ´ñ±Û ³»¿ë Ãâ·Â
 	public List<CommentDTO> getAllComment(int boardNum, int start, int end){
 		List<CommentDTO> list = null;
 		try {
@@ -106,7 +106,7 @@ public class CommentDAO {
 		return list;
 	}
 	
-	// ì´ë¯¸ ì‘ì„±ëœ ëŒ“ê¸€ ì •ë³´ ì¶œë ¥
+	// ÀÌ¹Ì ÀÛ¼ºµÈ ´ñ±Û Á¤º¸ Ãâ·Â
 	public CommentDTO getContent(CommentDTO dto) {
 		try {
 			conn = OracleDB.getConnection();
@@ -138,7 +138,7 @@ public class CommentDAO {
 		return dto;
 	}
 	
-	// íšŒì› ëŒ“ê¸€ ìˆ˜ì •
+	// È¸¿ø ´ñ±Û ¼öÁ¤
 	public int updateMemComment(CommentDTO dto) {
 		int result = 0;
 		try {
@@ -161,7 +161,7 @@ public class CommentDAO {
 		return result;
 	}
 	
-	// ìµëª… ëŒ“ê¸€ ìˆ˜ì •
+	// ÀÍ¸í ´ñ±Û ¼öÁ¤
 	public int updateComment(CommentDTO dto) {
 		String pw;
 		int result = 0;
@@ -195,7 +195,7 @@ public class CommentDAO {
 		return result;
 	}
 	
-	// íšŒì› ëŒ“ê¸€ ì‚­ì œ
+	// È¸¿ø ´ñ±Û »èÁ¦
 	public int deleteMemComment(CommentDTO dto) {
 		int result = 0;
 		try {
@@ -217,7 +217,7 @@ public class CommentDAO {
 		return result;
 	}
 	
-	// ìµëª… ëŒ“ê¸€ ì‚­ì œ
+	// ÀÍ¸í ´ñ±Û »èÁ¦
 	public int deleteComment(CommentDTO dto) {
 		String pw;
 		int result = 0;
@@ -251,7 +251,7 @@ public class CommentDAO {
 		return result;
 	}
 	
-	// ëŒ“ê¸€ì— ëŒ€í•œ ë‹µê¸€ ì‘ì„±
+	// ´ñ±Û¿¡ ´ëÇÑ ´ä±Û ÀÛ¼º
 	public int insertReComment(CommentDTO dto, int boardNum) {
 		int result = 0;
 		int re_step = dto.getRe_step();

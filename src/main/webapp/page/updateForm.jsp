@@ -38,9 +38,9 @@ if(id != null){%>
 <%}if(kid != null){%>
 <div id="containAll">
 <form action="updatePro.jsp" method="post">
-	<h3>아이디 : <%=kid%> <input type="hidden" name="id" value="<%=kid%>"/></h3>  
-	<h3>이름 : <input type="text" name="kname" value="<%=kdto.getName() %>" /></h3> 
-	<h3>이메일 : <input type="text" name="kemail1" value="<%=kdto.getEmail() %>" /></h3>
+	<h3>아이디 : <%=kid%> <input type="hidden" name="kid" value="<%=kid%>"/></h3>  
+	<h3>이름 : <input type="text" name="name" value="<%=kdto.getName() %>" /></h3> 
+	<h3>이메일 : <input type="text" name="email" value="<%=kdto.getEmail() %>" /></h3>
 			<input type="submit" value="정보 수정" /> &nbsp;&nbsp; &nbsp;&nbsp;
 			<input type="button" value="회원탈퇴" onclick="window.location.href='deleteForm.jsp'"/>
 		

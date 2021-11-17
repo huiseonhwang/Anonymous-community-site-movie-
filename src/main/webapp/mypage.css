@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+ body {
+            margin: 0px;
+            background: #e4e4e4;
+        }
+        
+        #containAll {
+            width: 768px;
+            margin: 0 auto;
+        }
+        
+        #container {
+            width: 460px;
+            margin: 0 auto;
+        }
+        
+        #container>table{
+            margin: 0 auto;
+            background: white;
+            width: 100%;
+            height: 800;
+            border: 1px solid gray;
+        }
+        
+        #container>table tr{
+           border-bottom: 2px solid #ccc; 
+           font-size:23px;
+        }
+        
+        #container>table>tr td{
+           padding:20px;
+           font-size:20px;
+        }
+        
+        #container>h1{
+           text-align:center; 
+           color: #000000;
+           font-size: 30px;
+           font-weight: bold;
+        
+        }
+         input[value = "비밀번호 변경"]{
+           text-align:center;
+           width: 40%; 
+           color: #808080;
+           font-size: 13px;
+           font-weight: bold;
+           margin: 20px;
+           margin-top: 50px; 
+           padding:10px
+        }
+        input[value = "정보수정"]{
+           text-align:center;
+           width: 40%; 
+           color: #808080;
+           font-size: 13px;
+           font-weight: bold;
+           margin: 20px; 
+           margin-top: 50px;
+           padding:10px
+        }
+        
+         input[value = "홈으로 가기"]{
+            width: 100%;
+            height: 55px;
+            border: none;
+ 
+            font-size: 20px;
+            color: #fff;
+            background: #6b818d;
+            margin-bottom: 10px;
+        }

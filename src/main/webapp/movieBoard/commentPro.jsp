@@ -21,6 +21,6 @@
 	if(result == 1) { %>
 		<script>
 			alert("댓글 작성완료");
-			window.location='content.jsp?num=<%=num%>&oageNum=<%=pageNum%>';
+			window.location="content.jsp?num=<%=num%>&pageNum=<%=pageNum%>";
 		</script>
 <% } %>

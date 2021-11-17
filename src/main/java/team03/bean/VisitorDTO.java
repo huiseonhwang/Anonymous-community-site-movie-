@@ -3,11 +3,15 @@ package team03.bean;
 import java.sql.Timestamp;
 
 public class VisitorDTO {
+	private String owner;
 	private int num; 	
 	private String id;		
 	private String pw;		
 	private String content;	
 	private Timestamp reg;	
+	
+	public void setOwner(String owner) { this.owner = owner; }
+	public String getOwner() { return owner; }
 	
 	public void setNum(int num) { this.num = num; }
 	public int getNum() { return num; }
@@ -24,4 +28,3 @@ public class VisitorDTO {
 	public void setReg(Timestamp reg) { this.reg = reg; }
 	public Timestamp getReg() { return reg; }
 }
-

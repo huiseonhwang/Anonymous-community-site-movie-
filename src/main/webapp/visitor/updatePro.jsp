@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="team03.bean.VisitorDAO"%>
@@ -5,13 +6,16 @@
 
 <% 	
 	request.setCharacterEncoding("UTF-8");
-	String num = request.getParameter("num");
+
+	int num = Integer.parseInt(request.getParameter("num"));
 	String pageNum = request.getParameter("pageNum");
 	String pw = request.getParameter("pw");
 	String content = request.getParameter("content");
+	String owner = request.getParameter("owner");
 	
 	VisitorDTO dto = new VisitorDTO();
-	dto.setNum(Integer.parseInt(num));
+	dto.setOwner(owner);
+	dto.setNum(num);
 	dto.setPw(pw);
 	dto.setContent(content);
 	
@@ -21,7 +25,7 @@
 	if(check == 1){%>
 		<script>
 			alert("수정되었습니다.");
-			window.location="visitorForm.jsp?num=<%=num%>&pageNum=<%=pageNum%>";
+			window.location="visitorForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&pageNum=<%=pageNum%>";
 		</script>
 	<%}else{%>
 		<script>

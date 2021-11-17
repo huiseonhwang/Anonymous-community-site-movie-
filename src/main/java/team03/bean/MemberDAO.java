@@ -1,11 +1,10 @@
 package team03.bean;
 
-import java.io.IOException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Iterator;
 
 
 import team03.bean.OracleDB;
@@ -14,6 +13,7 @@ public class MemberDAO {
 	private Connection conn=null;
 	private PreparedStatement pstmt=null;
 	private ResultSet rs = null;
+	
 	
 	public MemberDTO getUserInfo(String id) {
 		MemberDTO dto = null;
@@ -62,7 +62,7 @@ public class MemberDAO {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
-			pstmt = conn.prepareStatement("update member set pw=?, where id=?");
+			pstmt = conn.prepareStatement("update member set pw=? where id=?");
 			pstmt.setString(1, dto.getPw());
 			pstmt.setString(2, dto.getId());
 			result = pstmt.executeUpdate();
