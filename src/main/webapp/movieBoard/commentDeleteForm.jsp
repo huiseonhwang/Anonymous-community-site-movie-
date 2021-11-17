@@ -43,8 +43,6 @@
 		<tr>
 			<td colspan="2" style="text-align:center;">
 				<input type = "submit" value = "삭제"/>
-			</td>
-			<td colspan="2" style="text-align:center;">
 				<input type = "button" value = "창 닫기" 
 					onclick = "windowClose();" />
 			</td>

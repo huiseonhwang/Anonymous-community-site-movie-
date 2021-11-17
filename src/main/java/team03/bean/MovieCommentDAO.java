@@ -157,14 +157,15 @@ public class MovieCommentDAO {
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement
-					("update MovieComment set pw where boardNum=? and num=?");
+					("select pw from MovieComment where boardNum=? and num=?");
 			pstmt.setInt(1, dto.getBoardNum());
 			pstmt.setInt(2, dto.getNum());
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				pw = rs.getString("pw");
 				if(pw.equals(dto.getPw())) {
-					pstmt = conn.prepareStatement("update MovieComment set pw =?, content =? where boardNum =? and num =?");
+					pstmt = conn.prepareStatement
+							("update MovieComment set pw =?, content =? where boardNum =? and num =?");
 					pstmt.setString(1, dto.getPw());
 					pstmt.setString(2, dto.getContent());
 					pstmt.setInt(3, dto.getBoardNum());
@@ -207,10 +208,11 @@ public class MovieCommentDAO {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
-			pstmt = conn.prepareStatement("select pw from MovieComment where boardNum=? and num=?");
+			pstmt = conn.prepareStatement
+					("select pw from MovieComment where boardNum=? and num=?");
 			pstmt.setInt(1, dto.getBoardNum());
 			pstmt.setInt(2, dto.getNum());
-			result = pstmt.executeUpdate();
+			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				pw = rs.getString("pw");
 				if (pw.equals(dto.getPw())) {

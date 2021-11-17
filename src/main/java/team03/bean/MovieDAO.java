@@ -286,7 +286,7 @@ public class MovieDAO {
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement(
-					"select pw from teamBoard where num = ?");
+					"select pw from movieBoard where num = ?");
 			pstmt.setInt(1, dto.getNum());
 			rs = pstmt.executeQuery();
 			if(rs.next()){
@@ -299,6 +299,39 @@ public class MovieDAO {
 					pstmt.setString(3, dto.getContent());
 					pstmt.setString(4, dto.getFilename());
 					pstmt.setInt(5, dto.getNum());
+					pstmt.executeUpdate();
+					result = 1;
+				}else{
+					result = 0;
+				}
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+		}
+		return result;
+	}
+	
+	// 익명 게시글 삭제
+	
+	public int deleteContent(int num, String pw) {
+		String DBpw;
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"select pw from movieBoard where num = ?");
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				DBpw = rs.getString("pw"); 
+				if(DBpw.equals(pw)){
+					pstmt = conn.prepareStatement(
+							"delete from movieBoard where num = ?");
+					pstmt.setInt(1, num);
 					pstmt.executeUpdate();
 					result = 1;
 				}else{

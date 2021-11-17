@@ -50,7 +50,7 @@
 		// kid == null kid 로그인 정보값이 없을 경우
 		if (id == null) { 
 		// kid와 id값이 null일 경우, 익명일 경우 %>
-		<form action = "writePro.jsp" method = "post" enctype="multipart/form-data">
+		<form action = "writePro.jsp" method = "post" enctype="multipart/form-data" onsubmit="return nullCheck();">
 			<table>
 				<tr>
 					<th colspan = "3"> <h1> 게시글 작성 </h1> </th>
@@ -59,7 +59,7 @@
 					<td> 작성자 </td>
 					<td>
 						<%= writer %>
-						<input type="hidden" name="writer" value="<%= writer %> "/>
+						<input type="hidden" name="writer" value="<%= writer %>"/>
 					</td>
 				</tr>
 				<tr>
@@ -94,11 +94,13 @@
 				</tr>
 				<tr>
 					<td> 비밀번호 </td>
-					<td> <input type = "password" name = "password" /> </td>
+					<td> <input type = "password" name = "pw" /> </td>
 				</tr>
 				<tr>
 					<th colspan = "3">
 						<input type = "submit" value = "작성" />
+						<input type = "button" value = "닫기"
+							onclick = "window.location='list.jsp'" />
 					</th>
 				</tr>
 			</table>
@@ -150,6 +152,8 @@
 				<tr>
 					<th colspan = "3">
 						<input type = "submit" value = "작성" />
+						<input type = "button" value = "닫기"
+							onclick = "window.location='list.jsp'" />
 					</th>
 				</tr>
 			</table>
@@ -165,7 +169,7 @@
 					<td> 작성자 </td>
 					<td>
 						 카카오<%= kid %>
-						<input type="hidden" name="writer" value="카카오<%= kid %> "/>
+						<input type="hidden" name="writer" value="카카오<%= kid %>"/>
 					</td>
 				</tr>
 				<tr>
@@ -202,6 +206,8 @@
 				<tr>
 					<th colspan = "3">
 						<input type = "submit" value = "작성" />
+						<input type = "button" value = "닫기"
+							onclick = "window.location='list.jsp'" />
 					</th>
 				</tr>
 			</table>

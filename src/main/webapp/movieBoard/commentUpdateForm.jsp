@@ -68,6 +68,7 @@
 			<tr>
 				<td style = "text-align:center;" >
 					비밀번호를 입력하세요 <br/>
+					<input type = "password" name = "pw" />
 				</td>
 			</tr>
 		<% } %>

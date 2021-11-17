@@ -161,4 +161,6 @@
 	</select>
 	<input type = "text" name = "search" />
 	<input type = "submit" value = "검색" />
+		<input type = "button" value = "목록" 
+		onclick = "window.location='list.jsp'"/>
 </form>

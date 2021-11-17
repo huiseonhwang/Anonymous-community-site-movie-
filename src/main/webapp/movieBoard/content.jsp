@@ -139,9 +139,13 @@
 	
 <%
 	if(kid == null){
+		// kid 에 정보가 없고
 		if(id == null){
+			// kid, id에 정보가 없을 경우 = 익명
 			// 개시글 작성자가 익명일 때 표시되는 항목
-			if(dto.getPw() != null){ %>
+			if(dto.getPw() != null){ 
+				// dto에 있는 pw값이 있을 경우 => 익명
+				%>
 				<tr id="center">
 					<td style="width: 5%;" colspan="2">
 						<input type="button" value="글 수정"
@@ -204,8 +208,24 @@
 					onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
 			</td>
 		</tr>
+	
 	<%}
-}%>
+}
+	if (kid == null) {
+		if (id == null) {
+			if ( dto.getPw() == null) { 
+				// 익명인데 pw가 없을 경우 => id, kid로 작성된 글일 경우
+			%>
+			
+				<tr id="center">
+				<td style="width: 90%;" colspan="4">
+					<input type="button" value="글 목록"
+						onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
+				</td>
+			</tr>
+			<%}
+			}
+		}%>
 
 		
 
@@ -213,8 +233,7 @@
 
 <br/>
 <%-- 댓글 작성 --%>
-<%
-	
+<%	
 	// 댓글 작성자 writer 변수 선언
 	String writer;
 
@@ -284,13 +303,13 @@
 				<td colspan = "5" >
 					<textarea rows="4" cols="40" name = "content" placeholder="내용을 작성해주세요" >
 					</textarea>
-				</br>
+				<br/>
 					<input type = "submit" value = "댓글작성" />
 				</td>
 			</tr>
 	</table>
 </form>
-</br>
+<br/>
 
 <table style="text-align: left;">
 	<tr>
@@ -326,7 +345,10 @@
 					<td height="80" style="font-size: 13;">
 						<div>
 							<%if(kid != null){
-								if(kid.equals(MCdto.getWriter())){ %>
+								// kid의 값이 있고
+								if(kid.equals(MCdto.getWriter())){ 
+									// 로그인 되어있는 kid의 세션값과 작성자의 명이 같으면 
+									%>
 									<p><a href="#" onclick="updateComment(<%=MCdto.getBoardNum()%>, <%=MCdto.getNum()%>, <%=pageNum%>)">[수정]</a></p>
 									<p><a href="#" onclick="deleteComment(<%=MCdto.getBoardNum()%>, <%=MCdto.getNum()%>, <%=pageNum%>)">[삭제]</a></p>
 							<%	}
