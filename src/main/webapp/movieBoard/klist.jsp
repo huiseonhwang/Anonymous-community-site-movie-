@@ -114,7 +114,7 @@
 					</td>
 					<td>
 						<% if (!dto.getWriter().contains("익")) {  %>
-							<a href = "/team03/visitor/visitorForm.jsp?writer=<%=URLEncoder.encode(dto.getWriter(), "UTF-8")%>" >
+							<a href = "/team03/visitor/visitorForm.jsp?owner=<%=URLEncoder.encode(dto.getWriter(), "UTF-8")%>" >
 								<%=dto.getWriter() %>
 							</a>
 						<% } else { %>

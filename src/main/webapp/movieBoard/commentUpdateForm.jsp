@@ -76,8 +76,8 @@
 		<tr>
 			<td style = "text-align:center;" >
 				<input type = "submit" value = "수정하기" />
-				<input type = "button" value = "창 닫기" 
-					onclick = "windowClose();" />
+				<input type = "button" value = "창 닫기"
+					onclick = "window.close()"/>
 			</td>
 		</tr>				
 	</table>

@@ -171,6 +171,7 @@
 <div id = "center">
 
 	<%
+	
 		// 페이지 정렬
 		if ( count > 0) {
 			int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);

@@ -43,8 +43,8 @@
 		<tr>
 			<td colspan="2" style="text-align:center;">
 				<input type = "submit" value = "삭제"/>
-				<input type = "button" value = "창 닫기" 
-					onclick = "windowClose();" />
+				<input type = "button" value = "창 닫기"
+					onclick = "window.close()"/>
 			</td>
 		</tr>
 	</table>
