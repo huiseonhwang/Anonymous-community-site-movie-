@@ -152,7 +152,7 @@
 				</td>
 			<td>
 				<% if (!dto.getWriter().contains("익")) { %>
-					<a href="/team03/visitor/visitorForm.jsp?writer=<%=URLEncoder.encode(dto.getWriter(), "UTF-8")%>">
+					<a href="/team03/visitor/visitorForm.jsp?owner=<%=URLEncoder.encode(dto.getWriter(), "UTF-8")%>">
 						<%=dto.getWriter()%>
 					</a>
 				<% } else { %>
@@ -198,7 +198,7 @@
 		<option value = "writer" > 작성자 </option>
 		<option value = "subject" > 제목 </option>
 		<option value = "kategorie" > 카테고리 </option>
-		<option value = "content" > 내용 </option>
+		<option value = "boardContent" > 글 내용 </option>
 	</select>
 	<input type = "text" name = "search" />
 	<input type = "submit" value = "검색" />

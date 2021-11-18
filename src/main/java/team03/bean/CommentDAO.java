@@ -75,7 +75,7 @@ public class CommentDAO {
 			pstmt = conn.prepareStatement(
 					"select * from "
 						+ " (select boardNum, num, writer, pw, content, reg, re_step, re_level, rownum r from " 
-						+ " (select * from boardComment where boardNum = ? order by num asc)) "
+						+ " (select * from boardComment where boardNum = ? order by num asc, re_step asc)) "
 						+ " where r >= ? and r <= ?");
 			pstmt.setInt(1, boardNum);
 			pstmt.setInt(2, start);
@@ -252,7 +252,7 @@ public class CommentDAO {
 	}
 	
 	// 댓글에 대한 답글 작성
-	public int insertReComment(CommentDTO dto, int boardNum) {
+	public int insertReComment(CommentDTO dto, int boardNum, int num) {
 		int result = 0;
 		int re_step = dto.getRe_step();
 		int re_level = dto.getRe_level();
@@ -268,13 +268,14 @@ public class CommentDAO {
 			re_level = re_level + 1;
 			
 			pstmt = conn.prepareStatement(
-					"insert into boardComment values(?, boardComment_seq.nextval, ?, ?, ?, sysdate, ?, ?)");
+					"insert into boardComment values(?, ?, ?, ?, ?, sysdate, ?, ?)");
 			pstmt.setInt(1, boardNum);
-			pstmt.setString(2, dto.getWriter());
-			pstmt.setString(3, dto.getPw());
-			pstmt.setString(4, dto.getContent());
-			pstmt.setInt(5, re_step);
-			pstmt.setInt(6, re_level);
+			pstmt.setInt(2, num);
+			pstmt.setString(3, dto.getWriter());
+			pstmt.setString(4, dto.getPw());
+			pstmt.setString(5, dto.getContent());
+			pstmt.setInt(6, re_step);
+			pstmt.setInt(7, re_level);
 			
 			result = pstmt.executeUpdate();
 			

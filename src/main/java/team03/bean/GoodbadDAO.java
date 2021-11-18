@@ -38,4 +38,31 @@ public class GoodbadDAO {
 		}
 		return result;
 	}
+	
+	// 공감, 비공감 테이블 내에 있는 정보 조회
+	public GoodbadDTO getUserInfo(int num) {
+		GoodbadDTO dto = null;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"select * from goodbad where num = ?");
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				dto = new GoodbadDTO();
+				dto.setIp(rs.getString("ip"));
+				dto.setNum(rs.getInt("num"));
+				dto.setWriter(rs.getString("writer"));
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return dto;
+	}
 }

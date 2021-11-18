@@ -13,7 +13,7 @@
 <%
 	String num = request.getParameter("num");
 	String pageNum = request.getParameter("pageNum");
-	String pw = request.getParameter("pw");
+
 	dto.setBoardNum(Integer.parseInt(num));
 	
 	MovieCommentDAO dao = MovieCommentDAO.getInstance();

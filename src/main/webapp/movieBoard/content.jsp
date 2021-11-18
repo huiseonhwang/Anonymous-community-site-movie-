@@ -275,7 +275,7 @@
 
 <%-- 게시글에서 댓글을 작성할 수 있는 폼을 작성하고 값(피아미터)를 넘김 --%>
 <form action = "commentPro.jsp" method = "post" onsubmit="return nullCheck();">
-	<table id = "center">
+	<table style="width: 50%;">
 		<tr>
 			<th colspan = "5">
 				댓글 작성
@@ -301,8 +301,7 @@
 		<% } %>
 			<tr>
 				<td colspan = "5" >
-					<textarea rows="4" cols="40" name = "content" placeholder="내용을 작성해주세요" >
-					</textarea>
+					<textarea style="width: 100%;" name="content" placeholder="내용을 작성해주세요!"></textarea>
 				<br/>
 					<input type = "submit" value = "댓글작성" />
 				</td>
@@ -324,8 +323,10 @@
 		<% for (MovieCommentDTO MCdto : list) { %>
 				<td>
 					<div>
-							<% if(MCdto.getRe_level() > 0){ %>
+							<% if(MCdto.getRe_level() > 0){ 
+								for(int i=0; i<MCdto.getRe_level(); i++) { %>
 								&nbsp;&nbsp;&nbsp;&nbsp;
+								<% } %>
 								<img src="images/re.gif">
 							<% }
 								if(MCdto.getWriter().contains("익")) { %>
@@ -336,6 +337,9 @@
 									</a>
 								<% } %>
 					</div>
+				</td>
+				<td>
+					<%=MCdto.getReg() %>
 				</td>
 				<td width = "2oo">
 					<div>

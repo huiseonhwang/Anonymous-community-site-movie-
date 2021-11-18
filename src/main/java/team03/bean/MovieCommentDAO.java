@@ -26,7 +26,7 @@ public class MovieCommentDAO {
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement
-				("insert into movieComment values(?, boardComment_seq.nextval, ?, ?, ?, sysdate, 0, 0)");
+				("insert into movieComment values(?, movieComment_seq.nextval, ?, ?, ?, sysdate, 0, 0)");
 			pstmt.setInt(1, boardNum);
 			pstmt.setString(2, dto.getWriter());
 			pstmt.setString(3, dto.getPw());
@@ -71,7 +71,7 @@ public class MovieCommentDAO {
 			pstmt = conn.prepareStatement(
 					"select * from "
 					+ " (select boardNum, num, writer, pw, content, reg, re_step, re_level, rownum r from " 
-					+ " (select * from MovieComment where boardNum = ? order by num asc)) "
+					+ " (select * from MovieComment where boardNum = ? order by num asc, re_step asc)) "
 					+ " where r >= ? and r <= ?");
 			pstmt.setInt(1, boardNum);
 			pstmt.setInt(2, start);
@@ -233,7 +233,7 @@ public class MovieCommentDAO {
 	}
 	
 	// 댓글에 대한 답글 작성
-	public int insertReComment(MovieCommentDTO dto, int boardNum) {
+	public int insertReComment(MovieCommentDTO dto, int boardNum, int num) {
 		int result = 0;
 		int re_step = dto.getRe_step();
 		int re_level = dto.getRe_level();

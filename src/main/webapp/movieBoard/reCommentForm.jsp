@@ -71,12 +71,13 @@
 	}
 %>
 
-<form action = "reCommentPro.jsp" method = "post" >
-	<input type = "hidden" name = "num" value = "<%=num %>"/>
-	<input type = "hidden" name = "pageNum" value = "<%=pageNum %>"/>
-	<input type = "hidden" name = "boardNum" value = "<%=boardNum %>" />
-	<input type = "hidden" name = "re_step" value = "<%=re_step %>" />
-	<input type = "hidden" name = "re_level" value = "<%=re_level %>" />
+<form action="reCommentPro.jsp" method="post" onsubmit="return nullCheck();">
+
+	<input type="hidden" name="num" value="<%=num%>" />
+	<input type="hidden" name="pageNum" value="<%=pageNum%>" />
+	<input type="hidden" name="boardNum" value="<%=boardNum%>" />
+	<input type="hidden" name="re_step" value="<%=re_step%>" />
+	<input type="hidden" name="re_level" value="<%=re_level%>" />
 	
 	<table>
 		<tr>

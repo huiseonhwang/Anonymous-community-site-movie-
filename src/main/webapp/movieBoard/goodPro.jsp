@@ -1,9 +1,11 @@
+<%@page import="java.util.Random"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "team03.bean.MovieDAO" %>
-<%@ page import = "team03.bean.GoodbadDAO" %>
-<%@page import = "java.util.Random" %>
-<jsp:useBean class="team03.bean.MovieDTO" id = "dto" />
+<%@ page import="team03.bean.BoardDAO" %>
+<%@ page import="team03.bean.GoodbadDAO" %>
+<%@ page import="team03.bean.GoodbadDTO" %>
+
+<jsp:useBean class="team03.bean.BoardDTO" id = "dto" />
 <jsp:setProperty property="*" name = "dto" />
 
 <%! //전역변수(클래스에 선언한 변수) 선언
@@ -59,6 +61,10 @@ String getClientIP(HttpServletRequest request) {
 	String id = (String)session.getAttribute("id");
 	String kid = (String)session.getAttribute("kid");
 	
+	GoodbadDTO Gdto = new GoodbadDTO();
+	GoodbadDAO GBdao = GoodbadDAO.getInstance();
+	Gdto = GBdao.getUserInfo(num);
+	
 	if(id != null){
 		writer = id;
 	}
@@ -66,23 +72,96 @@ String getClientIP(HttpServletRequest request) {
 		writer = kid;
 	}
 	
-	GoodbadDAO GBdao = GoodbadDAO.getInstance();
-	int GBResult = GBdao.check(num, getClientIP(request), writer);
-	
-	if(GBResult == 1){
-		MovieDAO dao = MovieDAO.getInstance();
-		int result = dao.goodCountUp(dto);
+	if(Gdto == null){
+		int GBResult = GBdao.check(num, getClientIP(request), writer);
 		
-		if(result == 1) { %>
-		<script>
-			alert("공감완료");
-			window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
-		</script>	
-	<%	}  %>
-<%	} else {%>
-		<script>
-			alert("공감/비공감은 한 번만 가능합니다.");
-			window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
-		</script>
-<%	}
+		if(GBResult == 1){
+			
+			BoardDAO dao = BoardDAO.getInstance();
+			int result = dao.goodCountUp(dto);
+			
+			if(result == 1) { %>
+			<script>
+				alert("공감완료");
+				window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
+			</script>
+			<%}
+		}
+	} else {
+
+		if(kid == null){
+			if(id == null){
+				if(writer.contains("익")){
+					
+					if(Gdto.getIp() != null && getClientIP(request).equals(Gdto.getIp())){%>
+						<script>
+							alert("공감/비공감은 한 번만 가능합니다.");
+							window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
+						</script>
+				<%	}else{
+						int GBResult = GBdao.check(num, getClientIP(request), writer);
+						
+						if(GBResult == 1){
+							
+							BoardDAO dao = BoardDAO.getInstance();
+							int result = dao.goodCountUp(dto);
+							
+							if(result == 1) { %>
+							<script>
+								alert("공감완료");
+								window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
+							</script>
+							<%}
+						}
+					}
+				}
+				
+			}else{
+				if(Gdto.getWriter() != null && id.equals(Gdto.getWriter())){%>
+					<script>
+						alert("공감/비공감은 한 번만 가능합니다.");
+						window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
+					</script>
+				<%} else {
+					int GBResult = GBdao.check(num, getClientIP(request), writer);
+					
+					if(GBResult == 1){
+						
+						BoardDAO dao = BoardDAO.getInstance();
+						int result = dao.goodCountUp(dto);
+						
+						if(result == 1) { %>
+						<script>
+							alert("공감완료");
+							window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
+						</script>
+						<%}
+					}
+				}
+			}
+		} else {
+			if(Gdto.getWriter() != null && kid.equals(Gdto.getWriter())){%>
+				<script>
+					alert("공감/비공감은 한 번만 가능합니다.");
+					window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
+				</script>
+			<%} else {
+					int GBResult = GBdao.check(num, getClientIP(request), writer);
+					
+					if(GBResult == 1){
+						
+						BoardDAO dao = BoardDAO.getInstance();
+						int result = dao.goodCountUp(dto);
+						
+						if(result == 1) { %>
+						<script>
+							alert("공감완료");
+							window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
+						</script>
+						<%}
+					}
+			}
+		}
+	}
+	
 %>

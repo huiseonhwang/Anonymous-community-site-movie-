@@ -9,9 +9,10 @@
 
 <%
 	int boardNum = Integer.parseInt(request.getParameter("boardNum"));
+	int num = Integer.parseInt(request.getParameter("num"));
 
 	CommentDAO dao = CommentDAO.getInstance();
-	int result = dao.insertReComment(dto, boardNum);
+	int result = dao.insertReComment(dto, boardNum, num);
 	
 	if(result == 1){ %>
 		<script>
