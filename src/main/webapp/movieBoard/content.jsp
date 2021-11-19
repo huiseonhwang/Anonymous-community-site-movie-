@@ -3,11 +3,15 @@
 <%@ page import = "team03.bean.MovieDAO" %>
 <%@ page import = "team03.bean.MovieCommentDAO" %>
 <%@ page import = "team03.bean.MovieCommentDTO" %>
+<%@ page import = "team03.bean.GoodbadDAO" %>
+<%@ page import = "team03.bean.GoodbadDTO" %>
 <%@ page import = "java.util.Random"%>
 <%@ page import = "java.util.List"%>
 <%@ page import = "java.net.URLEncoder"%>
 
 <jsp:useBean class = "team03.bean.MovieDTO" id = "dto" />
+<jsp:setProperty property = "num" name = "dto" />
+<jsp:useBean class = "team03.bean.GoodbadDTO" id = "dto2" />
 <jsp:setProperty property = "num" name = "dto" />
 
 <style>
@@ -28,26 +32,26 @@
 <script type="text/javascript">
 	
 	//댓글 수정 함수
-	function updateComment(boardNum, num, pageNum){
+	function updateComment(boardNum, num, pageNum, re_step, re_level){
 		window.name = "ParentForm";
-		window.open("commentUpdateForm.jsp?boardNum="+boardNum+"&num="+num+"&pageNum="+pageNum,
+		window.open("commentUpdateForm.jsp?boardNum="+boardNum+"&num="+num+"&pageNum="+pageNum+"&re_step="+re_step+"&re_level="+re_level,
 					"updateForm", "width=570, height=350, resizable = no, scrollbars = no");
-	}
-	
+}
+
 	// 댓글 삭제 함수
-	function deleteComment(boardNum, num, pageNum){
+	function deleteComment(boardNum, num, pageNum, re_step, re_level){
 		window.name = "ParentForm";
-		window.open("commentDeleteForm.jsp?boardNum="+boardNum+"&num="+num+"&pageNum="+pageNum,
-					"deleteForm", "width=570, height=350, resizable = no, scrollbars = no");
-	}
-	
+		window.open("commentDeleteForm.jsp?boardNum="+boardNum+"&num="+num+"&pageNum="+pageNum+"&re_step="+re_step+"&re_level="+re_level,
+				"deleteForm", "width=570, height=350, resizable = no, scrollbars = no");
+}
+
 	// 대댓글 함수
 	function reComment(boardNum, num, re_step, re_level){
 		window.name = "ParentForm";
 		window.open("reCommentForm.jsp?boardNum="+boardNum+"&num="+num+"&re_step="+re_step+"&re_level="+re_level,
-					"reCommentForm", "width=570, height=350, resizable = no, scrollbars = no");
-		
-	}
+				"reCommentForm", "width=570, height=350, resizable = no, scrollbars = no");
+	
+}
 	
 	// 댓글 작성시 내용, 비밀번호 입력값이 없을 시 띄우는 경고창 (유효성 검사)
 	function nullCheck(){
@@ -130,10 +134,10 @@
 <%	} %>
 	<tr>
 		<td> <input type="button" value="공감"
-				onclick="window.location='goodPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" /> </td>
+				onclick="window.location='goodPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>&boardName=<%="movieBoard" %>'" /> </td>
 		<td> <%= dto.getGood() %> </td>
 		<td> <input type="button" value="비공감"
-				onclick="window.location='badPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" /> </td>
+				onclick="window.location='badPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>&boardName=<%="movieBoard" %>'" /> </td>
 		<td> <%= dto.getBad() %> </td>
 	</tr>
 	
@@ -263,6 +267,7 @@
 	int count = 0;
 	
 	String num = request.getParameter("num");
+
 	
 	List<MovieCommentDTO> list = null;
 	MovieCommentDAO MCdao = MovieCommentDAO.getInstance();
@@ -349,25 +354,22 @@
 					<td height="80" style="font-size: 13;">
 						<div>
 							<%if(kid != null){
-								// kid의 값이 있고
-								if(kid.equals(MCdto.getWriter())){ 
-									// 로그인 되어있는 kid의 세션값과 작성자의 명이 같으면 
-									%>
-									<p><a href="#" onclick="updateComment(<%=MCdto.getBoardNum()%>, <%=MCdto.getNum()%>, <%=pageNum%>)">[수정]</a></p>
-									<p><a href="#" onclick="deleteComment(<%=MCdto.getBoardNum()%>, <%=MCdto.getNum()%>, <%=pageNum%>)">[삭제]</a></p>
+								if(kid.equals(MCdto.getWriter())){ %>
+									<p><a href="#" onclick="updateComment(<%=MCdto.getBoardNum()%>, <%=MCdto.getNum()%>, <%=pageNum%>, <%=MCdto.getRe_step()%>, <%=MCdto.getRe_level()%>)">[수정]</a></p>
+									<p><a href="#" onclick="deleteComment(<%=MCdto.getBoardNum()%>, <%=MCdto.getNum()%>, <%=pageNum%>, <%=MCdto.getRe_step()%>, <%=MCdto.getRe_level()%>)">[삭제]</a></p>
 							<%	}
 							} %>
 									
 							<%if(id != null){
 								if(id.equals(MCdto.getWriter())){ %>	
-									<p><a href="#" onclick="updateComment(<%=MCdto.getBoardNum()%>, <%=MCdto.getNum()%>, <%=pageNum%>)">[수정]</a></p>
-									<p><a href="#" onclick="deleteComment(<%=MCdto.getBoardNum()%>, <%=MCdto.getNum()%>, <%=pageNum%>)">[삭제]</a>	</p>						
+									<p><a href="#" onclick="updateComment(<%=MCdto.getBoardNum()%>, <%=MCdto.getNum()%>, <%=pageNum%>, <%=MCdto.getRe_step()%>, <%=MCdto.getRe_level()%>)">[수정]</a></p>
+									<p><a href="#" onclick="deleteComment(<%=MCdto.getBoardNum()%>, <%=MCdto.getNum()%>, <%=pageNum%>, <%=MCdto.getRe_step()%>, <%=MCdto.getRe_level()%>)">[삭제]</a>	</p>						
 							<%	}
 							} %>
 									
 							<%if(MCdto.getPw() != null){ %>		
-								<p><a href="#" onclick="updateComment(<%=MCdto.getBoardNum()%>, <%=MCdto.getNum()%>, <%=pageNum%>)">[수정]</a></p>
-								<p><a href="#" onclick="deleteComment(<%=MCdto.getBoardNum()%>, <%=MCdto.getNum()%>, <%=pageNum%>)">[삭제]</a>	</p>						
+								<p><a href="#" onclick="updateComment(<%=MCdto.getBoardNum()%>, <%=MCdto.getNum()%>, <%=pageNum%>, <%=MCdto.getRe_step()%>, <%=MCdto.getRe_level()%>)">[수정]</a></p>
+								<p><a href="#" onclick="deleteComment(<%=MCdto.getBoardNum()%>, <%=MCdto.getNum()%>, <%=pageNum%>, <%=MCdto.getRe_step()%>, <%=MCdto.getRe_level()%>)">[삭제]</a>	</p>						
 							<% } %>
 								<p><a href="#" onclick="reComment(<%=MCdto.getBoardNum()%>, <%=MCdto.getNum()%>, <%=MCdto.getRe_step()%>, <%=MCdto.getRe_level()%>)">
 									[답글]

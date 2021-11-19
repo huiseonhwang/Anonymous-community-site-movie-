@@ -3,8 +3,7 @@
 <%@ page import="team03.bean.CommentDAO" %>
 
 <jsp:useBean class="team03.bean.CommentDTO" id = "dto" />
-<jsp:setProperty property="boardNum" name = "dto" />
-<jsp:setProperty property="num" name = "dto" />
+<jsp:setProperty property="*" name = "dto" />
 
 <style>
 	table {
@@ -49,14 +48,19 @@
 	// 게시글이 있는 게시판 페이지는 리퀘스트로 파라미터를 받음
 	String pageNum = request.getParameter("pageNum");
 	
+	int re_step = Integer.parseInt(request.getParameter("re_step"));
+	int re_level = Integer.parseInt(request.getParameter("re_level"));
+	
 	CommentDAO dao = CommentDAO.getInstance();
-	dto = dao.getContent(dto);
+	dto = dao.getContent(dto, re_step, re_level);
 %>
 
 <form action="commentUpdatePro.jsp" method="post" onsubmit="return nullCheck();">
 	<input type="hidden" name="boardNum" value="<%=dto.getBoardNum()%>" />
 	<input type="hidden" name="num" value="<%=dto.getNum()%>" />
 	<input type="hidden" name="pageNum" value="<%=pageNum%>" />
+	<input type="hidden" name="re_step" value="<%=dto.getRe_step()%>" />
+	<input type="hidden" name="re_level" value="<%=dto.getRe_level()%>" />
 	
 	<table>
 		<tr>

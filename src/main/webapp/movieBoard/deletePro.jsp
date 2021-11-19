@@ -15,6 +15,7 @@
 		MovieDAO dao = MovieDAO.getInstance();
 		int result = dao.deleteContent(num, pw);
 		
+		// 파일 삭제 
 		if (result == 1) {
 			String path = request.getRealPath("team03File");
 			File f = new File(path+"//"+result);
@@ -35,6 +36,7 @@
 		MovieDAO dao = MovieDAO.getInstance();
 		int result = dao.deleteMemContent(dto);
 		
+		// 파일 삭제
 		if (result ==1) {
 			String path = request.getRealPath("team03File");
 			File f = new File(path+"//"+result);

@@ -253,22 +253,20 @@
 				<div class="login"  >
 					<input type="button" value="로그인" onclick="window.location='/team03/login/loginform.jsp'"/>
 					<input type="button" value="회원가입" onclick="window.location='/team03/signUp/signUpForm.jsp'"/>
-					<input type="button" value="게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
-					<input type="button" value="영화게시판" onclick="window.location='/team03/movieBoard/list.jsp'"/>
+					<input type="button" value="자유게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
 					<input type="button" value="방명록"    onclick="window.location='/team03/visitor/visitorForm.jsp'"/> 
-					<input type="button" value="지역게시판"    onclick="window.location='/team03/localBoard/localMain.jsp'"/>
+					<input type="button" value="영화게시판"	onclick="window.location='/team03/movieBoard/list.jsp'"/>
 					<input type="button" value="Q&A"    onclick="window.location='/team03/QnA/q&a_List.jsp'"/> 
-		
 				</div>
 			<%}else{%>
 		<div class="login" >
 			<h3> [<%=id %>] 님.</h3>
 			<input type="button" value="로그아웃" onclick=" window.location='/team03/page/logout.jsp'" /> 
 			<input type="button" value="마이페이지" onclick="window.location='/team03/page/mypage.jsp'"/>
-			<input type="button" value="게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
-			<input type="button" value="영화게시판" onclick="window.location='/team03/movieBoard/list.jsp'"/>
-			<input type="button" value="방명록"    onclick="window.location='/team03/visitor/visitorForm.jsp'"/> 
+			<input type="button" value="자유게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
+			<input type="button" value="방명록"    onclick="window.location='/team03/visitor/visitorForm.jsp?owner=<%=id%>'"/> 
 			<input type="button" value="지역게시판"    onclick="window.location='/team03/localBoard/localMain.jsp'"/>
+			<input type="button" value="영화게시판"	onclick="window.location='/team03/movieBoard/list.jsp'"/>
 			<input type="button" value="Q&A"    onclick="window.location='/team03/QnA/q&a_List.jsp'"/>  
 		</div>
 		<%}%>
@@ -277,10 +275,10 @@
 		<h3> [<%=kid %>] 님.</h3>
 			<input type="button" value="로그아웃" onclick=" window.location='/team03/page/logout.jsp'" /> 
 			<input type="button" value="마이페이지" onclick="window.location='/team03/page/mypage.jsp'"/>
-			<input type="button" value="게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
-			<input type="button" value="영화게시판" onclick="window.location='/team03/movieBoard/list.jsp'"/>
-			<input type="button" value="방명록"    onclick="window.location='/team03/visitor/visitorForm.jsp'"/>
+			<input type="button" value="자유게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
+			<input type="button" value="방명록"    onclick="window.location='/team03/visitor/visitorForm.jsp?owner=<%=kid%>'"/>
 			<input type="button" value="지역게시판"    onclick="window.location='/team03/localBoard/localMain.jsp'"/>
+			<input type="button" value="영화게시판"	onclick="window.location='/team03/movieBoard/list.jsp'"/>
 			<input type="button" value="Q&A"    onclick="window.location='/team03/QnA/q&a_List.jsp'"/>   
 		</div>												
 	<%}
@@ -288,11 +286,9 @@
 		<div class="login"  >
 		<h3> [<%=admin %>] 님.</h3>
 			<input type="button" value="로그아웃" onclick=" window.location='/team03/page/logout.jsp'" /> 
-			<input type="button" value="마이페이지" onclick="window.location='/team03/page/mypage.jsp'"/>
-			<input type="button" value="게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
-			<input type="button" value="영화게시판" onclick="window.location='/team03/movieBoard/list.jsp'"/>
-			<input type="button" value="방명록"    onclick="window.location='/team03/visitor/visitorForm.jsp'"/>
+			<input type="button" value="자유게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
 			<input type="button" value="지역게시판"    onclick="window.location='/team03/localBoard/localMain.jsp'"/>
+			<input type="button" value="영화게시판"	onclick="window.location='/team03/movieBoard/list.jsp'"/>
 			<input type="button" value="Q&A"    onclick="window.location='/team03/QnA/q&a_List.jsp'"/>   
 			<input type="button" value="관리자 페이지"    onclick="window.location='/team03/admin/adminMain.jsp'"/> 
 		</div>

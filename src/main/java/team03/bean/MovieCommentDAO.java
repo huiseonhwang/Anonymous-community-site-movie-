@@ -101,13 +101,16 @@ public class MovieCommentDAO {
 	}
 	
 	// 이미 작성된 댓글 정보 출력
-	public MovieCommentDTO getContent(MovieCommentDTO dto) {
+	public MovieCommentDTO getContent(MovieCommentDTO dto, int re_step, int re_level) {
 		try {
 			conn = OracleDB.getConnection();
-			pstmt = conn.prepareStatement
-					("select * from MovieComment where boardNum = ? and num =? ");
+			pstmt = conn.prepareStatement(
+					"select * from movieComment where boardNum = ? and num = ? and re_step = ? and re_level = ?");
 			pstmt.setInt(1, dto.getBoardNum());
 			pstmt.setInt(2, dto.getNum());
+			pstmt.setInt(3, re_step);
+			pstmt.setInt(4, re_level);
+			
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
@@ -131,14 +134,16 @@ public class MovieCommentDAO {
 	} 
 	
 	// 회원 댓글 수정
-	public int updateMemComment(MovieCommentDTO dto) {
+	public int updateMemComment(MovieCommentDTO dto, int re_step, int re_level) {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
-			pstmt = conn.prepareStatement("update MovieComment set content = ? where boardNum =? and num =? ");
+			pstmt = conn.prepareStatement("update MovieComment set content = ? where boardNum =? and num =? and re_step =? and re_level =?");
 			pstmt.setString(1, dto.getContent());
 			pstmt.setInt(2, dto.getBoardNum());
 			pstmt.setInt(3, dto.getNum());
+			pstmt.setInt(4, re_step);
+			pstmt.setInt(5, re_level);
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -151,25 +156,29 @@ public class MovieCommentDAO {
 	}
 	
 	// 익명 댓글 수정
-	public int updateComment(MovieCommentDTO dto) {
+	public int updateComment(MovieCommentDTO dto, int re_step, int re_level) {
 		String pw;
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement
-					("select pw from MovieComment where boardNum=? and num=?");
+					("select pw from MovieComment where boardNum =? and num =? and re_step =? and re_level =?");
 			pstmt.setInt(1, dto.getBoardNum());
 			pstmt.setInt(2, dto.getNum());
+			pstmt.setInt(3, re_step);
+			pstmt.setInt(4, re_level);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				pw = rs.getString("pw");
 				if(pw.equals(dto.getPw())) {
 					pstmt = conn.prepareStatement
-							("update MovieComment set pw =?, content =? where boardNum =? and num =?");
+							("update MovieComment set pw =?, content =? where boardNum =? and num =? and re_step =? and re_level =?");
 					pstmt.setString(1, dto.getPw());
 					pstmt.setString(2, dto.getContent());
 					pstmt.setInt(3, dto.getBoardNum());
 					pstmt.setInt(4, dto.getNum());
+					pstmt.setInt(5, re_step);
+					pstmt.setInt(6, re_level);
 					result = pstmt.executeUpdate();
 				}
 			}
@@ -184,13 +193,16 @@ public class MovieCommentDAO {
 	}
 	
 	// 회원 댓글 삭제
-	public int deleteMemComment(MovieCommentDTO dto) {
+	public int deleteMemComment(MovieCommentDTO dto, int re_step, int re_level) {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
-			pstmt = conn.prepareStatement("delete from MovieComment where boardNum = ? and num =?");
+			pstmt = conn.prepareStatement
+					("delete from MovieComment where boardNum = ? and num =? and re_step = ? and re_level =?");
 			pstmt.setInt(1, dto.getBoardNum());
 			pstmt.setInt(2, dto.getNum());
+			pstmt.setInt(3, re_step);
+			pstmt.setInt(4, re_level);
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -203,22 +215,26 @@ public class MovieCommentDAO {
 	}
 	
 	// 익명 댓글 삭제
-	public int deleteComment(MovieCommentDTO dto) {
+	public int deleteComment(MovieCommentDTO dto, int re_step, int re_level) {
 		String pw;
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement
-					("select pw from MovieComment where boardNum=? and num=?");
+					("select pw from MovieComment where boardNum=? and num=? and re_step =? and re_level =?");
 			pstmt.setInt(1, dto.getBoardNum());
 			pstmt.setInt(2, dto.getNum());
+			pstmt.setInt(3, re_step);
+			pstmt.setInt(4, re_level);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				pw = rs.getString("pw");
 				if (pw.equals(dto.getPw())) {
-					pstmt = conn.prepareStatement("delete from MovieComment where boardNum = ? and num=?");
+					pstmt = conn.prepareStatement("delete from MovieComment where boardNum = ? and num=? and re_step =? and re_level =?");
 					pstmt.setInt(1, dto.getBoardNum());
 					pstmt.setInt(2, dto.getNum());
+					pstmt.setInt(3, re_step);
+					pstmt.setInt(4, re_level);
 					result = pstmt.executeUpdate();
 				}
 			}
@@ -239,24 +255,28 @@ public class MovieCommentDAO {
 		int re_level = dto.getRe_level();
 		try {
 			conn = OracleDB.getConnection();
-			pstmt = conn.prepareStatement
-					("update movieComment set re_step = re_step + 1 where re_step > ?");
-			pstmt.setInt(1, re_level);
+			pstmt = conn.prepareStatement(
+					"update movieComment set re_step = re_step + 1 where re_step > ?");
+			pstmt.setInt(1, re_step);
+			
 			pstmt.executeUpdate();
 			
 			re_step = re_step + 1;
-			re_level = re_level +1;
+			re_level = re_level + 1;
 			
-			pstmt = conn.prepareStatement
-					("insert into movieComment values(?, movieComment_seq.nextval, ?, ?, ?, sysdate, ?, ?)");
+			pstmt = conn.prepareStatement(
+					"insert into movieComment values(?, ?, ?, ?, ?, sysdate, ?, ?)");
 			pstmt.setInt(1, boardNum);
-			pstmt.setString(2, dto.getWriter());
-			pstmt.setString(3, dto.getPw());
-			pstmt.setString(4, dto.getContent());
-			pstmt.setInt(5, re_step);
-			pstmt.setInt(6, re_level);
+			pstmt.setInt(2, num);
+			pstmt.setString(3, dto.getWriter());
+			pstmt.setString(4, dto.getPw());
+			pstmt.setString(5, dto.getContent());
+			pstmt.setInt(6, re_step);
+			pstmt.setInt(7, re_level);
+			
 			result = pstmt.executeUpdate();
-		} catch (Exception e) {
+			
+		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			if(rs != null) {try {rs.close();}catch(SQLException s) {}}

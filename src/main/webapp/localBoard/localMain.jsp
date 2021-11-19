@@ -146,7 +146,7 @@ window.onload = function(){
 	</script>
 <%} else{%>
 
- <a href= 'localList.jsp'> 전체글 보기</a>   	
+ <input type = "button" value = "전체글보기" onclick = "window.location ='localList.jsp'"/>  	
 <div style="clear:both; position: relative; z-index: 1; top: -35px; left: 25; ">
 <a href='localssList.jsp?local=<%=URLEncoder.encode("전남", "UTF-8")%>' onfocus='this.blur()' onmouseover=mus_on('mus1') onmouseout=mus_off('mus1') onclick=smenu_click('mus1')>
 <img src='map/m061.gif' alt='' border='0' name='mus1' class='list1' ></a>

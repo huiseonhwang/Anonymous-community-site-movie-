@@ -39,6 +39,7 @@
 	int start = (currentPage - 1) * pageSize + 1; // 결과 = 11
 	int end = currentPage * pageSize; // 결과 = 20
 	int count = 0;
+	int number = 0;
 	
 	List<LocalBoardDTO> list = null;
 	LocalBoardDAO dao = LocalBoardDAO.getInstance();
@@ -64,6 +65,8 @@
 			}
 		}
 	}
+	
+	number = count-(currentPage-1)*pageSize;
 %>
 
 <%if(id == null && kid == null){ %>
@@ -96,7 +99,26 @@ window.location = "/team03/main.jsp";
 	</tr>
 	<tr>
 		<th> 글 번호 </th>
-		<th> 지역 </th>
+		<th> <select name ="local" onchange = "if(this.value) location.href=(this.value);">
+		<option value = "local" > 지역 </option>
+		<option value ="localList.jsp?l"> 전체 </option>
+		<option value ="localssList.jsp?local=<%=URLEncoder.encode("인천", "UTF-8")%>"> 인천 </option>
+		<option value ="localssList.jsp?local=<%=URLEncoder.encode("서울", "UTF-8")%>"> 서울 </option>
+		<option value ="localssList.jsp?local=<%=URLEncoder.encode("경기", "UTF-8")%>"> 경기 </option>
+		<option value ="localssList.jsp?local=<%=URLEncoder.encode("강원", "UTF-8")%>"> 강원 </option>
+		<option value ="localssList.jsp?local=<%=URLEncoder.encode("충남", "UTF-8")%>"> 충남 </option>
+		<option value ="localssList.jsp?local=<%=URLEncoder.encode("충북", "UTF-8")%>"> 충북 </option>
+		<option value ="localssList.jsp?local=<%=URLEncoder.encode("경북", "UTF-8")%>"> 경북 </option>
+		<option value ="localssList.jsp?local=<%=URLEncoder.encode("대전", "UTF-8")%>"> 대전 </option>
+		<option value ="localssList.jsp?local=<%=URLEncoder.encode("대구", "UTF-8")%>"> 대구 </option>
+		<option value ="localssList.jsp?local=<%=URLEncoder.encode("전북", "UTF-8")%>"> 전북 </option>
+		<option value ="localssList.jsp?local=<%=URLEncoder.encode("경남", "UTF-8")%>"> 경남 </option>
+		<option value ="localssList.jsp?local=<%=URLEncoder.encode("전남", "UTF-8")%>"> 전남 </option>
+		<option value ="localssList.jsp?local=<%=URLEncoder.encode("광주", "UTF-8")%>"> 광주 </option>
+		<option value ="localssList.jsp?local=<%=URLEncoder.encode("울산", "UTF-8")%>"> 울산 </option>
+		<option value ="localssList.jsp?local=<%=URLEncoder.encode("부산", "UTF-8")%>"> 부산 </option>
+		<option value ="localssList.jsp?local=<%=URLEncoder.encode("제주도", "UTF-8")%>"> 제주도 </option>
+		</select> </th>
 		<th> 제목 </th>
 		<th> 작성자 </th>
 		<th> 작성일 </th>
@@ -111,8 +133,10 @@ window.location = "/team03/main.jsp";
 <%	}else{ %>
 
 	<%	for(LocalBoardDTO dto : list) { %>
-			<tr>
-				<td> <%= dto.getNum() %> </td>
+			<td id="center">
+					<%= number-- %>
+					<input type="hidden" name="num" value="<%=dto.getNum() %>" />
+				</td>
 				<td><%= dto.getLocal() %></td>
 				<td>
 					<a href="localContent.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>">
@@ -120,7 +144,7 @@ window.location = "/team03/main.jsp";
 					</a>
 				</td>
 				<td> 
-					<a href="/team03/visitor/visitorForm.jsp?writer=<%=dto.getWriter()%>">
+					<a href="/team03/visitor/visitorForm.jsp?owner=<%=URLEncoder.encode(dto.getWriter(), "UTF-8")%>">
 								<%= dto.getWriter() %>
 						</a>
 				</td>
@@ -145,13 +169,13 @@ window.location = "/team03/main.jsp";
 			endPage = pageCount;
 		}	
 		if(startPage > 10){%>
-			<a href="LocalList.jsp?pageNum=<%=startPage-10%>">[이전]</a>
+			<a href="localList.jsp?pageNum=<%=startPage-10%>">[이전]</a>
 		<%}
 		for(int i = startPage ; i <= endPage ; i++){
-		%>	<a href="LocalList.jsp?pageNum=<%=i%>">[<%=i%>]</a> 	
+		%>	<a href="localList.jsp?pageNum=<%=i%>">[<%=i%>]</a> 	
 	  <%}
 		if(endPage < pageCount){%>
-		<a href="LocalList.jsp?pageNum=<%=startPage + 10%>">[다음]</a>
+		<a href="localList.jsp?pageNum=<%=startPage + 10%>">[다음]</a>
 	  <%}	
 	}
 %>

@@ -11,6 +11,8 @@ public class MovieCommentDTO {
 	private Timestamp reg;
 	private int re_step;
 	private int re_level;
+	
+	
 	public int getBoardNum() {
 		return boardNum;
 	}

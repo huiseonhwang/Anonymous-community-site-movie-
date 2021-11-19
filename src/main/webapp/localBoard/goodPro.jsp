@@ -3,62 +3,68 @@
     pageEncoding="UTF-8"%>
 <%@ page import="team03.bean.LocalBoardDAO" %>
 <%@ page import="team03.bean.GoodbadDAO" %>
+<%@ page import="team03.bean.GoodbadDTO" %>
 
 <jsp:useBean class="team03.bean.LocalBoardDTO" id = "dto" />
-<jsp:setProperty property="*" name = "dto" />
+<jsp:setProperty property="num" name = "dto" />
 
 <%! //전역변수(클래스에 선언한 변수) 선언
 
 String getClientIP(HttpServletRequest request) {
 
-  String ip = request.getHeader("X-FORWARDED-FOR"); 
-     
-  if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-    ip= request.getHeader("Proxy-Client-IP");
-  }
+	  String ip = request.getHeader("X-FORWARDED-FOR"); 
+	     
+	  if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+	    ip= request.getHeader("Proxy-Client-IP");
+	  }
 
-  if (ip == null || ip.length() == 0|| "unknown".equalsIgnoreCase(ip)) {
-    ip= request.getHeader("WL-Proxy-Client-IP");  
-  }
+	  if (ip == null || ip.length() == 0|| "unknown".equalsIgnoreCase(ip)) {
+	    ip= request.getHeader("WL-Proxy-Client-IP");  
+	  }
 
-  if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
-      ip = request.getHeader("HTTP_CLIENT_IP"); 
-  } 
-  
-  if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
-      ip = request.getHeader("HTTP_X_FORWARDED_FOR"); 
-  }
-  
-  if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
-      ip = request.getHeader("X-Real-IP"); 
-  }
-  
-  if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
-      ip = request.getHeader("X-RealIP"); 
-  }
-  
-  if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
-      ip = request.getHeader("REMOTE_ADDR");
-  }
-  
-  if (ip == null || ip.length() == 0|| "unknown".equalsIgnoreCase(ip)) {
-    ip= request.getRemoteAddr() ;
-  }
-     
-  return ip;
-}
+	  if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+	      ip = request.getHeader("HTTP_CLIENT_IP"); 
+	  } 
+	  
+	  if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+	      ip = request.getHeader("HTTP_X_FORWARDED_FOR"); 
+	  }
+	  
+	  if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+	      ip = request.getHeader("X-Real-IP"); 
+	  }
+	  
+	  if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+	      ip = request.getHeader("X-RealIP"); 
+	  }
+	  
+	  if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+	      ip = request.getHeader("REMOTE_ADDR");
+	  }
+	  
+	  if (ip == null || ip.length() == 0|| "unknown".equalsIgnoreCase(ip)) {
+	    ip= request.getRemoteAddr() ;
+	  }
+	     
+	  return ip;
+	}
 
 %>
 
 <%
 	String pageNum = request.getParameter("pageNum");
 	int num = Integer.parseInt(request.getParameter("num"));
+	String localBoard = request.getParameter("boardName");
 	
 	
-	String writer = "사용자";
+	String writer = null;
 	
 	String id = (String)session.getAttribute("id");
 	String kid = (String)session.getAttribute("kid");
+	
+	GoodbadDTO Gdto = new GoodbadDTO();
+	GoodbadDAO GBdao = GoodbadDAO.getInstance();
+	Gdto = GBdao.getUserInfo(num, localBoard);
 	
 	if(id != null){
 		writer = id;
@@ -67,23 +73,81 @@ String getClientIP(HttpServletRequest request) {
 		writer = kid;
 	}
 	
-	GoodbadDAO GBdao = GoodbadDAO.getInstance();
-	int GBResult = GBdao.check(num, getClientIP(request), writer);
 	
-	if(GBResult == 1){
-		LocalBoardDAO dao = LocalBoardDAO.getInstance();
-		int result = dao.LgoodCountUp(dto);
+	if(Gdto == null){
 		
-		if(result == 1) { %>
-		<script>
-			alert("공감완료");
-			window.location="localContent.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
-		</script>	
-	<%	}  %>
-<%	} else {%>
-		<script>
-			alert("공감/비공감은 한 번만 가능합니다.");
-			window.location="localContent.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
-		</script>
-<%	}
+		int GBResult = GBdao.check(num, getClientIP(request), writer, localBoard);
+		if(GBResult == 1){
+		
+			LocalBoardDAO dao = LocalBoardDAO.getInstance();
+			int result = dao.LgoodCountUp(dto);
+			
+			
+			if(result == 1) { %>
+			<script>
+				alert("공감완료");
+				window.location="localContent.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
+			</script>	
+		<%		} 
+			}
+	}else{
+		
+		if(kid == null){
+			if(id == null){%>
+				<script>
+					alert("로그인 후 이용해주세요.");
+					window.location="/team03/main.jsp"
+				</script>
+			<%}else{
+				
+				if(id.equals(Gdto.getWriter())){%>
+				<script>
+					alert("공감/비공감은 한 번만 가능합니다.");
+					window.location="localContent.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
+				</script>
+				<%}else{
+						int GBResult = GBdao.check(num, getClientIP(request), writer, localBoard);
+						if(GBResult == 1){
+						
+							LocalBoardDAO dao = LocalBoardDAO.getInstance();
+							int result = dao.LgoodCountUp(dto);
+							
+							
+							if(result == 1) { %>
+							<script>
+								alert("공감완료");
+								window.location="localContent.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
+							</script>	
+						<%	} 
+						}
+					}
+			}
+			
+		}else{
+			if(kid.equals(Gdto.getWriter())){%>
+			<script>
+				alert("공감/비공감은 한 번만 가능합니다.");
+				window.location="localContent.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
+			</script>
+			<%}else{
+				int GBResult = GBdao.check(num, getClientIP(request), writer, localBoard);
+				if(GBResult == 1){
+				
+					LocalBoardDAO dao = LocalBoardDAO.getInstance();
+					int result = dao.LgoodCountUp(dto);
+					
+					
+					if(result == 1) { %>
+					<script>
+						alert("공감완료");
+						window.location="localContent.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
+					</script>	
+				<%	} 
+				}
+			}
+		}
+		
+	}
+	
+		
 %>

@@ -182,7 +182,7 @@ public class AdminDAO {
 		return result;
 	}
 
-	//자유게시글 지우기
+	//게시글 지우기
 	public int deleteContent(int num) {
 		int result = 0;
 		try {
@@ -335,14 +335,14 @@ public class AdminDAO {
 	}
 	
 	// 댓글 삭제
-	public int deleteComment(CommentDTO dto) {
+	public int deleteComment(int CboardNum, int Cnum) {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement(
 					"delete from boardComment where boardNum = ? and num = ?");
-			pstmt.setInt(1, dto.getBoardNum());
-			pstmt.setInt(2, dto.getNum());
+			pstmt.setInt(1, CboardNum);
+			pstmt.setInt(2, Cnum);
 			
 			result = pstmt.executeUpdate();
 			
@@ -356,17 +356,200 @@ public class AdminDAO {
 		return result;
 	}
 	
-	//지역게시판 글 지우기
-	public int deleteLcontent(int num) {
+	//지역게시글 지우기
+	public int LocalDeleteContent(int num) {
 		int result = 0;
 		try {
-			conn=OracleDB.getConnection();
+			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement("delete from localBoard where num =?");
 			pstmt.setInt(1, num);
 			result=pstmt.executeUpdate();
-		} catch (Exception e) {
+		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+		}
+		return result;
+	}
+	
+	// 지역 댓글 전체 댓글 카운트
+	public int LocalCommentCount() {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"select count(*) from localBoardComment");
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+		}
+		return result;
+	}
+	
+	// 지역 댓글 내용 출력
+	public List<LocalBoardCommentDTO> getLocalComment(int start, int end){
+		List<LocalBoardCommentDTO> list = null;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"select * from "
+						+ " (select boardNum, num, writer, content, reg, re_step, re_level, rownum r from "
+						+ " (select * from localBoardComment order by num desc)) "
+						+ " where r >= ? and r <= ?");
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			
+			rs = pstmt.executeQuery();
+			list = new ArrayList<LocalBoardCommentDTO>();
+			while(rs.next()) {
+				LocalBoardCommentDTO dto = new LocalBoardCommentDTO();
+				dto.setBoardNum(rs.getInt("boardNum"));
+				dto.setNum(rs.getInt("num"));
+				dto.setContent(rs.getString("content"));
+				dto.setWriter(rs.getString("writer"));
+				dto.setReg(rs.getTimestamp("reg"));
+				dto.setRe_step(rs.getInt("re_step"));
+				dto.setRe_level(rs.getInt("re_level"));
+				list.add(dto);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+		}
+		return list;
+	}
+	
+	// 지역 게시판 댓글 삭제
+	public int localDeleteComment(int LboardNum, int Lnum) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"delete from localBoardComment where boardNum = ? and num = ?");
+			pstmt.setInt(1, LboardNum);
+			pstmt.setInt(2, Lnum);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
+			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return result;
+	}
+	
+	//영화게시글 지우기
+	public int MovieDeleteContent(int num) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement("delete from MovieBoard where num =?");
+			pstmt.setInt(1, num);
+			result=pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+		}
+		return result;
+	}
+	
+	// 영화 게시판 전체 댓글 카운트
+	public int MovieCommentCount() {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"select count(*) from movieComment");
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+		}
+		return result;
+	}
+	
+	// 영화 게시판 댓글 출력
+	public List<MovieCommentDTO> getMovieComment(int start, int end){
+		List<MovieCommentDTO> list = null;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"select * from "
+						+ " (select boardNum, num, writer, pw, content, reg, re_step, re_level, rownum r from "
+						+ " (select * from MovieComment order by num desc)) "
+						+ " where r >= ? and r <= ?");
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			
+			rs = pstmt.executeQuery();
+			list = new ArrayList<MovieCommentDTO>();
+			while(rs.next()) {
+				MovieCommentDTO dto = new MovieCommentDTO();
+				dto.setBoardNum(rs.getInt("boardNum"));
+				dto.setNum(rs.getInt("num"));
+				dto.setContent(rs.getString("content"));
+				dto.setWriter(rs.getString("writer"));
+				dto.setPw(rs.getString("pw"));
+				dto.setReg(rs.getTimestamp("reg"));
+				dto.setRe_step(rs.getInt("re_step"));
+				dto.setRe_level(rs.getInt("re_level"));
+				list.add(dto);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+		}
+		return list;
+	}
+	
+	// 영화 게시판 댓글 삭제
+	public int movieDeleteComment(int MboardNum, int Mnum) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"delete from movieComment where boardNum = ? and num = ?");
+			pstmt.setInt(1, MboardNum);
+			pstmt.setInt(2, Mnum);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
 			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
 			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
 			if (conn != null) try { conn.close(); } catch(SQLException ex) {}

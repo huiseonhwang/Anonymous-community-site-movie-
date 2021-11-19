@@ -46,14 +46,19 @@
 
 <%
 	String pageNum = request.getParameter("pageNum");
+	int re_step = Integer.parseInt(request.getParameter("re_step"));
+	int re_level = Integer.parseInt(request.getParameter("re_level"));
+
 	MovieCommentDAO dao = MovieCommentDAO.getInstance();
-	dto = dao.getContent(dto);
+	dto = dao.getContent(dto, re_step, re_level);
 %>
 
 <form action = "commentUpdatePro.jsp" method = "post" onsubmit="return nullCheck();" >
 	<input type = "hidden" name = "boardNum" value = "<%=dto.getBoardNum() %>" />
 	<input type = "hidden" name = "num" value = "<%=dto.getNum() %>" />
 	<input type = "hidden" name = "pageNum" value = "<%=pageNum %>" />
+	<input type = "hidden" name = "re_step" value = "<%=dto.getRe_step() %>" />
+	<input type = "hidden" name = "re_level" value = "<%=dto.getRe_level() %>" />
 	
 	<table>
 		<tr>

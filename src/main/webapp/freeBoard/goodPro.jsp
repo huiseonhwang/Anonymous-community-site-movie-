@@ -52,6 +52,7 @@ String getClientIP(HttpServletRequest request) {
 %>
 
 <%
+	String freeBoard = request.getParameter("boardName");
 	String pageNum = request.getParameter("pageNum");
 	int num = Integer.parseInt(request.getParameter("num"));
 	
@@ -63,7 +64,7 @@ String getClientIP(HttpServletRequest request) {
 	
 	GoodbadDTO Gdto = new GoodbadDTO();
 	GoodbadDAO GBdao = GoodbadDAO.getInstance();
-	Gdto = GBdao.getUserInfo(num);
+	Gdto = GBdao.getUserInfo(num, freeBoard);
 	
 	if(id != null){
 		writer = id;
@@ -73,33 +74,65 @@ String getClientIP(HttpServletRequest request) {
 	}
 	
 	if(Gdto == null){
-		int GBResult = GBdao.check(num, getClientIP(request), writer);
-		
-		if(GBResult == 1){
+		if(kid == null){
+			if(id == null){
+				int GBResult = GBdao.check(num, getClientIP(request), writer, freeBoard);
+				
+				if(GBResult == 1){
+					
+					BoardDAO dao = BoardDAO.getInstance();
+					int result = dao.goodCountUp(dto);
+					
+					if(result == 1) { %>
+					<script>
+						alert("공감완료");
+						window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
+					</script>
+					<%}
+				}
+			} else {
+				int GBResult = GBdao.check(num, getClientIP(request), writer, freeBoard);
+				
+				if(GBResult == 1){
+					
+					BoardDAO dao = BoardDAO.getInstance();
+					int result = dao.goodCountUp(dto);
+					
+					if(result == 1) { %>
+					<script>
+						alert("공감완료");
+						window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
+					</script>
+					<%}
+				}
+			}
+		} else {
+			int GBResult = GBdao.check(num, getClientIP(request), writer, freeBoard);
 			
-			BoardDAO dao = BoardDAO.getInstance();
-			int result = dao.goodCountUp(dto);
-			
-			if(result == 1) { %>
-			<script>
-				alert("공감완료");
-				window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
-			</script>
-			<%}
+			if(GBResult == 1){
+				
+				BoardDAO dao = BoardDAO.getInstance();
+				int result = dao.goodCountUp(dto);
+				
+				if(result == 1) { %>
+				<script>
+					alert("공감완료");
+					window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
+				</script>
+				<%}
+			}
 		}
 	} else {
 
 		if(kid == null){
 			if(id == null){
-				if(writer.contains("익")){
-					
-					if(Gdto.getIp() != null && getClientIP(request).equals(Gdto.getIp())){%>
+					if(getClientIP(request).equals(Gdto.getIp())){%>
 						<script>
 							alert("공감/비공감은 한 번만 가능합니다.");
 							window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
 						</script>
 				<%	}else{
-						int GBResult = GBdao.check(num, getClientIP(request), writer);
+						int GBResult = GBdao.check(num, getClientIP(request), writer, freeBoard);
 						
 						if(GBResult == 1){
 							
@@ -114,16 +147,15 @@ String getClientIP(HttpServletRequest request) {
 							<%}
 						}
 					}
-				}
 				
-			}else{
-				if(Gdto.getWriter() != null && id.equals(Gdto.getWriter())){%>
+			} else {
+				if(id.equals(Gdto.getWriter())){%>
 					<script>
 						alert("공감/비공감은 한 번만 가능합니다.");
 						window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
 					</script>
 				<%} else {
-					int GBResult = GBdao.check(num, getClientIP(request), writer);
+					int GBResult = GBdao.check(num, getClientIP(request), writer, freeBoard);
 					
 					if(GBResult == 1){
 						
@@ -140,13 +172,13 @@ String getClientIP(HttpServletRequest request) {
 				}
 			}
 		} else {
-			if(Gdto.getWriter() != null && kid.equals(Gdto.getWriter())){%>
+			if(kid.equals(Gdto.getWriter())){%>
 				<script>
 					alert("공감/비공감은 한 번만 가능합니다.");
 					window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
 				</script>
 			<%} else {
-					int GBResult = GBdao.check(num, getClientIP(request), writer);
+					int GBResult = GBdao.check(num, getClientIP(request), writer, freeBoard);
 					
 					if(GBResult == 1){
 						
@@ -154,10 +186,10 @@ String getClientIP(HttpServletRequest request) {
 						int result = dao.goodCountUp(dto);
 						
 						if(result == 1) { %>
-						<script>
-							alert("공감완료");
-							window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
-						</script>
+							<script>
+								alert("공감완료");
+								window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
+							</script>
 						<%}
 					}
 			}

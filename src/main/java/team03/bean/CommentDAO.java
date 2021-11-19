@@ -107,13 +107,15 @@ public class CommentDAO {
 	}
 	
 	// 이미 작성된 댓글 정보 출력
-	public CommentDTO getContent(CommentDTO dto) {
+	public CommentDTO getContent(CommentDTO dto, int re_step, int re_level) {
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement(
-					"select * from boardComment where boardNum = ? and num = ?");
+					"select * from boardComment where boardNum = ? and num = ? and re_step = ? and re_level = ?");
 			pstmt.setInt(1, dto.getBoardNum());
 			pstmt.setInt(2, dto.getNum());
+			pstmt.setInt(3, re_step);
+			pstmt.setInt(4, re_level);
 			
 			rs = pstmt.executeQuery();
 			
@@ -139,15 +141,17 @@ public class CommentDAO {
 	}
 	
 	// 회원 댓글 수정
-	public int updateMemComment(CommentDTO dto) {
+	public int updateMemComment(CommentDTO dto, int re_step, int re_level) {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement(
-					"update boardComment set content = ? where boardNum = ? and num = ?");
+					"update boardComment set content = ? where boardNum = ? and num = ? and re_step = ? and re_level = ?");
 			pstmt.setString(1, dto.getContent());
 			pstmt.setInt(2, dto.getBoardNum());
 			pstmt.setInt(3, dto.getNum());
+			pstmt.setInt(4, re_step);
+			pstmt.setInt(5, re_level);
 			
 			result = pstmt.executeUpdate();
 			
@@ -162,26 +166,30 @@ public class CommentDAO {
 	}
 	
 	// 익명 댓글 수정
-	public int updateComment(CommentDTO dto) {
+	public int updateComment(CommentDTO dto, int re_step, int re_level) {
 		String pw;
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement(
-					"select pw from boardComment where boardNum = ? and num = ?");
+					"select pw from boardComment where boardNum = ? and num = ? and re_step = ? and re_level = ?");
 			pstmt.setInt(1, dto.getBoardNum());
 			pstmt.setInt(2, dto.getNum());
+			pstmt.setInt(3, re_step);
+			pstmt.setInt(4, re_level);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
 				pw = rs.getString("pw");
 				if(pw.equals(dto.getPw())) {
 					pstmt = conn.prepareStatement(
-							"update boardComment set pw = ?, content = ? where boardNum = ? and num = ?");
+							"update boardComment set pw = ?, content = ? where boardNum = ? and num = ? and re_step = ? and re_level = ?");
 					pstmt.setString(1, dto.getPw());
 					pstmt.setString(2, dto.getContent());
 					pstmt.setInt(3, dto.getBoardNum());
 					pstmt.setInt(4, dto.getNum());
+					pstmt.setInt(5, re_step);
+					pstmt.setInt(6, re_level);
 					result = pstmt.executeUpdate();
 				}
 			}
@@ -196,14 +204,16 @@ public class CommentDAO {
 	}
 	
 	// 회원 댓글 삭제
-	public int deleteMemComment(CommentDTO dto) {
+	public int deleteMemComment(CommentDTO dto, int re_step, int re_level) {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement(
-					"delete from boardComment where boardNum = ? and num = ?");
+					"delete from boardComment where boardNum = ? and num = ? and re_step = ? and re_level = ?");
 			pstmt.setInt(1, dto.getBoardNum());
 			pstmt.setInt(2, dto.getNum());
+			pstmt.setInt(3, re_step);
+			pstmt.setInt(4, re_level);
 			
 			result = pstmt.executeUpdate();
 			
@@ -218,15 +228,17 @@ public class CommentDAO {
 	}
 	
 	// 익명 댓글 삭제
-	public int deleteComment(CommentDTO dto) {
+	public int deleteComment(CommentDTO dto, int re_step, int re_level) {
 		String pw;
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement(
-					"select pw from boardComment where boardNum = ? and num = ?");
+					"select pw from boardComment where boardNum = ? and num = ? and re_step = ? and re_level = ?");
 			pstmt.setInt(1, dto.getBoardNum());
 			pstmt.setInt(2, dto.getNum());
+			pstmt.setInt(3, re_step);
+			pstmt.setInt(4, re_level);
 			
 			rs = pstmt.executeQuery();
 			
@@ -234,9 +246,11 @@ public class CommentDAO {
 				pw = rs.getString("pw");
 				if(pw.equals(dto.getPw())) {
 					pstmt = conn.prepareStatement(
-							"delete from boardComment where boardNum = ? and num = ?");
+							"delete from boardComment where boardNum = ? and num = ? and re_step = ? and re_level = ?");
 					pstmt.setInt(1, dto.getBoardNum());
 					pstmt.setInt(2, dto.getNum());
+					pstmt.setInt(3, re_step);
+					pstmt.setInt(4, re_level);
 					
 					result = pstmt.executeUpdate();
 				}

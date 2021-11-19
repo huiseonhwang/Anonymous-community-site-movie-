@@ -4,6 +4,7 @@ public class LoginDTO {
 	
 	private String id;
 	private String pw;
+	private String name;
 	
 	
 	public void setId(String id) {
@@ -11,6 +12,9 @@ public class LoginDTO {
 	}
 	public void setPw(String pw) {
 		this.pw = pw;	
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	
@@ -21,6 +25,8 @@ public class LoginDTO {
 		return pw;
 	}
 	
-
+	public String getName() {
+		return name;
+	}
 
 }

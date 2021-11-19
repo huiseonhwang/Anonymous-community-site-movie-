@@ -8,10 +8,12 @@
 <%
 	String pw = request.getParameter("pw");
 	String pageNum = request.getParameter("pageNum");
+	int re_step = Integer.parseInt(request.getParameter("re_step"));
+	int re_level = Integer.parseInt(request.getParameter("re_level"));
 	
 	if ( pw == null ) {
 		MovieCommentDAO dao = MovieCommentDAO.getInstance();
-		int result = dao.deleteMemComment(dto);
+		int result = dao.deleteMemComment(dto, re_step, re_level);
 		if (result == 1) { %>
 			<script>
 				alert("삭제되었습니다.");
@@ -22,7 +24,7 @@
 	 } else { 
 		MovieCommentDAO dao = MovieCommentDAO.getInstance();
 		dto.setPw(pw);
-		int result = dao.deleteComment(dto);
+		int result = dao.deleteComment(dto, re_step, re_level);
 		if (result ==1 ) { %>
 			<script>
 				alert("삭제되었습니다.");

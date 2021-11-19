@@ -79,14 +79,15 @@
 	<td> 
 		<select name = "kategorie" onchange = "if(this.value) location.href=(this.value);" >
 		<option value = "kategorie" > 카테고리 </option>
-		<option value ="klist.jsp?kategorie=romance"> 로맨스/멜로 </option>
-		<option value = "klist.jsp?kategorie=comic"> 코미디 </option>
-		<option value = "klist.jsp?kategorie=action"> 액션 </option>
-		<option value = "klist.jsp?kategorie=sf"> SF </option>
-		<option value = "klist.jsp?kategorie=fantasy"> 판타지 </option>
-		<option value = "klist.jsp?kategorie=thriller"> 스릴러/공포 </option>
-		<option value = "klist.jsp?kategorie=adventure"> 어드벤쳐 </option>
-		<option value = "klist.jsp?kategorie=drama"> 드라마 </option>
+		<option value = "list.jsp" > 전체 </option>
+		<option value ="klist.jsp?kategorie=<%=URLEncoder.encode("로맨스/멜로", "UTF-8")%>"> 로맨스/멜로 </option>
+		<option value ="klist.jsp?kategorie=<%=URLEncoder.encode("코미디", "UTF-8")%>"> 코미디 </option>
+		<option value ="klist.jsp?kategorie=<%=URLEncoder.encode("액션", "UTF-8")%>"> 액션 </option>
+		<option value ="klist.jsp?kategorie=<%=URLEncoder.encode("SF", "UTF-8")%>"> SF </option>
+		<option value ="klist.jsp?kategorie=<%=URLEncoder.encode("판타지", "UTF-8")%>"> 판타지 </option>
+		<option value ="klist.jsp?kategorie=<%=URLEncoder.encode("스릴러/공포", "UTF-8")%>"> 스릴러/공포 </option>
+		<option value ="klist.jsp?kategorie=<%=URLEncoder.encode("어드벤쳐", "UTF-8")%>"> 어드벤쳐 </option>
+		<option value ="klist.jsp?kategorie=<%=URLEncoder.encode("드라마", "UTF-8")%>"> 드라마 </option>
 		</select> 
 	</td>
 	<th> 제목 </th>

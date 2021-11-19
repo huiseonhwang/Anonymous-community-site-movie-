@@ -39,4 +39,28 @@ public class LoginDAO {
 		return result;
 		
 	}
+	
+	public MemberDTO getMemberData(String id) {
+		MemberDTO dto = null;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"select * from member where id = ?");
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto = new MemberDTO();
+				dto.setId(rs.getString("id"));
+				dto.setPw(rs.getString("pw"));
+				dto.setName(rs.getString("name"));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try{rs.close();}catch(SQLException s) {}}
+			if(pstmt !=null) {try {rs.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return dto;
+	}
 }

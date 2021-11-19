@@ -18,15 +18,16 @@ public class GoodbadDAO {
 	private GoodbadDAO() {}
 	
 	// 공감, 비공감 중복 체크
-	public int check(int num, String ip, String writer) {
+	public int check(int num, String ip, String writer, String boardName) {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement(
-					"insert into goodbad values(?, ?, ?)");
+					"insert into goodbad values(?, ?, ?, ?)");
 			pstmt.setInt(1, num);
 			pstmt.setString(2, ip);
 			pstmt.setString(3, writer);
+			pstmt.setString(4, boardName);
 			
 			result = pstmt.executeUpdate();
 		} catch(Exception e) {
@@ -40,13 +41,14 @@ public class GoodbadDAO {
 	}
 	
 	// 공감, 비공감 테이블 내에 있는 정보 조회
-	public GoodbadDTO getUserInfo(int num) {
+	public GoodbadDTO getUserInfo(int num, String boardName) {
 		GoodbadDTO dto = null;
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement(
-					"select * from goodbad where num = ?");
+					"select * from goodbad where num = ? and boardName= ?");
 			pstmt.setInt(1, num);
+			pstmt.setString(2, boardName);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -54,6 +56,7 @@ public class GoodbadDAO {
 				dto.setIp(rs.getString("ip"));
 				dto.setNum(rs.getInt("num"));
 				dto.setWriter(rs.getString("writer"));
+				dto.SetBoardName(rs.getString("boardName"));
 			}
 			
 		} catch(Exception e) {

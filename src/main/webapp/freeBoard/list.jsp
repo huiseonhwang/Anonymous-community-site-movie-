@@ -73,7 +73,7 @@
 %>
 
 <h1 style="text-align: center;">
-	<a href="list.jsp">게시판</a>
+	<a href="list.jsp">자유게시판</a>
 </h1>
 
 <table style="width: 90%;">

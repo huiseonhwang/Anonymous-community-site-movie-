@@ -29,8 +29,12 @@
 </script>
 
 <%
+	String num = request.getParameter("num");
+	// 글 번호
 	String pageNum = request.getParameter("pageNum");
+	// 페이지 번호
 	MovieDAO dao = MovieDAO.getInstance();
+	// 삭제할 DAO 가져오기
 	dto = dao.getContent(dto);
 %>
 

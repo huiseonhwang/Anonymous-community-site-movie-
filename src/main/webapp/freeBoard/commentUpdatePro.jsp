@@ -5,19 +5,21 @@
 <% request.setCharacterEncoding("UTF-8"); %>
 
 <jsp:useBean class="team03.bean.CommentDTO" id="dto" />
-<jsp:setProperty property="boardNum" name="dto" />
-<jsp:setProperty property="num" name="dto" />
+<jsp:setProperty property="*" name="dto" />
 
 <%
 	String pageNum = request.getParameter("pageNum");
 	String content = request.getParameter("content");
 	String pw = request.getParameter("pw");
+
+	int re_step = Integer.parseInt(request.getParameter("re_step"));
+	int re_level = Integer.parseInt(request.getParameter("re_level"));
 	
 	// pw가 null 일 때 (익명이 작성한 댓글이 아닐 때)
 	if(pw == null) {
 		dto.setContent(content);
 		CommentDAO dao = CommentDAO.getInstance();
-		int result = dao.updateMemComment(dto);
+		int result = dao.updateMemComment(dto, re_step, re_level);
 		if(result == 1) { %>
 		
 			<script>
@@ -31,7 +33,7 @@
 		dto.setContent(content);
 		dto.setPw(pw);
 		CommentDAO dao = CommentDAO.getInstance();
-		int result = dao.updateComment(dto);
+		int result = dao.updateComment(dto, re_step, re_level);
 		if(result == 1) { %>
 		
 			<script>

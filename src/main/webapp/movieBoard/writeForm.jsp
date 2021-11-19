@@ -66,14 +66,14 @@
 					<td> 장르 </td>
 					<td>
 						<select name = "kategorie">
-							<option value ="romance"> 로맨스/멜로 </option>
-							<option value = "comic"> 코미디 </option>
-							<option value = "action"> 액션 </option>
-							<option value = "sf"> SF </option>
-							<option value = "fantasy"> 판타지 </option>
-							<option value = "thriller"> 스릴러/공포 </option>
-							<option value = "adventure"> 어드벤쳐 </option>
-							<option value = "drama"> 드라마 </option>
+							<option value ="로맨스/멜로"> 로맨스/멜로 </option>
+							<option value = "코미디"> 코미디 </option>
+							<option value = "액션"> 액션 </option>
+							<option value = "SF"> SF </option>
+							<option value = "판타지"> 판타지 </option>
+							<option value = "스릴러/공포"> 스릴러/공포 </option>
+							<option value = "어드벤쳐"> 어드벤쳐 </option>
+							<option value = "드라마"> 드라마 </option>
 						</select>
 					</td>
 				<tr>
@@ -122,14 +122,14 @@
 					<td> 장르 </td>
 					<td>
 						<select name = "kategorie">
-							<option value ="romance"> 로맨스/멜로 </option>
-							<option value = "comic"> 코미디 </option>
-							<option value = "action"> 액션 </option>
-							<option value = "sf"> SF </option>
-							<option value = "fantasy"> 판타지 </option>
-							<option value = "thriller"> 스릴러/공포 </option>
-							<option value = "adventure"> 어드벤쳐 </option>
-							<option value = "drama"> 드라마 </option>
+							<option value ="로맨스/멜로"> 로맨스/멜로 </option>
+							<option value = "코미디"> 코미디 </option>
+							<option value = "액션"> 액션 </option>
+							<option value = "SF"> SF </option>
+							<option value = "판타지"> 판타지 </option>
+							<option value = "스릴러/공포"> 스릴러/공포 </option>
+							<option value = "어드벤쳐"> 어드벤쳐 </option>
+							<option value = "드라마"> 드라마 </option>
 						</select>
 					</td>
 				<tr>
@@ -176,14 +176,14 @@
 					<td> 장르 </td>
 					<td>
 						<select name = "kategorie">
-							<option value ="romance"> 로맨스/멜로 </option>
-							<option value = "comic"> 코미디 </option>
-							<option value = "action"> 액션 </option>
-							<option value = "sf"> SF </option>
-							<option value = "fantasy"> 판타지 </option>
-							<option value = "thriller"> 스릴러/공포 </option>
-							<option value = "adventure"> 어드벤쳐 </option>
-							<option value = "drama"> 드라마 </option>
+							<option value ="로맨스/멜로"> 로맨스/멜로 </option>
+							<option value = "코미디"> 코미디 </option>
+							<option value = "액션"> 액션 </option>
+							<option value = "SF"> SF </option>
+							<option value = "판타지"> 판타지 </option>
+							<option value = "스릴러/공포"> 스릴러/공포 </option>
+							<option value = "어드벤쳐"> 어드벤쳐 </option>
+							<option value = "드라마"> 드라마 </option>
 						</select>
 					</td>
 				<tr>

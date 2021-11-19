@@ -28,16 +28,16 @@
 <script type="text/javascript">
 	
 	//댓글 수정 함수
-	function updateComment(boardNum, num, pageNum){
+	function updateComment(boardNum, num, pageNum, re_step, re_level){
 		window.name = "ParentForm";
-		window.open("commentUpdateForm.jsp?boardNum="+boardNum+"&num="+num+"&pageNum="+pageNum,
+		window.open("commentUpdateForm.jsp?boardNum="+boardNum+"&num="+num+"&pageNum="+pageNum+"&re_step="+re_step+"&re_level="+re_level,
 					"updateForm", "width=570, height=350, resizable = no, scrollbars = no");
 	}
 	
 	// 댓글 삭제 함수
-	function deleteComment(boardNum, num, pageNum){
+	function deleteComment(boardNum, num, pageNum, re_step, re_level){
 		window.name = "ParentForm";
-		window.open("commentDeleteForm.jsp?boardNum="+boardNum+"&num="+num+"&pageNum="+pageNum,
+		window.open("commentDeleteForm.jsp?boardNum="+boardNum+"&num="+num+"&pageNum="+pageNum+"&re_step="+re_step+"&re_level="+re_level,
 					"deleteForm", "width=570, height=350, resizable = no, scrollbars = no");
 	}
 	
@@ -111,10 +111,11 @@
 <%	} %>
 	<tr>
 		<td style="width: 2%;"> <input type="button" value="공감"
-				onclick="window.location='goodPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" /> </td>
+				onclick="window.location='goodPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>&boardName=<%="freeBoard" %>'" /> </td>
+				
 		<td style="width: 48%;"> <%= dto.getGood() %> </td>
 		<td style="width: 2%;"> <input type="button" value="비공감"
-				onclick="window.location='badPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" /> </td>
+				onclick="window.location='badPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>&boardName=<%="freeBoard" %>'" /> </td>
 		<td style="width: 48%;"> <%= dto.getBad() %> </td>
 	</tr>
 	
@@ -135,6 +136,14 @@
 							onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
 					</td>
 				</tr>
+			<%} else {%>
+					
+					<tr id="center">
+						<td colspan="4">
+							<input type="button" value="글 목록"
+								onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
+						</td>
+					</tr>
 			<%}
 			
 		} else {
@@ -312,21 +321,21 @@
 						<div>
 							<%if(kid != null){
 								if(kid.equals(Cdto.getWriter())){ %>
-									<p><a href="#" onclick="updateComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>)">[수정]</a></p>
-									<p><a href="#" onclick="deleteComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>)">[삭제]</a></p>
+									<p><a href="#" onclick="updateComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">[수정]</a></p>
+									<p><a href="#" onclick="deleteComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">[삭제]</a></p>
 							<%	}
 							} %>
 									
 							<%if(id != null){
 								if(id.equals(Cdto.getWriter())){ %>	
-									<p><a href="#" onclick="updateComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>)">[수정]</a></p>
-									<p><a href="#" onclick="deleteComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>)">[삭제]</a>	</p>						
+									<p><a href="#" onclick="updateComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">[수정]</a></p>
+									<p><a href="#" onclick="deleteComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">[삭제]</a>	</p>						
 							<%	}
 							} %>
 									
 							<%if(Cdto.getPw() != null){ %>		
-								<p><a href="#" onclick="updateComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>)">[수정]</a></p>
-								<p><a href="#" onclick="deleteComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>)">[삭제]</a>	</p>						
+								<p><a href="#" onclick="updateComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">[수정]</a></p>
+								<p><a href="#" onclick="deleteComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">[삭제]</a>	</p>						
 							<% } %>
 								<p><a href="#" onclick="reComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">
 									[답글]

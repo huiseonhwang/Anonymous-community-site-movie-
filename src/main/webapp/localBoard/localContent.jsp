@@ -100,10 +100,10 @@
 <%	} %>
 	<tr>
 		<td> <input type="button" value="공감"
-				onclick="window.location='goodPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" /> </td>
+				onclick="window.location='goodPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>&boardName=<%="localBoard"%>'" /> </td>
 		<td> <%= dto.getGood() %> </td>
 		<td> <input type="button" value="비공감"
-				onclick="window.location='badPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" /> </td>
+				onclick="window.location='badPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>&boardName=<%="localBoard"%>'" /> </td>
 		<td> <%= dto.getBad() %> </td>
 	</tr>
 	<tr>
