@@ -27,6 +27,12 @@
 	}
 </style>
 
+<head>
+
+<title>관리자용 댓글 모아보기</title>
+<link href="https://cdn.discordapp.com/attachments/902120345748774922/912167936536481842/My_Post_Copy_1.jpg" rel="shortcut icon" type="image/x-icon">
+</head>
+
 <script type="text/javascript">
 	
 	// 자유게시판 댓글 삭제 함수

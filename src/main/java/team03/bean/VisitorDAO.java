@@ -1,7 +1,6 @@
 package team03.bean;
 
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +12,7 @@ public class VisitorDAO {
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	
+	//글 작성
 	public int visitorInsert(VisitorDTO dto) {
 		int result = 0;
 		try {
@@ -36,6 +36,7 @@ public class VisitorDAO {
 		return result;
 	} 
 	
+	//글 갯수
 	public int getCount(String owner) {
 		int result = 0;
 		try {
@@ -56,6 +57,7 @@ public class VisitorDAO {
 		return result;
 	}
 	
+	//글 페이지 출력
 	public List<VisitorDTO> getAllList(String owner, int start, int end){
 		List<VisitorDTO> list = null;
 		try {
@@ -91,6 +93,7 @@ public class VisitorDAO {
 		return list;
 	}
 	
+	//나의 글 갯수
 	public int getMyCount(String id) {
 		int result = 0;
 		try {
@@ -111,6 +114,7 @@ public class VisitorDAO {
 		return result;
 	}
 	
+	//나의 글 페이지 출력
 	public List<VisitorDTO> getMyList(String id, int start, int end){
 		List<VisitorDTO> list = null;
 		try {
@@ -144,38 +148,7 @@ public class VisitorDAO {
 		return list;
 	}
 	
-	public int VisitorDelete(String owner, String pw, int num) throws Exception {
-		String dbpw="";
-		int result = -1;
-		try {
-			conn = OracleDB.getConnection();
-			pstmt = conn.prepareStatement(
-				"select pw from visitor where owner = ? and num = ?");
-			pstmt.setString(1, owner);
-			pstmt.setInt(2, num);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				dbpw = rs.getString("pw");
-				if(dbpw.equals(pw)) {
-				pstmt = conn.prepareStatement(
-					"delete from visitor where owner = ? and num = ?");
-				pstmt.setString(1, owner);
-				pstmt.setInt(2, num);
-				pstmt.executeUpdate();
-				result = 1;
-			}else
-				result = 0;
-			}	
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {
-			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
-			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
-			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
-		}
-		return result;
-	}
-	
+	//글 내용 출력
 	public VisitorDTO getContent(VisitorDTO dto) {
 		try {
 			conn = OracleDB.getConnection();
@@ -203,6 +176,7 @@ public class VisitorDAO {
 		return dto;
 	}
 	
+	//글 수정
 	public int updateContent(VisitorDTO dto) {
 		String dbpw="";
 		int result=-1;
@@ -233,6 +207,39 @@ public class VisitorDAO {
 			if(rs != null) {try {rs.close();}catch(SQLException s) {}}
 			if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}
 			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return result;
+	}
+	
+	//글 삭제 
+	public int VisitorDelete(String owner, String pw, int num) throws Exception {
+		String dbpw="";
+		int result = -1;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+				"select pw from visitor where owner = ? and num = ?");
+			pstmt.setString(1, owner);
+			pstmt.setInt(2, num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dbpw = rs.getString("pw");
+				if(dbpw.equals(pw)) {
+				pstmt = conn.prepareStatement(
+					"delete from visitor where owner = ? and num = ?");
+				pstmt.setString(1, owner);
+				pstmt.setInt(2, num);
+				pstmt.executeUpdate();
+				result = 1;
+			}else
+				result = 0;
+			}	
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
 		}
 		return result;
 	}

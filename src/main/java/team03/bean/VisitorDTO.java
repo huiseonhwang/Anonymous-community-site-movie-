@@ -11,20 +11,16 @@ public class VisitorDTO {
 	private Timestamp reg;	
 	
 	public void setOwner(String owner) { this.owner = owner; }
-	public String getOwner() { return owner; }
-	
 	public void setNum(int num) { this.num = num; }
-	public int getNum() { return num; }
-	
 	public void setId(String id) { this.id = id;}
-	public String getId() { return id; }
-	
 	public void setPw(String pw) { this.pw = pw; }
-	public String getPw() { return pw; }
-	
 	public void setContent(String content) { this.content = content; }
-	public String getContent() { return content; }
-	
 	public void setReg(Timestamp reg) { this.reg = reg; }
+	
+	public String getOwner() { return owner; }
+	public int getNum() { return num; }
+	public String getId() { return id; }
+	public String getPw() { return pw; }
+	public String getContent() { return content; }
 	public Timestamp getReg() { return reg; }
 }

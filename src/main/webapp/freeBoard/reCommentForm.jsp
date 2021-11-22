@@ -2,6 +2,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<head>
+	<meta charset="UTF-8">
+	<link href="https://cdn.discordapp.com/attachments/902120345748774922/912167936536481842/My_Post_Copy_1.jpg" rel="shortcut icon" type="image/x-icon">
+	<title>시네톡-자유게시판</title>
+</head>
+
 <style>
 	table {
 		margin: 0 auto;
@@ -26,24 +32,44 @@
 	
 	// 입력된 값이 없을 때 띄우는 경고창 (유효성 검사)
 	function nullCheck(){
-		contentVal = document.getElementsByName("content")[0].value;
-		pwVal = document.getElementsByName("pw")[0].value;
 		
-		if(contentVal == ""){
-			alert("내용을 작성해주세요.");
-			return false;
+		// 세션값을 각각의 변수명에 대입
+		var sessionId = '<%=(String)session.getAttribute("id")%>';
+		var sessionKid = '<%=(String)session.getAttribute("kid")%>';
+		
+		// 세션의 여부를 판단하여 익명 사용자일 때와 로그인 된 사용자일 때를 구분
+		if(sessionId == null || sessionKid == null){
+			// 익명 사용자일 때
+			pwVal = document.getElementsByName("pw")[0].value;
+			contentVal = document.getElementsByName("content")[0].value;
+			
+			if(pwVal == ""){
+				alert("비밀번호를 입력해주세요.");
+				return false;
+			}
+			if(contentVal == ""){
+				alert("내용을 작성해주세요.");
+				return false;
+			}
+		} else {
+			// 로그인 된 사용자일 때
+			contentVal = document.getElementsByName("content")[0].value;
+			
+			if(contentVal == ""){
+				alert("내용을 작성해주세요.");
+				return false;
+			}
 		}
-		if(pwVal == ""){
-			alert("비밀번호를 입력해주세요.");
-			return false;
-		}
+		
 	}
 	
 </script>
 
 <%
 	request.setCharacterEncoding("UTF-8");
-
+	
+	
+	// 게시글 번호(boardNum)와 대댓글을 달 댓글 번호(num)를 파라미터로 받아옴
 	String pageNum = request.getParameter("pageNum");
 	int boardNum = Integer.parseInt(request.getParameter("boardNum"));
 	int num = Integer.parseInt(request.getParameter("num"));
@@ -105,8 +131,7 @@
 					<textarea rows="4" cols="60" name="content" placeholder="내용을 작성해주세요!"></textarea>
 				<br/>
 					<input type="submit" value="답글작성" />
-					<input type="button" value="창 닫기"
-						onclick="windowClose();" />
+					<input type="button" value="창 닫기" onclick="windowClose();" />
 				</td>
 			</tr>
 	</table>

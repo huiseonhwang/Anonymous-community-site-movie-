@@ -11,6 +11,7 @@ public class SignUpDAO {
 		private PreparedStatement pstmt = null;
 		private ResultSet rs = null;
 	
+	// 회원가입
 	public int memberInsert(SignUpDTO dto) {
 		int result = 0;
 		try {
@@ -32,6 +33,7 @@ public class SignUpDAO {
 		return result;
 	}
 	
+	// id 유효성 검사
 	public boolean memberIdCheck(SignUpDTO dto) {
 		boolean result = false;
 		try {

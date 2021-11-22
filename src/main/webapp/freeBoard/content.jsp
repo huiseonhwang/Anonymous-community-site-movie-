@@ -10,6 +10,12 @@
 <jsp:useBean class="team03.bean.BoardDTO" id="dto" />
 <jsp:setProperty property="num" name="dto" />
 
+<head>
+	<meta charset="UTF-8">
+	<link href="https://cdn.discordapp.com/attachments/902120345748774922/912167936536481842/My_Post_Copy_1.jpg" rel="shortcut icon" type="image/x-icon">
+	<title>시네톡-자유게시판</title>
+</head>
+
 <style>
 	table {
 		margin: 0 auto;
@@ -41,7 +47,7 @@
 					"deleteForm", "width=570, height=350, resizable = no, scrollbars = no");
 	}
 	
-	// 대댓글 함수
+	// 대댓글 함수 (게시글 번호, 댓글 번호, 대댓글에 대한 번호와 레벨을 메게변수로 받아서 파라미터로 넘김)
 	function reComment(boardNum, num, re_step, re_level){
 		window.name = "ParentForm";
 		window.open("reCommentForm.jsp?boardNum="+boardNum+"&num="+num+"&re_step="+re_step+"&re_level="+re_level,
@@ -51,17 +57,35 @@
 	
 	// 댓글 작성시 내용, 비밀번호 입력값이 없을 시 띄우는 경고창 (유효성 검사)
 	function nullCheck(){
-		pwVal = document.getElementsByName("pw")[0].value;
-		contentVal = document.getElementsByName("content")[0].value;
 		
-		if(pwVal == ""){
-			alert("비밀번호를 입력해주세요.");
-			return false;
+		// 세션값을 각각의 변수명에 대입
+		var sessionId = '<%=(String)session.getAttribute("id")%>';
+		var sessionKid = '<%=(String)session.getAttribute("kid")%>';
+		
+		// 세션의 여부를 판단하여 익명 사용자일 때와 로그인 된 사용자일 때를 구분
+		if(sessionId == null || sessionKid == null){
+			// 익명 사용자일 때
+			pwVal = document.getElementsByName("pw")[0].value;
+			contentVal = document.getElementsByName("content")[0].value;
+			
+			if(pwVal == ""){
+				alert("비밀번호를 입력해주세요.");
+				return false;
+			}
+			if(contentVal == ""){
+				alert("내용을 작성해주세요.");
+				return false;
+			}
+		} else {
+			// 로그인 된 사용자일 때
+			contentVal = document.getElementsByName("content")[0].value;
+			
+			if(contentVal == ""){
+				alert("내용을 작성해주세요.");
+				return false;
+			}
 		}
-		if(contentVal == ""){
-			alert("내용을 작성해주세요.");
-			return false;
-		}
+		
 	}
 	
 </script>
@@ -110,6 +134,7 @@
 		</tr>
 <%	} %>
 	<tr>
+		<%-- 공감 비공감 버튼 / 버튼을 누를 때 goodPro, badPro로 이동함과 동시에 게시글 번호, 페이지 번호, 데이터베이스에 저장할 게시판 이름을 넘겨줌 --%>
 		<td style="width: 2%;"> <input type="button" value="공감"
 				onclick="window.location='goodPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>&boardName=<%="freeBoard" %>'" /> </td>
 				
@@ -137,7 +162,6 @@
 					</td>
 				</tr>
 			<%} else {%>
-					
 					<tr id="center">
 						<td colspan="4">
 							<input type="button" value="글 목록"
@@ -145,7 +169,6 @@
 						</td>
 					</tr>
 			<%}
-			
 		} else {
 			// 게시글 작성자가 회원이고, 회원의 id세션이 작성자와 같을 때 표시되는 항목
 			if(id.equals(dto.getWriter())){ %>
@@ -197,12 +220,12 @@
 	<%}
 }%>
 
-		
-
 </table>
 
 <br/>
-<%-- 댓글 작성 --%>
+
+<%-- 게시글에 대한 댓글 작성 --%>
+
 <%
 	// 댓글 작성자 writer 변수 선언
 	String writer;
@@ -222,33 +245,15 @@
 		// writer에 kid 대입
 		writer = kid;
 	}
-	
-	// 페이징 처리
-	int pageSize = 10;
-	
-	int currentPage = Integer.parseInt(pageNum);
-	int start = (currentPage - 1) * pageSize + 1; // 결과 = 11
-	int end = currentPage * pageSize; // 결과 = 20
-	int count = 0;
- 	
-	String num = request.getParameter("num");
-	
-	List<CommentDTO> list = null;
-	CommentDAO Cdao = CommentDAO.getInstance();
-	
-	count = Cdao.countComment(Integer.parseInt(num));
-	if (count > 0){
-		list = Cdao.getAllComment(Integer.parseInt(num), start, end);
-	}
-	
 %>
-<%-- 컨텐츠 페이지 내에 폼태그를 작성하여 컨텐츠 페이지 내에서 댓글을 작성하고 파라미터를 넘김 --%>
+
+<%-- 컨텐츠 페이지 내에 폼태그를 작성하여 컨텐츠 페이지 내에서 댓글을 작성하고 commentPro.jsp로 작성된 파라미터를 넘김 --%>
 <form action="commentPro.jsp" method="post" onsubmit="return nullCheck();">
 	<table style="width: 50%;">
 		<tr>
 			<th colspan="2">
 				댓글 작성
-				<input type="hidden" name="num" value="<%=num%>" />
+				<input type="hidden" name="num" value="<%=dto.getNum()%>" />
 				<input type="hidden" name="pageNum" value="<%=pageNum%>" />
 			</th>
 		</tr>
@@ -278,7 +283,31 @@
 			</tr>
 	</table>
 </form>
+
 <br/>
+
+<%-- 작성된 댓글 내용 출력 --%>
+
+<%	
+	// 페이징 처리
+	int pageSize = 10;
+	
+	int currentPage = Integer.parseInt(pageNum);
+	int start = (currentPage - 1) * pageSize + 1; // 결과 = 11
+	int end = currentPage * pageSize; // 결과 = 20
+	int count = 0;
+ 	
+	String num = request.getParameter("num");
+	
+	List<CommentDTO> list = null;
+	CommentDAO Cdao = CommentDAO.getInstance();
+	
+	count = Cdao.countComment(Integer.parseInt(num));
+	if (count > 0){
+		list = Cdao.getAllComment(Integer.parseInt(num), start, end);
+	}
+	
+%>
 
 <table style="text-align: left; width: 50%;" >
 	<tr>
@@ -294,6 +323,7 @@
 				<td style="font-size: 13;">
 					<div>
 					<%
+						// 댓글에 대한 답글일 때 (대댓글일 때) 여백을 4칸 주고 re.gif 이미지 출력
 						if(Cdto.getRe_level() > 0){
 							for(int i = 0; i < Cdto.getRe_level(); i++){ %>
 								&nbsp;&nbsp;&nbsp;&nbsp;
@@ -317,22 +347,27 @@
 						</div>
 					</td>
 				
-					<td height="80" style="font-size: 13;">
+					<td style="font-size: 13; width: 10%;" id="center">
 						<div>
+							<%-- 카카오 로그인이 된 사용자 일 때 표시되는 항목 --%>
 							<%if(kid != null){
+								// 현재 유지되고 있는 kid세션과 댓글 작성자가 같을 때 표기되는 항목
 								if(kid.equals(Cdto.getWriter())){ %>
 									<p><a href="#" onclick="updateComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">[수정]</a></p>
 									<p><a href="#" onclick="deleteComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">[삭제]</a></p>
 							<%	}
 							} %>
-									
+							
+							<%-- 사이트 자체 로그인이 된 사용자 일 때 표시되는 항목 --%>
 							<%if(id != null){
+								// 현재 유지되고 있는 kid세션과 댓글 작성자가 같을 때 표기되는 항목
 								if(id.equals(Cdto.getWriter())){ %>	
 									<p><a href="#" onclick="updateComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">[수정]</a></p>
 									<p><a href="#" onclick="deleteComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">[삭제]</a>	</p>						
 							<%	}
 							} %>
 									
+							<%-- 익명 사용자일 때 표시되는 항목 --%>
 							<%if(Cdto.getPw() != null){ %>		
 								<p><a href="#" onclick="updateComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">[수정]</a></p>
 								<p><a href="#" onclick="deleteComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">[삭제]</a>	</p>						

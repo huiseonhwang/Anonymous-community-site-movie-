@@ -21,6 +21,13 @@
 	}
 </style>
 
+<head>
+
+	<title>관리자용 영화게시판</title>
+	<link href="https://cdn.discordapp.com/attachments/902120345748774922/912167936536481842/My_Post_Copy_1.jpg" rel="shortcut icon" type="image/x-icon">
+</head>
+
+
 <%
 String admin = (String)session.getAttribute("admin");
 if(admin == null){ 

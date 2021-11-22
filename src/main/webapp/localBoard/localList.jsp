@@ -6,6 +6,10 @@
 <%@ page import="team03.bean.LocalBoardDTO" %>
 <%@ page import="team03.bean.LocalBoardDAO" %>
 
+<head>
+<title>지역게시판</title>
+</head>
+
 <style>
    	table {
 		margin: 0 auto;

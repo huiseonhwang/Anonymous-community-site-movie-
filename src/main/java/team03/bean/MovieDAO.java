@@ -415,7 +415,7 @@ public class MovieDAO {
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement("select * from "
-					+ " (select num,writer, kategorie, subject,pw,content,filename,reg,readcount, good, bad, rownum r from " 
+					+ " (select num,writer, kategorie, subject, pw, content, filename, reg, readcount, good, bad, rownum r from " 
 					+ " (select * from movieBoard where "+colum+" like '%"+search+"%' order by num desc)) "
 					+ " where r >=? and r <=?");
 			pstmt.setInt(1, start);
@@ -474,11 +474,11 @@ public class MovieDAO {
 		List<MovieDTO> list = null; // 객체가 없으면 값은 안들어감
 		try {
 			conn = OracleDB.getConnection();
-			pstmt = conn.prepareStatement("select * from "
-					+ " (select num,writer,kategorie, subject,pw,content,filename,reg,readcount, good, bad, rownum r from " 
+			pstmt = conn.prepareStatement(
+					"select * from " 
+					+ " (select num, writer, kategorie, subject, pw, content, filename, reg, readcount, good, bad, rownum r from " 
 					+ " (select * from movieBoard where kategorie = ? order by num desc)) "
-					+ " where r >=? and r <=?");
-	
+					+ " where rownum >=? and rownum <=?");	
 			pstmt.setString(1, colum);
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);

@@ -13,6 +13,7 @@ public class Q_DAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 
+	//글 작성
 	public void insertQuestion(Q_DTO dto) {
 		int num = dto.getNum();
 		int ref = dto.getRef();
@@ -31,7 +32,6 @@ public class Q_DAO {
 				number = rs.getInt(1)+1;	
 			else
 				number = 1; 
-			
 			if (num != 0) 
 			{ 
 				sql="update question set re_step = re_step + 1 where ref = ? and re_step > ?";
@@ -70,6 +70,7 @@ public class Q_DAO {
 		}
 	}
 
+	//글 수정
 	public int updateQuestion(Q_DTO dto) {
 		String dbpw = "";
 		String sql = "";
@@ -107,6 +108,7 @@ public class Q_DAO {
 		return result;
 	}
 	
+	//글 삭제
 	public int deleteQuestion(int num, String pw) {
 		String dbpw = "";
 		int result = -1;
@@ -140,6 +142,7 @@ public class Q_DAO {
 		return result;
 	}
 	
+	//글 페이지 출력
 	public List<Q_DTO> getQuestionList(int start, int end) {
 		List<Q_DTO> List = null;
 		String sql = "";
@@ -184,6 +187,7 @@ public class Q_DAO {
 		return List;
 	}
 	
+	//글 내용 출력
 	public Q_DTO getQuestionContent(int num) {
 		Q_DTO dto = new Q_DTO();
 		try {
@@ -220,6 +224,7 @@ public class Q_DAO {
 		return dto;
 	}
 
+	//글 갯수
 	public int getQuestionCount() {
 		int result = 0;
 		
@@ -242,6 +247,7 @@ public class Q_DAO {
 		return result;
 	}
 	
+	//나의 글 페이지 출력
 	public List<Q_DTO> getMyList(String id, int start, int end) {
 		List<Q_DTO> list = null;
 		
@@ -281,6 +287,7 @@ public class Q_DAO {
 		return list;
 	}
 	
+	//나의 글 갯수
 	public int getMyCount(String id) {
 		int result = 0;
 		
@@ -304,6 +311,7 @@ public class Q_DAO {
 		return result;
 	}
 	
+	//글 검색
 	public List<Q_DTO> getSearchList(String searchq, String search, int start, int end) {
 		List<Q_DTO> list = null;
 		
@@ -345,6 +353,7 @@ public class Q_DAO {
 		return list;
 	}
 		
+	//검색한 글 갯수
 	public int getSearchCount(String searchq, String search) {
 		int result = 0;
 		

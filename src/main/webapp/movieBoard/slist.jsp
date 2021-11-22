@@ -60,7 +60,7 @@
 %>	
 
 <h1 style="text-align: center;">
-	<a href="list.jsp">게시판</a>
+	<a href="list.jsp">영화게시판</a>
 </h1>
 
 <table>
@@ -149,13 +149,15 @@
 		if(endPage > pageCount){
 			endPage = pageCount;
 		}
-		if(startPage > 10) { %>
-			<a href = "slist.jsp?pageNum=<%=startPage-10 %>&colum=<%=colum%>&search=<%=search%>">[이전]</a> <%}
-		for(int i = startPage; i<=endPage; i++) { %> 	
-			<a href = "slist.jsp?pageNum=<%=i %>&colum=<%=colum%>&search=<%=search%>">[<%=i %>]</a> <% } 
-		if (endPage < pageCount) {%>
-			<a href = "slist.jsp?pageNum=<%=startPage+10 %>&colum=<%=colum%>&search=<%=search%>">[다음]</a>
-	 <% }
+		if(startPage > 10){%>
+			<a href="slist.jsp?pageNum=<%=startPage-10%>&colum=<%=colum%>&search=<%=URLEncoder.encode(search, "UTF-8")%>">[이전]</a>
+				<%}
+				for(int i = startPage ; i <= endPage ; i++){
+			%>		<a href="slist.jsp?pageNum=<%=i%>&colum=<%=colum%>&search=<%=URLEncoder.encode(search, "UTF-8")%>">[<%=i%>]</a> 	
+  	  <%}
+		if(endPage < pageCount){%>
+			<a href="slist.jsp?pageNum=<%=startPage + 10%>&colum=<%=colum%>&search=<%=URLEncoder.encode(search, "UTF-8")%>">[다음]</a>
+  	<%}	
 	}
 %>
 

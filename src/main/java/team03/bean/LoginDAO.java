@@ -17,7 +17,7 @@ public class LoginDAO {
 	}
 	
 	private LoginDAO() {}
-	
+	//로그인
 	public boolean logincheck(LoginDTO dto) {
 		boolean result = false;
 		try {
@@ -39,7 +39,7 @@ public class LoginDAO {
 		return result;
 		
 	}
-	
+	//본인정보
 	public MemberDTO getMemberData(String id) {
 		MemberDTO dto = null;
 		try {

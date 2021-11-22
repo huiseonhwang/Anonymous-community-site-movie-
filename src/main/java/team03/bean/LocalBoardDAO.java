@@ -22,6 +22,7 @@ public class LocalBoardDAO {
 	private LocalBoardDAO() {}
 
 	
+	//게시물 갯수
 	public int LgetCount() {
 		int result = 0;
 		try {
@@ -43,7 +44,7 @@ public class LocalBoardDAO {
 		}
 		return result;
 	}
-	
+	//게시물 정렬, 출력
 	public List<LocalBoardDTO> LgetAllList(int start, int end){
 		List<LocalBoardDTO> list = null;
 		try {
@@ -81,7 +82,7 @@ public class LocalBoardDAO {
 		}
 		return list;
 	}
-	
+	//내가 쓴글 갯수
 	public int LgetMyCount(String writer) {
 		int result = 0;
 		try {
@@ -104,7 +105,7 @@ public class LocalBoardDAO {
 		}
 		return result;
 	}
-	
+	//내 게시물 정렬,출력
 	public List<LocalBoardDTO> LgetMyList(String writer, int start, int end){
 		List<LocalBoardDTO> list = null;
 		try {
@@ -143,7 +144,7 @@ public class LocalBoardDAO {
 		}
 		return list;
 	}
-	
+	//글쓰기
 	public int LinsertContentMem(LocalBoardDTO dto) {
 		int result = 0;
 		try {
@@ -168,7 +169,7 @@ public class LocalBoardDAO {
 		}
 		return result;
 	}
-	
+	//조회수 증가
 	public void LreadcountUp(LocalBoardDTO dto) {
 		try {
 			conn = OracleDB.getConnection();
@@ -185,7 +186,7 @@ public class LocalBoardDAO {
 			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
 		}
 	}
-
+	//게시글 페이지 
 	public LocalBoardDTO LgetContent(LocalBoardDTO dto) {
 		try {
 			conn = OracleDB.getConnection();
@@ -217,7 +218,7 @@ public class LocalBoardDAO {
 		}
 		return dto;
 	}
-	
+	//게시물 수정
 	public int LupdateContent(LocalBoardDTO dto) {
 		int result = 0;
 		try {
@@ -237,7 +238,7 @@ public class LocalBoardDAO {
 		}
 		return result;
 	}
-	
+	//게시물 삭제
 	public int LdeleteMemContent(LocalBoardDTO dto) {
 		int result = 0;
 		try {
@@ -257,7 +258,7 @@ public class LocalBoardDAO {
 		}
 		return result;
 	}
-	
+	//좋이요 증가
 	public int LgoodCountUp(LocalBoardDTO dto) {
 		int result = 0;
 		try {
@@ -276,7 +277,7 @@ public class LocalBoardDAO {
 		}
 		return result;
 	}
-	
+	//싫어요 증가
 	public int LbadCountUp(LocalBoardDTO dto) {
 		int result = 0;
 		try {
@@ -355,7 +356,7 @@ public class LocalBoardDAO {
 			}
 			return result;
 		}
-		
+		//검색한 지역별 게시물 갯수
 		public int LLgetSearchCount(String local) {
 			int result = 0;
 			try {

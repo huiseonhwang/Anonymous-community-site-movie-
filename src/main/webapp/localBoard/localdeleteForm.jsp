@@ -4,6 +4,10 @@
 <jsp:useBean class="team03.bean.LocalBoardDTO" id="dto" />
 <jsp:setProperty property="num" name="dto" />
 
+<head>
+<title>지역게시판 게시물 삭제</title>
+</head>
+
 <style>
 	table {
 		margin: 0 auto;

@@ -3,6 +3,10 @@
     pageEncoding="UTF-8"%>
 <%@ page import = "team03.bean.LoginDTO" %>
     
+ <head>
+<title>로그인</title>
+</head>
+    
    <script>
 	   function check(){
 		   idv = document.getElementsByName("id")[0].value;
@@ -85,7 +89,7 @@ function kakaoLogin() {
         	  var kname = response.kakao_account.profile.nickname;
         	  
         	  window.location.href=
-        		  '/team03/login/loginpro.jsp?kid='+kid+'&kemail='+kemail+'&kname='+encodeURIComponent(kname)+'&login=kakao';  //로그인프로로 보내기 -> 프로에서 로그인 방법마다 다르게 처리하기(kakao/base)       	  
+        		  '/team03/login/loginpro.jsp?kid='+kid+'&kemail='+kemail+'&kname='+encodeURIComponent(kname)+'&login=kakao';         	  
         	  
           },
           fail: function (error) {

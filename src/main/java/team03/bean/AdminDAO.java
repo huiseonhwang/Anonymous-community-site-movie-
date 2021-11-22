@@ -16,13 +16,14 @@ public class AdminDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
+	//ì‹±ê¸€í†¤ íŒ¨í„´. ì‰½ê²Œ í‘œí˜„í•´ ê°ì²´ë¥¼ 1ê°œë§Œ ìƒì„±í•  ìˆ˜ ìˆê²Œ í•œë‹¤.
 	private static AdminDAO instance = new AdminDAO();
 	public static AdminDAO getInstance(){
 		return instance;
 	}
 	private AdminDAO(){}
 	
-	//¾îµå¹Î °èÁ¤ÀÇ Á¤º¸ ºÒ·¯¿À±â
+	//ë¡œê·¸ì¸ ì‹œ ê´€ë¦¬ì ê³„ì •ì˜ ì •ë³´ë¥¼ ë¶ˆëŸ¬ì˜¤ëŠ” ë©”ì„œë“œ
 	public AdminDTO getAdmin() {
 		AdminDTO dto = null;
 		try {
@@ -46,7 +47,7 @@ public class AdminDAO {
 		return dto;
 	}
 	
-	//¸â¹ö Á¤º¸ ºÒ·¯¿À±â
+	//í™ˆí˜ì´ì§€ íšŒì›ì˜ ì •ë³´ë¥¼ ë¶ˆëŸ¬ì˜¤ëŠ” ë©”ì„œë“œ
 	public List<MemberDTO> getMember(int start, int end){
 		List<MemberDTO> list = null;
 		try {
@@ -75,7 +76,7 @@ public class AdminDAO {
 		return list;
 	}
 	
-	//Ä«Ä«¿À Á¤º¸ ºÒ·¯¿À±â
+	//ì¹´ì¹´ì˜¤ ë¡œê·¸ì¸í•œ íšŒì›ì˜ ì •ë³´ë¥¼ ë¶ˆëŸ¬ì˜¤ëŠ” ë©”ì„œë“œ
 	public List<KloginDTO> getKmember(int start, int end){
 		List<KloginDTO> list = null;
 		try {
@@ -102,7 +103,7 @@ public class AdminDAO {
 		return list;
 	}
 	
-	//¸â¹ö ¼ö ¼¼¿À±â
+	//í™ˆí˜ì´ì§€ íšŒì›ì˜ ì´ ì¸ì›ìˆ˜ë¥¼ ì„¸ëŠ” ë©”ì„œë“œ
 	public int getMemCount() {
 		int result = 0;
 		try {
@@ -122,7 +123,7 @@ public class AdminDAO {
 		return result;
 	}
 	
-	//Ä«Ä«¿À¸â¹ö ¼ö ¼¼¿À±â
+	//ì¹´ì¹´ì˜¤ íšŒì›ì˜ ì´ ì¸ì›ìˆ˜ë¥¼ ì„¸ëŠ” ë©”ì„œë“œ
 	public int getKmemCount() {
 		int result = 0;
 		try {
@@ -142,7 +143,7 @@ public class AdminDAO {
 		return result;
 	}
 	
-	// È¸¿ø °­Á¦Å»Åğ
+	// í™ˆí˜ì´ì§€ íšŒì›ì„ ê°•ì œ íƒˆí‡´ì‹œí‚¤ëŠ” ë©”ì„œë“œ. 
 	public int deleteMem(String id) {
 		int result = 0;
 		try {
@@ -162,7 +163,7 @@ public class AdminDAO {
 		return result;
 	}
 	
-	// È¸¿ø °­Á¦Å»Åğ
+	// ì¹´ì¹´ì˜¤ íšŒì›ì„ ê°•ì œ íƒˆí‡´ì‹œí‚¤ëŠ” ë©”ì„œë“œ
 	public int deleteKMem(String kid) {
 		int result = 0;
 		try {
@@ -182,7 +183,7 @@ public class AdminDAO {
 		return result;
 	}
 
-	//°Ô½Ã±Û Áö¿ì±â
+	//ê²Œì‹œê¸€ì„ ë²ˆí˜¸ë¡œ ì°¾ì•„ ì§€ìš°ëŠ” ë©”ì„œë“œ
 	public int deleteContent(int num) {
 		int result = 0;
 		try {
@@ -200,7 +201,7 @@ public class AdminDAO {
 		return result;
 	}
 		
-	//¹æ¸í·Ï °³¼ö ºÒ·¯¿À±â (ÀüÃ¼¶ó¼­ ¸Å°³º¯¼ö ¾È ÁÜ)
+	//ë¯¸ë‹ˆí˜ì´ì§€(ë°©ëª…ë¡)ì˜ ê²Œì‹œê¸€ ìˆ˜ë¥¼ ì„¸ëŠ” ë©”ì„œë“œ
 	public int getVisitorCount () {
 		int result = 0;
 		try {
@@ -220,7 +221,7 @@ public class AdminDAO {
 		return result;
 	}
 	
-	//¹æ¸í·Ï ³»¿ë ºÒ·¯¿À±â(ÀüÃ¼)
+	//ë¯¸ë‹ˆí˜ì´ì§€(ë°©ëª…ë¡)ì˜ ê²Œì‹œê¸€ì„ ê°€ì ¸ì˜¤ëŠ” ë©”ì„œë“œ
 	public List<VisitorDTO> getAllVlist(int start, int end){
 		List<VisitorDTO> list = null;
 		try {
@@ -256,7 +257,7 @@ public class AdminDAO {
 	}
 
 	
-	//¹æ¸í·Ï »èÁ¦ÇÏ±â
+	//íŠ¹ì • ë¯¸ë‹ˆí˜ì´ì§€ì˜ ê²Œì‹œê¸€(ë°©ëª…ë¡)ì„ ë²ˆí˜¸ë¡œ ì°¾ì•„ ì§€ìš°ëŠ” ë©”ì„œë“œ
 	public int VisitorDelete(String owner, int num) {
 		int result = 0;
 		try {
@@ -275,7 +276,7 @@ public class AdminDAO {
 		return result;
 	}
 	
-	// ´ñ±Û °¹¼ö Ä«¿îÆ®
+	// ì§€ì—­ ê²Œì‹œíŒì˜ ì´ ëŒ“ê¸€ì„ ì„¸ëŠ” ë©”ì„œë“œ
 	public int commentCount() {
 		int result = 0;
 		try {
@@ -297,7 +298,7 @@ public class AdminDAO {
 		return result;
 	}
 	
-	// ´ñ±Û Á¤º¸ Ãâ·Â
+	// ì§€ì—­ ê²Œì‹œíŒì˜ ëª¨ë“  ëŒ“ê¸€ì„ ë¶ˆëŸ¬ì˜¤ëŠ” ë©”ì„œë“œ
 	public List<CommentDTO> getAllComment(int start, int end){
 		List<CommentDTO> list = null;
 		try {
@@ -334,7 +335,7 @@ public class AdminDAO {
 		return list;
 	}
 	
-	// ´ñ±Û »èÁ¦
+	// ììœ ê²Œì‹œíŒ ë‚´ íŠ¹ì • ê²Œì‹œê¸€ì˜ ëŒ“ê¸€ì„ ë²ˆí˜¸ë¡œ ì°¾ì•„ ì§€ìš°ëŠ” ë©”ì„œë“œ
 	public int deleteComment(int CboardNum, int Cnum) {
 		int result = 0;
 		try {
@@ -356,7 +357,7 @@ public class AdminDAO {
 		return result;
 	}
 	
-	//Áö¿ª°Ô½Ã±Û Áö¿ì±â
+	//ì§€ì—­ê²Œì‹œíŒ ë‚´ íŠ¹ì • ê²Œì‹œê¸€ì˜ ëŒ“ê¸€ì„ ë²ˆí˜¸ë¡œ ì°¾ì•„ ì§€ìš°ëŠ” ë©”ì„œë“œ
 	public int LocalDeleteContent(int num) {
 		int result = 0;
 		try {
@@ -374,7 +375,7 @@ public class AdminDAO {
 		return result;
 	}
 	
-	// Áö¿ª ´ñ±Û ÀüÃ¼ ´ñ±Û Ä«¿îÆ®
+	// ì§€ì—­ê²Œì‹œíŒì˜ ì´ ëŒ“ê¸€ì„ ì„¸ëŠ” ë©”ì„œë“œ
 	public int LocalCommentCount() {
 		int result = 0;
 		try {
@@ -397,7 +398,7 @@ public class AdminDAO {
 		return result;
 	}
 	
-	// Áö¿ª ´ñ±Û ³»¿ë Ãâ·Â
+	// ì§€ì—­ê²Œì‹œíŒì˜ ëª¨ë“  ëŒ“ê¸€ì„ ë¶ˆëŸ¬ì˜¤ëŠ” ë©”ì„œë“œ
 	public List<LocalBoardCommentDTO> getLocalComment(int start, int end){
 		List<LocalBoardCommentDTO> list = null;
 		try {
@@ -434,7 +435,7 @@ public class AdminDAO {
 		return list;
 	}
 	
-	// Áö¿ª °Ô½ÃÆÇ ´ñ±Û »èÁ¦
+	// ì§€ì—­ê²Œì‹œíŒ ë‚´ íŠ¹ì • ê²Œì‹œê¸€ì˜ ëŒ“ê¸€ì„ ë²ˆí˜¸ë¡œ ì°¾ì•„ ì§€ìš°ëŠ” ë©”ì„œë“œ
 	public int localDeleteComment(int LboardNum, int Lnum) {
 		int result = 0;
 		try {
@@ -456,7 +457,7 @@ public class AdminDAO {
 		return result;
 	}
 	
-	//¿µÈ­°Ô½Ã±Û Áö¿ì±â
+	// ì˜í™”ê²Œì‹œíŒ ë‚´ ê²Œì‹œê¸€ì„ ë²ˆí˜¸ë¡œ ì°¾ì•„ ì§€ìš°ëŠ” ë©”ì„œë“œ
 	public int MovieDeleteContent(int num) {
 		int result = 0;
 		try {
@@ -474,7 +475,7 @@ public class AdminDAO {
 		return result;
 	}
 	
-	// ¿µÈ­ °Ô½ÃÆÇ ÀüÃ¼ ´ñ±Û Ä«¿îÆ®
+	// ì˜í™”ê²Œì‹œíŒì˜ ì´ ëŒ“ê¸€ì„ ì„¸ëŠ” ë©”ì„œë“œ
 	public int MovieCommentCount() {
 		int result = 0;
 		try {
@@ -497,7 +498,7 @@ public class AdminDAO {
 		return result;
 	}
 	
-	// ¿µÈ­ °Ô½ÃÆÇ ´ñ±Û Ãâ·Â
+	// ì˜í™”ê²Œì‹œíŒì˜ ëŒ“ê¸€ì„ ë¶ˆëŸ¬ì˜¤ëŠ” ë©”ì„œë“œ
 	public List<MovieCommentDTO> getMovieComment(int start, int end){
 		List<MovieCommentDTO> list = null;
 		try {
@@ -535,7 +536,7 @@ public class AdminDAO {
 		return list;
 	}
 	
-	// ¿µÈ­ °Ô½ÃÆÇ ´ñ±Û »èÁ¦
+	// ì˜í™”ê²Œì‹œíŒ ë‚´ íŠ¹ì • ê²Œì‹œê¸€ì˜ ëŒ“ê¸€ì„ ë²ˆí˜¸ë¡œ ì°¾ì•„ ì§€ìš°ëŠ” ë©”ì„œë“œ
 	public int movieDeleteComment(int MboardNum, int Mnum) {
 		int result = 0;
 		try {

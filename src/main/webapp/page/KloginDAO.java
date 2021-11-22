@@ -17,7 +17,6 @@ public class KloginDAO {
 	}
 	private KloginDAO() {}
 	
-	//카카오 정보로 회원가입
 	public int insertKid(KloginDTO dto) {
 		int result = 0;
 		try {
@@ -39,7 +38,7 @@ public class KloginDAO {
 		}
 		return result;
 	}
-	//카카오로그인 회원정보
+
 	public KloginDTO kgetUserInfo(String id) {
 		KloginDTO dto = null;
 		try {
@@ -63,7 +62,7 @@ public class KloginDAO {
 		return dto;
 	}
 	
-	//카카오 로그인 정보 업데이트
+
 	public int KmemberDataUpdate(KloginDTO dto) {
 		int result = 0;
 		try {
@@ -82,7 +81,7 @@ public class KloginDAO {
 		}
 		return result;
 	}
-	//카카오 로그인 회원탈퇴
+
 	public int KmemberDataDelete(KloginDTO dto) {
 		int result = 0;
 		try {

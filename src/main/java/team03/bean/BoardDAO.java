@@ -10,14 +10,14 @@ public class BoardDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	// daoÀÇ °´Ã¼¸¦ dao Å¬·¡½º¿¡¼­ ¹Ì¸® »ı¼ºÇÑ ÈÄ ¸Ş¼Òµå¸¦ È£ÃâÇÏ´Â Çü½ÄÀ¸·Î dao Å¬·¡½º¸¦ »ç¿ëÇÏ´Â ÄÚµå
+	// daoì˜ ê°ì²´ë¥¼ dao í´ë˜ìŠ¤ì—ì„œ ë¯¸ë¦¬ ìƒì„±í•œ í›„ ë©”ì†Œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” í˜•ì‹ìœ¼ë¡œ dao í´ë˜ìŠ¤ë¥¼ ì‚¬ìš©í•˜ëŠ” ì½”ë“œ
 	private static BoardDAO instance = new BoardDAO();
 	public static BoardDAO getInstance() {
 		return instance;
 	}
 	private BoardDAO() {}
 
-	// ÀÍ¸í, È¸¿ø ±Û ÀÛ¼º
+	// ìµëª…, íšŒì› ê¸€ ì‘ì„±
 	public int insertContent(BoardDTO dto) {
 		int result = 0;
 		try {
@@ -43,7 +43,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// °Ô½Ã±Û ÆäÀÌÁö Á¤·Ä, Ãâ·Â
+	// ê²Œì‹œê¸€ í˜ì´ì§€ ì •ë ¬, ì¶œë ¥
 	public List<BoardDTO> getAllList(int start, int end){
 		List<BoardDTO> list = null;
 		try {
@@ -82,7 +82,7 @@ public class BoardDAO {
 		return list;
 	}
 	
-	// °Ô½Ã±Û °¹¼ö
+	// ê²Œì‹œê¸€ ê°¯ìˆ˜
 	public int getCount() {
 		int result = 0;
 		try {
@@ -105,7 +105,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// º»ÀÎÀÇ °Ô½Ã±Û ÆäÀÌÁö Á¤·Ä, Ãâ·Â
+	// ë³¸ì¸ì˜ ê²Œì‹œê¸€ í˜ì´ì§€ ì •ë ¬, ì¶œë ¥
 	public List<BoardDTO> getMyList(String writer, int start, int end){
 		List<BoardDTO> list = null;
 		try {
@@ -145,7 +145,7 @@ public class BoardDAO {
 		return list;
 	}
 	
-	// º»ÀÎÀÇ °Ô½Ã±Û °¹¼ö
+	// ë³¸ì¸ì˜ ê²Œì‹œê¸€ ê°¯ìˆ˜
 	public int getMyCount(String writer) {
 		int result = 0;
 		try {
@@ -169,7 +169,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// °Ô½Ã±Û ÆäÀÌÁö (³»¿ë Ãâ·Â)
+	// ê²Œì‹œê¸€ í˜ì´ì§€ (ë‚´ìš© ì¶œë ¥)
 	public BoardDTO getContent(BoardDTO dto) {
 		try {
 			conn = OracleDB.getConnection();
@@ -202,7 +202,7 @@ public class BoardDAO {
 		return dto;
 	}
 	
-	// °Ô½Ã±Û Á¶È¸¼ö Áõ°¡
+	// ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€
 	public void readcountUp(BoardDTO dto) {
 		try {
 			conn = OracleDB.getConnection();
@@ -220,7 +220,7 @@ public class BoardDAO {
 		}
 	}
 	
-	// ÀÍ¸í °Ô½Ã±Û ¼öÁ¤
+	// ìµëª… ê²Œì‹œê¸€ ìˆ˜ì •
 	public int updateContent(BoardDTO dto) {
 		String dbpasswd="";
 		int x=-1;
@@ -256,7 +256,7 @@ public class BoardDAO {
 		return x;
 	}
 	
-	// ÀÍ¸í °Ô½Ã±Û »èÁ¦
+	// ìµëª… ê²Œì‹œê¸€ ì‚­ì œ
 	public int deleteContent(int num, String pw) {
 		String DBpw;
 		int result = 0;
@@ -291,7 +291,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// È¸¿ø °Ô½Ã±Û ¼öÁ¤
+	// íšŒì› ê²Œì‹œê¸€ ìˆ˜ì •
 	public int updateMemContent(BoardDTO dto) {
 		int result = 0;
 		try {
@@ -314,7 +314,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// È¸¿ø °Ô½Ã±Û »èÁ¦
+	// íšŒì› ê²Œì‹œê¸€ ì‚­ì œ
 	public int deleteMemContent(BoardDTO dto) {
 		int result = 0;
 		try {
@@ -335,9 +335,9 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// °³½Ã±Û °Ë»ö
+	// ê°œì‹œê¸€ ê²€ìƒ‰
 	public List<BoardDTO> getSearchList (String colum, String search, int start, int end){
-		List<BoardDTO> list = null;//°´Ã¼ ¾øÀ¸¸é °ª ¾Èµé¾î°¨
+		List<BoardDTO> list = null;//ê°ì²´ ì—†ìœ¼ë©´ ê°’ ì•ˆë“¤ì–´ê°
 		try {
 			conn=OracleDB.getConnection();
 			pstmt=conn.prepareStatement("select * from "
@@ -373,7 +373,7 @@ public class BoardDAO {
 		return list;
 		}
 	
-	// °Ë»öÇÑ °³½Ã±Û °¹¼ö
+	// ê²€ìƒ‰í•œ ê°œì‹œê¸€ ê°¯ìˆ˜
 	public int getSearchCount(String colum, String search) {
 		int result = 0;
 		try {
@@ -395,7 +395,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// °Ô½Ã±Û °ø°¨ Áõ°¡
+	// ê²Œì‹œê¸€ ê³µê° ì¦ê°€
 	public int goodCountUp(BoardDTO dto) {
 		int result = 0;
 		try {
@@ -415,7 +415,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// °Ô½Ã±Û ºñ°ø°¨ Áõ°¡
+	// ê²Œì‹œê¸€ ë¹„ê³µê° ì¦ê°€
 	public int badCountUp(BoardDTO dto) {
 		int result = 0;
 		try {
@@ -435,7 +435,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// È¸¿ø Å»Åğ ÇÒ ½Ã ÇØ´ç ÀÛ¼ºÀÚ°¡ ÀÛ¼ºÇÑ ±Û »èÁ¦
+	// íšŒì› íƒˆí‡´ í•  ì‹œ í•´ë‹¹ ì‘ì„±ìê°€ ì‘ì„±í•œ ê¸€ ì‚­ì œ
 	public int deleteWriter(String writer) {
 		int result = 0;
 		try {

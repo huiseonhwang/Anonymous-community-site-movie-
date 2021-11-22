@@ -37,11 +37,12 @@
 </style>
 
 <head>
-<meta charset="UTF-8">
-<title>관리자 페이지에 오신 것을 환영합니다.</title>
+	<meta charset="UTF-8">
+	<title>관리자 페이지에 오신 것을 환영합니다.</title>
+	<link href="https://cdn.discordapp.com/attachments/902120345748774922/912167936536481842/My_Post_Copy_1.jpg" rel="shortcut icon" type="image/x-icon">
 </head>
 
-<%
+<% //관리자 세션이 아니면 접근할 수 없게 함
 String admin = (String)session.getAttribute("admin");
 if(admin == null){ 
 %>	<script>
@@ -74,11 +75,11 @@ if(admin == null){
 	
 	// AdminDAO가 아닌 BoardDAO에서 바로 정보를 가져옴
 	BoardDAO Bdao = BoardDAO.getInstance();
-	List<BoardDTO> Flist = null;
+	List<BoardDTO> Flist = null; //리스트 선언
 	
-	Fcount = Bdao.getCount();
+	Fcount = Bdao.getCount(); //자유게시판의 게시글 수를 세옴
 	if(Fcount > 0){
-		Flist = Bdao.getAllList(start, end);
+		Flist = Bdao.getAllList(start, end); //자유게시판의 모든 글을 불러옴
 	}
 	
 %>
@@ -95,7 +96,7 @@ if(admin == null){
 			<th> 작성일 </th>
 			<th> 삭제여부 </th>
 		</tr>
-		<%	if(Fcount == 0){ %>
+		<%	if(Fcount == 0){ %> <!-- 게시글 수가 없을 때 -->
 				<tr>
 					<td colspan="5">작성된 글이 없습니다...</td>
 				</tr>
