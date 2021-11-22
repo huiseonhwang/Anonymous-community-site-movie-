@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="team03.bean.Q_DTO" %>
+<%@ page import="team03.bean.Q_DTO" %> 
+
+<h2 align="center">Q&A</h2> 
+<h5 align="center">- 문의사항을 남겨주세요</h5>
 
 <style>
   table {
@@ -35,7 +38,8 @@
 		</tr>
 		<tr>
 			<td align="center">
-				<input type="button" value="뒤로가기" onclick="window.location='/team03/QnA/q&a_Content.jsp?num=<%=num%>&pageNum=<%=pageNum%>'">&nbsp;
+				<input type="button" value="뒤로가기" 
+				onclick="window.location='/team03/QnA/q&a_Content.jsp?num=<%=num%>&pageNum=<%=pageNum%>'">
 				<input type="submit" value="삭제하기">
 			</td>  
 		</tr>

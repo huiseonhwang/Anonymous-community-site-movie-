@@ -26,8 +26,8 @@
 if(id != null){%>
 <div id="containAll">
 <form action="updatePro.jsp" method="post">
-	<h3>아이디 : <%=id%> <input type="hidden" name="id" value="<%=id %>"/></h3>  
-	<h3>이름 : <input type="text" name="name" value="<%=dto.getName() %>" /></h3> 
+	<h3>아이디 : <%=dto.getId()%> <input type="hidden" name="id" value="<%=dto.getId() %>"/></h3>  
+	<h3>이름 : <input type="text" name="name" value="<%=id %>" /></h3> 
 	<h3>이메일 : <input type="text" name="email1" value="<%=dto.getEmail1() %>" /></h3>
 	<h3>		<input type="text" name="email2" value="<%=dto.getEmail2() %>" /> </h3>
 			<input type="submit" value="정보 수정" /> &nbsp;&nbsp; &nbsp;&nbsp;

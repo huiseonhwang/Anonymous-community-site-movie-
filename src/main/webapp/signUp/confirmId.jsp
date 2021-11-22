@@ -5,6 +5,11 @@
 <jsp:useBean class = "team03.bean.SignUpDTO" id = "dto"/>
 <jsp:setProperty property="*" name ="dto"/>
 
+<head>
+	<meta charset="UTF-8">
+	<title>시네톡-회원가입</title>
+</head>
+
 <style>
 	*{
 		text-align: center;

@@ -67,7 +67,7 @@
    	   		<td>안녕하세요!</td>
    	   </tr>
        <tr>
-       		<input type="hidden" name="kid" value="<%=kid%>" /></td>        			
+       		<td><input type="hidden" name="kid" value="<%=kid%>" /></td>        			
        </tr>   
        <tr>
           	<td>이름 : <%=kdto.getName()%><input type="hidden" name="kname" value="<%=kdto.getName()%>" /></td>

@@ -7,6 +7,7 @@
 	</script>
    
     <%
+   		session.removeAttribute("admin");
     	session.removeAttribute("kid");
     	session.removeAttribute("id");
    	 	session.removeAttribute("pw");

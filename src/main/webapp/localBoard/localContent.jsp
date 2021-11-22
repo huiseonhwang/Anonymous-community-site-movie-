@@ -28,16 +28,16 @@
 <script type="text/javascript">
 	
 	//댓글 수정 함수
-	function updateComment(boardNum, num, pageNum){
+	function updateComment(boardNum, num, pageNum, re_step, re_level){
 		window.name = "ParentForm";
-		window.open("localcommentupdateForm.jsp?boardNum="+boardNum+"&num="+num+"&pageNum="+pageNum,
+		window.open("localcommentupdateForm.jsp?boardNum="+boardNum+"&num="+num+"&pageNum="+pageNum+"&re_step="+re_step+"&re_level="+re_level,
 					"updateForm", "width=570, height=350, resizable = no, scrollbars = no");
 	}
 	
 	// 댓글 삭제 함수
-	function deleteComment(boardNum, num, pageNum){
+	function deleteComment(boardNum, num, pageNum, re_step, re_level){
 		window.name = "ParentForm";
-		window.open("localcommentdeleteForm.jsp?boardNum="+boardNum+"&num="+num+"&pageNum="+pageNum,
+		window.open("localcommentdeleteForm.jsp?boardNum="+boardNum+"&num="+num+"&pageNum="+pageNum+"&re_step="+re_step+"&re_level="+re_level,
 					"deleteForm", "width=570, height=350, resizable = no, scrollbars = no");
 	}
 	
@@ -222,11 +222,12 @@
 					<td>
 						<div>
 						<%
-							if(Cdto.getRe_level() > 0){ %>
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								<img src="images/re.gif">
+							if(Cdto.getRe_level() > 0){ 
+								for(int i = 0; i < Cdto.getRe_level(); i++){%>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+								<%}%>
+							<img src="images/re.gif">
 						<%	}%>
-							
 							<a href="/team03/visitor/visitorForm.jsp?owner=<%=URLEncoder.encode(Cdto.getWriter(), "UTF-8")%>">
 							<%=Cdto.getWriter()%>
 							</a>
@@ -242,15 +243,15 @@
 						<div>
 							<%if(kid2 != null){
 								if(kid2.equals(Cdto.getWriter())){ %>
-									<p><a href="#" onclick="updateComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>)">[수정]</a></p>
-									<p><a href="#" onclick="deleteComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>)">[삭제]</a></p>
+									<p><a href="#" onclick="updateComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">[수정]</a></p>
+									<p><a href="#" onclick="deleteComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">[삭제]</a></p>
 							<%	}
 							} %>
 									
 							<%if(id != null){
 								if(id.equals(Cdto.getWriter())){ %>	
-									<p><a href="#" onclick="updateComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>)">[수정]</a></p>
-									<p><a href="#" onclick="deleteComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>)">[삭제]</a>	</p>						
+									<p><a href="#" onclick="updateComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">[수정]</a></p>
+									<p><a href="#" onclick="deleteComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>)">[삭제]</a>	</p>						
 							<%	}
 							} %>
 									

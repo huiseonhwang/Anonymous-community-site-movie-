@@ -3,20 +3,20 @@
 <%@ page import="team03.bean.Q_DAO" %>
 
 <% request.setCharacterEncoding("UTF-8"); %>
-
-<jsp:useBean class="team03.bean.Q_DTO"  id="dto" />
+<%-- 액선태그 dto객체를 생성해서 *(all) 다 가져오는 기능 --%>
+<jsp:useBean class="team03.bean.Q_DTO"  id="dto" />  
 <jsp:setProperty property="*" name="dto" />
 
-<%
-	String admin = request.getParameter("admin");
+<script>
+	alert("등록되었습니다");
+	window.location="q&a_List.jsp";
+</script>
 
+<%
 	Q_DAO dao = new Q_DAO();
-	
-	 
-	dao.insertQuestion(dto);
+	dao.insertQuestion(dto);	
 %>
-	<script>alert("등록 되었습니다");</script>
-<% 
-	response.sendRedirect("q&a_List.jsp");
-%>		
+
+
+	
 	

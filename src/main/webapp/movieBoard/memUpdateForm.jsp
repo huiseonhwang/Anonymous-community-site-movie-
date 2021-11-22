@@ -5,6 +5,12 @@
 <jsp:useBean class="team03.bean.MovieDTO" id="dto" />
 <jsp:setProperty property="num" name="dto" />
 
+
+<head>
+	<meta charset="UTF-8">
+	<title>시네톡-영화게시판</title>
+</head>
+
 <style>
 	table {
 		margin: 0 auto;

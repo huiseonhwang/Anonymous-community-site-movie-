@@ -62,7 +62,7 @@
     </form>
     	
     <div id="center">
-   		<img src="https://t1.daumcdn.net/cfile/tistory/99BEE8465C3D7D1214"  width="230" onclick="kakaoLogin();" value = "kid"/>
+   		<input type="button" value="카카오 로그인" onclick="kakaoLogin();" />
     </div>
     
     <a href="javascript:void(0)"> </a>

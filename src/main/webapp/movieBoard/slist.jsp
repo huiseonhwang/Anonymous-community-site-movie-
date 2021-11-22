@@ -5,6 +5,12 @@
 <%@ page import = "java.util.List" %>
 <%@ page import = "java.net.URLEncoder" %>
 
+<head>
+	<meta charset="UTF-8">
+	<link href="https://cdn.discordapp.com/attachments/902120345748774922/912167936536481842/My_Post_Copy_1.jpg" rel="shortcut icon" type="image/x-icon">
+	<title>시네톡-영화게시판</title>
+</head>
+
 <style>
    	table {
 		margin: 0 auto;

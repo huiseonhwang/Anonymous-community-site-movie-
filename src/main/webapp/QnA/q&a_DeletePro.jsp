@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="team03.bean.Q_DAO" %>
+<%@ page import="team03.bean.Q_DAO" %> 
 
 <%
 	int num = Integer.parseInt(request.getParameter("num"));

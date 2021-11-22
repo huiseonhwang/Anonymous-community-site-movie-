@@ -361,8 +361,7 @@ public class LocalBoardDAO {
 			try {
 				conn=OracleDB.getConnection();
 				pstmt = conn.prepareStatement(
-						"select count(*) from localBoard where local = ?");
-				pstmt.setString(1, local);
+						"select count(*) from localBoard where"+local);
 				
 				rs=pstmt.executeQuery();
 				if(rs.next()) {

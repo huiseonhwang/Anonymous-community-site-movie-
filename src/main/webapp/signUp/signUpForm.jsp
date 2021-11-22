@@ -2,6 +2,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+<head>
+	<meta charset="UTF-8">
+	<title>시네톡-회원가입</title>
+</head>
+    
+    
 <script>
 	function confirm() {
 		//value = document.getElemenrsByName("id")[0].value;

@@ -304,18 +304,17 @@ public class Q_DAO {
 		return result;
 	}
 	
-	public List<Q_DTO> getSearchList(String search, int start, int end) {
+	public List<Q_DTO> getSearchList(String searchq, String search, int start, int end) {
 		List<Q_DTO> list = null;
 		
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement("select * from "
 					  + " (select num, id, pw, subject, content, reg, readcount, ref, re_step, re_level, rownum r from "
-					  + " (select * from question where id = ? order by num desc)) "
+					  + " (select * from question where "+searchq+" like '%"+search+"%' order by num desc)) "
 					  + " where r >= ? and r <= ?");
-			pstmt.setString(1, search);
-			pstmt.setInt(2, start);
-			pstmt.setInt(3, end);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
 			
 			rs = pstmt.executeQuery();
 			

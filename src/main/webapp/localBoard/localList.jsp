@@ -133,6 +133,7 @@ window.location = "/team03/main.jsp";
 <%	}else{ %>
 
 	<%	for(LocalBoardDTO dto : list) { %>
+		<tr>
 			<td id="center">
 					<%= number-- %>
 					<input type="hidden" name="num" value="<%=dto.getNum() %>" />

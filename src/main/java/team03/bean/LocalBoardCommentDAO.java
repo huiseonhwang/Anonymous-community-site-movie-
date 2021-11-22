@@ -72,7 +72,7 @@ public class LocalBoardCommentDAO {
 				pstmt = conn.prepareStatement(
 						"select * from "
 							+ " (select boardNum, num, writer, content, reg, re_step, re_level, rownum r from " 
-							+ " (select * from localboardComment where boardNum = ? order by num asc)) "
+							+ " (select * from localboardComment where boardNum = ? order by num asc, re_step asc)) "
 							+ " where r >= ? and r <= ?");
 				pstmt.setInt(1, boardNum);
 				pstmt.setInt(2, start);
@@ -103,13 +103,15 @@ public class LocalBoardCommentDAO {
 		}
 
 		// 이미 작성된 댓글 정보 출력
-		public LocalBoardCommentDTO LgetContent(LocalBoardCommentDTO dto) {
+		public LocalBoardCommentDTO LgetContent(LocalBoardCommentDTO dto, int re_step, int re_level) {
 			try {
 				conn = OracleDB.getConnection();
 				pstmt = conn.prepareStatement(
-						"select * from localboardComment where boardNum = ? and num = ?");
+						"select * from localboardComment where boardNum = ? and num = ? and re_step = ? and re_level = ?");
 				pstmt.setInt(1, dto.getBoardNum());
 				pstmt.setInt(2, dto.getNum());
+				pstmt.setInt(3, re_step);
+				pstmt.setInt(4, re_level);
 				
 				rs = pstmt.executeQuery();
 				
@@ -134,15 +136,17 @@ public class LocalBoardCommentDAO {
 		}
 		
 		// 회원 댓글 수정
-		public int LupdateMemComment(LocalBoardCommentDTO dto) {
+		public int LupdateMemComment(LocalBoardCommentDTO dto, int re_step, int re_level) {
 			int result = 0;
 			try {
 				conn = OracleDB.getConnection();
 				pstmt = conn.prepareStatement(
-						"update localboardComment set content = ? where boardNum = ? and num = ?");
+						"update localboardComment set content = ? where boardNum = ? and num = ? and re_step = ? and re_level = ?");
 				pstmt.setString(1, dto.getContent());
 				pstmt.setInt(2, dto.getBoardNum());
 				pstmt.setInt(3, dto.getNum());
+				pstmt.setInt(4, re_step);
+				pstmt.setInt(5, re_level);
 				
 				result = pstmt.executeUpdate();
 				
@@ -157,14 +161,16 @@ public class LocalBoardCommentDAO {
 		}
 		
 		// 회원 댓글 삭제
-		public int LdeleteMemComment(LocalBoardCommentDTO dto) {
+		public int LdeleteMemComment(LocalBoardCommentDTO dto, int re_step, int re_level) {
 			int result = 0;
 			try {
 				conn = OracleDB.getConnection();
 				pstmt = conn.prepareStatement(
-						"delete from localboardComment where boardNum = ? and num = ?");
+						"delete from localboardComment where boardNum = ? and num = ? and re_step = ? and re_level = ?");
 				pstmt.setInt(1, dto.getBoardNum());
 				pstmt.setInt(2, dto.getNum());
+				pstmt.setInt(3, re_step);
+				pstmt.setInt(4, re_level);
 				
 				result = pstmt.executeUpdate();
 				
@@ -179,7 +185,7 @@ public class LocalBoardCommentDAO {
 		}
 		
 		// 댓글에 대한 답글 작성
-		public int LinsertReComment(LocalBoardCommentDTO dto, int boardNum) {
+		public int LinsertReComment(LocalBoardCommentDTO dto, int boardNum, int num) {
 			int result = 0;
 			int re_step = dto.getRe_step();
 			int re_level = dto.getRe_level();
@@ -195,12 +201,13 @@ public class LocalBoardCommentDAO {
 				re_level = re_level + 1;
 				
 				pstmt = conn.prepareStatement(
-						"insert into localboardComment values(?, localboardComment_seq.nextval, ?, ?, sysdate, ?, ?)");
+						"insert into localboardComment values(?, ?, ?, ?, sysdate, ?, ?)");
 				pstmt.setInt(1, boardNum);
-				pstmt.setString(2, dto.getWriter());
-				pstmt.setString(3, dto.getContent());
-				pstmt.setInt(4, re_step);
-				pstmt.setInt(5, re_level);
+				pstmt.setInt(2, num);
+				pstmt.setString(3, dto.getWriter());
+				pstmt.setString(4, dto.getContent());
+				pstmt.setInt(5, re_step);
+				pstmt.setInt(6, re_level);
 				
 				result = pstmt.executeUpdate();
 				

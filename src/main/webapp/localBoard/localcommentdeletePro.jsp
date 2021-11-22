@@ -3,15 +3,17 @@
 <%@ page import="team03.bean.LocalBoardCommentDAO" %>
 
 <jsp:useBean class="team03.bean.LocalBoardCommentDTO" id="dto" />
-<jsp:setProperty property="boardNum" name="dto" />
-<jsp:setProperty property="num" name="dto" />
+<jsp:setProperty property="*" name="dto" />
 
 <%
 	
 	String pageNum = request.getParameter("pageNum");
-	
+
+	int re_step = Integer.parseInt(request.getParameter("re_step"));
+	int re_level = Integer.parseInt(request.getParameter("re_level"));
+
 	LocalBoardCommentDAO dao = LocalBoardCommentDAO.getInstance();
-	int result = dao.LdeleteMemComment(dto);
+	int result = dao.LdeleteMemComment(dto, re_step, re_level);
 		
 		if(result == 1){ %>
 		
