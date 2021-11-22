@@ -448,13 +448,13 @@ public class MovieDAO {
 	}
 	
 	// 카테고리 게시글 개수
-	public int getKategorieSearchCount(String colum) {
+	public int getKategorieSearchCount(String kategorie) {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement
-					("select count (*) from MovieBoard where kategorie = ?");
-			pstmt.setString(1, colum);
+					("select count (*) from MovieBoard where kategorie =? ");
+			pstmt.setString(1, kategorie);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				result = rs.getInt(1);
@@ -470,16 +470,16 @@ public class MovieDAO {
 	}
 	
 	// 카테고리 게시글 검색
-	public List<MovieDTO> getKategorieSearchList (String colum, int start, int end) {
+	public List<MovieDTO> getKategorieSearchList (String kategorie, int start, int end) {
 		List<MovieDTO> list = null; // 객체가 없으면 값은 안들어감
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement(
-					"select * from " 
-					+ " (select num, writer, kategorie, subject, pw, content, filename, reg, readcount, good, bad, rownum r from " 
-					+ " (select * from movieBoard where kategorie = ? order by num desc)) "
-					+ " where rownum >=? and rownum <=?");	
-			pstmt.setString(1, colum);
+					"select * from "
+					+ " (select num,writer, kategorie, subject,pw,content,filename,reg,readcount, good, bad, rownum r from " 
+					+ " (select * from movieBoard order by num desc)) "
+					+ " where r >= ? and r <= ?");
+			pstmt.setString(1, kategorie);
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);
 			rs = pstmt.executeQuery();

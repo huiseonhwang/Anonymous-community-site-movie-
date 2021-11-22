@@ -29,12 +29,12 @@
 
 <%
 	request.setCharacterEncoding("UTF-8");
-
+	
 	String kategorie = request.getParameter("kategorie");
 	String kid = request.getParameter("kid");
 	String id = request.getParameter("id");
 	String pageNum = request.getParameter("pageNum");
-	String searchkate = request.getParameter("searchkate"); // 내 작성글로 갈 때 대입되는 글
+	String my = request.getParameter("my"); // 내 작성글로 갈 때 대입되는 글
 	
 	int pageSize = 10;
 	
@@ -46,16 +46,19 @@
 	int start = (currentPage - 1) * pageSize + 1;
 	int end = currentPage * pageSize;
 	int count = 0;
+	int number = 0;
 	
 	List<MovieDTO> list = null;
 	MovieDAO dao = MovieDAO.getInstance();
 	
-	if (searchkate == null) {
+	if (my == null) {
 		count = dao.getKategorieSearchCount(kategorie);
 		if (count > 0) {
 			list = dao.getKategorieSearchList(kategorie, start, end);
 		}
 	}
+	
+	number = count-(currentPage-1)*pageSize;
 %>	
 
 <h1 style="text-align: center;">
@@ -149,13 +152,13 @@
 			endPage = pageCount;
 		}
 		if (startPage > 10) { %>
-			<a href = "klist.jsp?pageNum=<%=startPage-10 %>"> [이전] </a>
+			<a href = "klist.jsp?pageNum=<%=startPage-10 %>>&kategorie<%=URLEncoder.encode(kategorie, "UTF-8")%>"> [이전] </a>
 		<% } 
 		 	for (int i = startPage; i <= endPage; i++) { %>
-		 		<a href = "klist.jsp?pageNum=<%=i%>" > [<%=i %>] </a>
+		 		<a href = "klist.jsp?pageNum=<%=i%>&kategorie<%=URLEncoder.encode(kategorie, "UTF-8")%>"> [<%=i %>] </a>
 		 	<% }
 		 	if (endPage < pageCount) { %>
-		 	<a href="klist.jsp?pageNum=<%=startPage + 10%>"> [다음] </a>
+		 	<a href="klist.jsp?pageNum=<%=startPage + 10%>&kategorie<%=URLEncoder.encode(kategorie, "UTF-8")%>"> [다음] </a>
 	 <% }
 	}
 %>
