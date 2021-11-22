@@ -52,7 +52,7 @@ String getClientIP(HttpServletRequest request) {
 %>
 
 <%
-	String freeBoard = request.getParameter("boardName");
+	String movieBoard = request.getParameter("boardName");
 	String pageNum = request.getParameter("pageNum");
 	int num = Integer.parseInt(request.getParameter("num"));
 	
@@ -64,7 +64,7 @@ String getClientIP(HttpServletRequest request) {
 	
 	GoodbadDTO Gdto = new GoodbadDTO();
 	GoodbadDAO GBdao = GoodbadDAO.getInstance();
-	Gdto = GBdao.getUserInfo(num, freeBoard);
+	Gdto = GBdao.getUserInfo(num, movieBoard);
 	
 	if(id != null){
 		writer = id;
@@ -76,7 +76,7 @@ String getClientIP(HttpServletRequest request) {
 	if(Gdto == null){
 		if(kid == null){
 			if(id == null){
-				int GBResult = GBdao.check(num, getClientIP(request), writer, freeBoard);
+				int GBResult = GBdao.check(num, getClientIP(request), writer, movieBoard);
 				
 				if(GBResult == 1){
 					
@@ -91,7 +91,7 @@ String getClientIP(HttpServletRequest request) {
 					<%}
 				}
 			} else {
-				int GBResult = GBdao.check(num, getClientIP(request), writer, freeBoard);
+				int GBResult = GBdao.check(num, getClientIP(request), writer, movieBoard);
 				
 				if(GBResult == 1){
 					
@@ -107,7 +107,7 @@ String getClientIP(HttpServletRequest request) {
 				}
 			}
 		} else {
-			int GBResult = GBdao.check(num, getClientIP(request), writer, freeBoard);
+			int GBResult = GBdao.check(num, getClientIP(request), writer, movieBoard);
 			
 			if(GBResult == 1){
 				
@@ -132,7 +132,7 @@ String getClientIP(HttpServletRequest request) {
 							window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
 						</script>
 				<%	}else{
-						int GBResult = GBdao.check(num, getClientIP(request), writer, freeBoard);
+						int GBResult = GBdao.check(num, getClientIP(request), writer, movieBoard);
 						
 						if(GBResult == 1){
 							
@@ -155,7 +155,7 @@ String getClientIP(HttpServletRequest request) {
 						window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
 					</script>
 				<%} else {
-					int GBResult = GBdao.check(num, getClientIP(request), writer, freeBoard);
+					int GBResult = GBdao.check(num, getClientIP(request), writer, movieBoard);
 					
 					if(GBResult == 1){
 						
@@ -178,7 +178,7 @@ String getClientIP(HttpServletRequest request) {
 					window.location="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>";
 				</script>
 			<%} else {
-					int GBResult = GBdao.check(num, getClientIP(request), writer, freeBoard);
+					int GBResult = GBdao.check(num, getClientIP(request), writer, movieBoard);
 					
 					if(GBResult == 1){
 						
