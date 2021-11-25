@@ -92,10 +92,10 @@
 				
 				<tr>
 					<%if(request.getParameter("num") == null) {%>
-						<td width="85" align="center">작성자</td>
+						<td width="100" align="center">작성자</td>
 						<td><input type="hidden" name="id" value="<%=id%>"><%=id%></td>
 					<%}else{%>
-						<td width="85" align="center">작성자</td>
+						<td width="100" align="center">작성자</td>
 						<td><input type="hidden" name="id" value="<%=admin%>"><%=admin%></td>
 					<%}%>
 				</tr>
@@ -104,14 +104,14 @@
 					<%-- 두번째는 id가 admin이면 안내드립니다로 바뀌는 조건문 --%>
 					<%if(request.getParameter("num") == null) {%>
 						<%if(id == admin){%>
-							<td width="85" align="center">제목</td>
+							<td width="100" align="center">제목</td>
 							<td>
 								<select name="subject" value="안내 드립니다">
 									<option>안내 드립니다</option>
 								</select>
 							</td>
 						<%}else{%>
-							<td width="85" align="center">제목</td>
+							<td width="100" align="center">제목</td>
 							<td>
 								<select name="subject" value="문의 드립니다">
 									<option>문의 드립니다</option>
@@ -119,7 +119,7 @@
 							</td>
 						<%}%>
 					<%}else{%>
-						<td width="85" align="center">제목</td>
+						<td width="100" align="center">제목</td>
 						<td>
 							<select name="subject" value="답변 드립니다">
 								<option>답변 드립니다</option>
@@ -128,12 +128,12 @@
 					<%}%>
 				</tr>
 				<tr>
-					<td width="85" align="center">내용</td>
+					<td width="100" align="center">내용</td>
 					
-					<td><textarea rows="10" cols="100" name="content" placeholder="내용을 작성해주세요"></textarea></td>
+					<td><textarea rows="10" cols="80" name="content" placeholder="내용을 작성해주세요"></textarea></td>
 				</tr>
 				<tr>
-					<td width="85" align="center">비밀번호</td>
+					<td width="100" align="center">비밀번호</td>
 					<td><input type="password" name="pw"></td>
 				</tr>
 				<tr>

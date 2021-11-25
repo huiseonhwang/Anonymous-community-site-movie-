@@ -1,9 +1,11 @@
+<%@page import="java.net.URLEncoder"%>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "team03.bean.LoginDTO" %>
     
  <head>
+ <link href="https://cdn.discordapp.com/attachments/902120345748774922/912167936536481842/My_Post_Copy_1.jpg" rel="shortcut icon" type="image/x-icon">
 <title>로그인</title>
 </head>
     
@@ -46,7 +48,7 @@
     		</tr>
     		<tr>
     			<th> 아이디 </th>
-    			<td> <input type = "text" name = "id"/> </td>
+    			<td> <input type = "text" name = "<%=URLEncoder.encode("id", "UTF-8")%>"/> </td>
     		</tr>
     		<tr>
     			<th> 비밀번호 </th>

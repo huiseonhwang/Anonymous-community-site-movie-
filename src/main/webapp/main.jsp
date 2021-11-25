@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="team03.bean.MemberDAO"%>
+<!DOCTYPE html>
 
 <html>
 <head>
-<title>실시간 박스오피스 & 영화검색</title>
+<link href="https://cdn.discordapp.com/attachments/902120345748774922/912167936536481842/My_Post_Copy_1.jpg" rel="shortcut icon" type="image/x-icon">
+<title>시네톡-실시간 박스오피스 & 영화검색</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/css/movie.css">
+<img src="image/Post.jpg">
 <script>
 	// $. 제이쿼리에서 유틸리티 함수(); 선택된 html 요소를 제이쿼리에서 이용할 수 있는 형태로
 	// 	  생성해 주는 역할을 한다.
@@ -143,7 +146,7 @@
 		}
 		// form에서 값 받아오기
 		// trim(); : 문자열의 앞뒤에 공백을 없애주는 기능
-		$.serviceAPISearchBlog = function() {
+				$.serviceAPISearchBlog = function() {
 			if ("" == $.trim($("#query").val())) {
 				$("#query").val("검색어");
 			}
@@ -252,21 +255,20 @@
 			if(id == null){ %>
 				<div class="login"  >
 					<input type="button" value="로그인" onclick="window.location='/team03/login/loginform.jsp'"/>
-					<input type="button" value="회원가입" onclick="window.location='/team03/signUp/signUpForm.jsp'"/>
+					<input type="button" value="회원가입" onclick="window.location='/team03/signUp/signUpForm.jsp'"/></br>
 					<input type="button" value="자유게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
-					<input type="button" value="방명록"    onclick="window.location='/team03/visitor/visitorForm.jsp'"/> 
 					<input type="button" value="영화게시판"	onclick="window.location='/team03/movieBoard/list.jsp'"/>
-					<input type="button" value="Q&A"    onclick="window.location='/team03/QnA/q&a_List.jsp'"/> 
+					<input type="button" value="Q&A"    onclick="window.location='/team03/QnA/q&a_List.jsp'"/> </br>
 				</div>
 			<%}else{%>
-		<div class="login" >
+		<div class="login"  >
 			<h3> [<%=id %>] 님.</h3>
 			<input type="button" value="로그아웃" onclick=" window.location='/team03/page/logout.jsp'" /> 
-			<input type="button" value="마이페이지" onclick="window.location='/team03/page/mypage.jsp'"/>
+			<input type="button" value="마이페이지" onclick="window.location='/team03/page/mypage.jsp'"/></br>
 			<input type="button" value="자유게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
-			<input type="button" value="방명록"    onclick="window.location='/team03/visitor/visitorForm.jsp?owner=<%=id%>'"/> 
 			<input type="button" value="지역게시판"    onclick="window.location='/team03/localBoard/localMain.jsp'"/>
-			<input type="button" value="영화게시판"	onclick="window.location='/team03/movieBoard/list.jsp'"/>
+			<input type="button" value="영화게시판"	onclick="window.location='/team03/movieBoard/list.jsp'"/></br>
+			<input type="button" value="미니페이지"    onclick="window.location='/team03/visitor/visitorForm.jsp?owner=<%=id%>'"/> 
 			<input type="button" value="Q&A"    onclick="window.location='/team03/QnA/q&a_List.jsp'"/>  
 		</div>
 		<%}%>
@@ -274,21 +276,18 @@
 		<div class="login"  >
 		<h3> [<%=kid %>] 님.</h3>
 			<input type="button" value="로그아웃" onclick=" window.location='/team03/page/logout.jsp'" /> 
-			<input type="button" value="마이페이지" onclick="window.location='/team03/page/mypage.jsp'"/>
+			<input type="button" value="마이페이지" onclick="window.location='/team03/page/mypage.jsp'"/></br>
 			<input type="button" value="자유게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
-			<input type="button" value="방명록"    onclick="window.location='/team03/visitor/visitorForm.jsp?owner=<%=kid%>'"/>
 			<input type="button" value="지역게시판"    onclick="window.location='/team03/localBoard/localMain.jsp'"/>
-			<input type="button" value="영화게시판"	onclick="window.location='/team03/movieBoard/list.jsp'"/>
+			<input type="button" value="영화게시판"	onclick="window.location='/team03/movieBoard/list.jsp'"/></br>
+			<input type="button" value="미니페이지"    onclick="window.location='/team03/visitor/visitorForm.jsp?owner=<%=kid%>'"/>
 			<input type="button" value="Q&A"    onclick="window.location='/team03/QnA/q&a_List.jsp'"/>   
 		</div>												
 	<%}
 	} else { %>
 		<div class="login"  >
 		<h3> [<%=admin %>] 님.</h3>
-			<input type="button" value="로그아웃" onclick=" window.location='/team03/page/logout.jsp'" /> 
-			<input type="button" value="자유게시판"	onclick="window.location='/team03/freeBoard/list.jsp'"/>
-			<input type="button" value="지역게시판"    onclick="window.location='/team03/localBoard/localMain.jsp'"/>
-			<input type="button" value="영화게시판"	onclick="window.location='/team03/movieBoard/list.jsp'"/>
+			<input type="button" value="로그아웃" onclick=" window.location='/team03/page/logout.jsp'" />
 			<input type="button" value="Q&A"    onclick="window.location='/team03/QnA/q&a_List.jsp'"/>   
 			<input type="button" value="관리자 페이지"    onclick="window.location='/team03/admin/adminMain.jsp'"/> 
 		</div>
@@ -300,11 +299,11 @@
 			<form name="serviceAPISearchForm" id="serviceAPISearchForm"	method="post" action="" onsubmit="return false;">
 				<div id="mo_inline">
 					<div id="MovieSearchInput" >		
-						<input class="form-control" type="text" id="query"  name="query"	placeholder="보고싶은 영화를 검색하세요" value="" />
+						
 					</div>
 				</div>
 				
-				<button class="btn btn-primary"  type="button" onclick="$.serviceAPISearchBlog(); $.popup();">검색</button>
+				
 			</form>
 		</div>
 		

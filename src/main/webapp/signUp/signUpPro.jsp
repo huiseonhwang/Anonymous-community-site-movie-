@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import = "team03.bean.SignUpDAO" %>
 
+<% request.setCharacterEncoding("UTF-8"); %>
+
 <jsp:useBean class = "team03.bean.SignUpDTO" id = "dto" />
 <jsp:setProperty property = "*" name ="dto" />
 

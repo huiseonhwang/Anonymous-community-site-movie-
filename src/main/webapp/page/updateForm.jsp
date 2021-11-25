@@ -7,6 +7,8 @@
 
 
 <link rel="stylesheet" type="text/css" href="mypage.css">
+<link href="https://cdn.discordapp.com/attachments/902120345748774922/912167936536481842/My_Post_Copy_1.jpg" rel="shortcut icon" type="image/x-icon">
+<title>시네톡-정보 수정</title>
 <h1>정보 수정</h1>
 <style>
 		*{
@@ -27,7 +29,7 @@ if(id != null){%>
 <div id="containAll">
 <form action="updatePro.jsp" method="post">
 	<h3>아이디 : <%=dto.getId()%> <input type="hidden" name="id" value="<%=dto.getId() %>"/></h3>  
-	<h3>이름 : <input type="text" name="name" value="<%=id %>" /></h3> 
+	<h3>이름 : <input type="text" name="name" value="<%=dto.getName() %>" /></h3> 
 	<h3>이메일 : <input type="text" name="email1" value="<%=dto.getEmail1() %>" /></h3>
 	<h3>		<input type="text" name="email2" value="<%=dto.getEmail2() %>" /> </h3>
 			<input type="submit" value="정보 수정" /> &nbsp;&nbsp; &nbsp;&nbsp;

@@ -17,23 +17,23 @@ String id = (String)session.getAttribute("id");
 
     
 <style>
-.list0 { clear:both; position: relative; z-index: 1; top: -35px; left: -5px; } 
-.list1 { clear:both; position: absolute; z-index: 1; top: 260px; left: 20px; }
-.list2 { clear:both; position: absolute; z-index: 2; top: 215px; left: 52px; } 
-.list3 { clear:both; position: absolute; z-index: 3; top: 232px; left: 115px; } 
-.list4 { clear:both; position: absolute; z-index: 4; top: 050px; left: 88px; } 
-.list5 { clear:both; position: absolute; z-index: 5; top: 154px; left: 35px; } 
-.list6 { clear:both; position: absolute; z-index: 6; top: 074px; left: 63px; } 
-.list7 { clear:both; position: absolute; z-index: 7; top: 143px; left: 98px; } 
-.list8 { clear:both; position: absolute; z-index: 8; top: 147px; left: 128px; } 
-.list9 { clear:both; position: absolute; z-index: 9; top: 368px; left: 40px; } 
-.list10 { clear:both; position: absolute; z-index: 10; top: 112px; left: 72px; } 
-.list11 { clear:both; position: absolute; z-index: 11; top: 101px; left: 39px; } 
-.list12 { clear:both; position: absolute; z-index: 12; top: 192px; left: 96px; } 
-.list13 { clear:both; position: absolute; z-index: 13; top: 275px; left: 62px; } 
-.list14 { clear:both; position: absolute; z-index: 14; top: 223px; left: 157px; } 
-.list15 { clear:both; position: absolute; z-index: 15; top: 242px; left: 189px; } 
-.list16 { clear:both; position: absolute; z-index: 16; top: 263px; left: 179px; }
+.list0 { clear:both; position: relative; z-index: 1; } 
+.list1 { clear:both; position: absolute; z-index: 1; top: 360px; left: 750px; }
+.list2 { clear:both; position: absolute; z-index: 2; top: 315px; left: 782px; } 
+.list3 { clear:both; position: absolute; z-index: 3; top: 332px; left: 845px; } 
+.list4 { clear:both; position: absolute; z-index: 4; top: 150px; left: 818px; } 
+.list5 { clear:both; position: absolute; z-index: 5; top: 254px; left: 765px; } 
+.list6 { clear:both; position: absolute; z-index: 6; top: 174px; left: 793px; } 
+.list7 { clear:both; position: absolute; z-index: 7; top: 243px; left: 828px; } 
+.list8 { clear:both; position: absolute; z-index: 8; top: 247px; left: 858px; } 
+.list9 { clear:both; position: absolute; z-index: 9; top: 468px; left: 780px; } 
+.list10 { clear:both; position: absolute; z-index: 10; top: 212px; left: 802px; } 
+.list11 { clear:both; position: absolute; z-index: 11; top: 201px; left: 769px; } 
+.list12 { clear:both; position: absolute; z-index: 12; top: 292px; left: 826px; } 
+.list13 { clear:both; position: absolute; z-index: 13; top: 375px; left: 792px; } 
+.list14 { clear:both; position: absolute; z-index: 14; top: 323px; left: 887px; } 
+.list15 { clear:both; position: absolute; z-index: 15; top: 342px; left: 919px; } 
+.list16 { clear:both; position: absolute; z-index: 16; top: 363px; left: 909px; }
 </style>
 <script>
 //-----------------------------------------------------------------------------------------
@@ -146,7 +146,12 @@ window.onload = function(){
 	</script>
 <%} else{%>
 
- <input type = "button" value = "전체글보기" onclick = "window.location ='localList.jsp'"/>  	
+
+<head>
+<link href="https://cdn.discordapp.com/attachments/902120345748774922/912167936536481842/My_Post_Copy_1.jpg" rel="shortcut icon" type="image/x-icon">
+<title>지역게시판</title>
+</head>
+<center> <input type = "button" value = "전체글보기" onclick = "window.location ='localList.jsp'"/></center>
 <div style="clear:both; position: relative; z-index: 1; top: -35px; left: 25; ">
 <a href='localssList.jsp?local=<%=URLEncoder.encode("전남", "UTF-8")%>' onfocus='this.blur()' onmouseover=mus_on('mus1') onmouseout=mus_off('mus1') onclick=smenu_click('mus1')>
 <img src='map/m061.gif' alt='' border='0' name='mus1' class='list1' ></a>

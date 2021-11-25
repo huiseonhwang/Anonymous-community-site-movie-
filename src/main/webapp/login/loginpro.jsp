@@ -7,6 +7,7 @@
 <%@ page import = "team03.bean.AdminDAO" %>
 <%@page import="team03.bean.AdminDTO"%>
 
+ <% request.setCharacterEncoding("UTF-8"); %>
  
  <jsp:useBean class = "team03.bean.LoginDTO" id ="dto"/>
  <jsp:setProperty property = "*" name ="dto"/>

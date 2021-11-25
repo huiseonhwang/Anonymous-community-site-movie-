@@ -75,7 +75,7 @@ public class CommentDAO {
 			pstmt = conn.prepareStatement(
 					"select * from "
 						+ " (select boardNum, num, writer, pw, content, reg, re_step, re_level, rownum r from " 
-						+ " (select * from boardComment where boardNum = ? order by num asc, re_step asc)) "
+						+ " (select * from boardComment where boardNum = ? order by num asc, reg asc)) "
 						+ " where r >= ? and r <= ?");
 			pstmt.setInt(1, boardNum);
 			pstmt.setInt(2, start);

@@ -14,7 +14,7 @@
 	</head>
 		<body>
 	
-		<style>
+		<style>	
 			table {
 				margin: 0 auto;
 				border: 2px solid black;
@@ -28,46 +28,52 @@
 
 		<%-- 내용, 비밀번호 기입되었는지 확인 --%>
 		<script>
-			function check(){
-				contentcheck = document.getElementsByName("content")[0].value;
-				pwcheck = document.getElementsByName("pw")[0].value;
+			function nullCheck(){
+				contentVal = document.getElementsByName("content")[0].value;
+				pwVal = document.getElementsByName("pw")[0].value;
 				
-				if(contentcheck == ""){
-					alert("내용을 작성해주세요");
+				if(contentVal == ""){
+					alert("내용을 작성해주세요.");
 					return false;
 				}
+				if(pwVal == ""){
+					alert("비밀번호를 입력해주세요.");
+					return false;
+				}
+			}
+			
+			function memNullCheck(){
+				contentVal = document.getElementsByName("content")[0].value;
 				
-				if(pwcheck == ""){
-					alert("비밀번호를 입력해주세요")
-					return false;	
+				if(contentVal == ""){
+					alert("내용을 작성해주세요.");
+					return false;
 				}
 			}
 		</script>
 
 		<%	
-			String id;
-			String id2 = (String)session.getAttribute("id"); 
+			String writer;
+			String id = (String)session.getAttribute("id"); 
 			String kid = (String)session.getAttribute("kid"); 
 			String admin = (String)session.getAttribute("admin"); 
-		
-			Random random = new Random(); 
-			String writer = "익명" + random.nextInt(1000000); 
 		
 			// 첫번째 조건문은 admin이 null값일 때
 			// 두번째 조건문은 kid가 null값일 때
 			// 세번째 조건문은 실제 id인 id2가 null값일 때
 			if(admin == null){	
 				if(kid == null){ 
-					if(id2 == null){ 
-						id = writer; 
+					if(id == null){ 
+						Random random = new Random(); 
+						writer = "익명" + random.nextInt(1000000);  
 					}else{
-						id = id2; 
+						writer = id; 
 					}
 				}else{
-					id = "카카오" + kid; 
+					writer = "카카오" + kid; 
 				}
 			}else{ 
-				id = admin;
+				writer = admin;
 			}
 		%>	
 
@@ -106,9 +112,10 @@
 		%>
 
 		<br />
-
-		<form action="visitorPro.jsp" method="post" onsubmit="return check();">
-			<table border="1" width="1000" align="center">
+	<% 
+		if(kid == null && id == null){%>
+			<form action="visitorPro.jsp" method="post" onsubmit="return nullCheck();">
+			<table border="1" style="width: 60%; text-align: center;">
 				<tr>
 					<th colspan="4"><h1><%=owner%>님의 미니페이지</h1>
 						<input type="hidden" name="owner" value=<%=owner%> />
@@ -116,20 +123,21 @@
 					</th>
 				</tr>					
 				<tr>
-					<td align="center">아이디</td>
+					<td align="center" style="width: 30%;">작성자</td>
 					<td align="center">
-						<%=id%>
-						<input type="hidden" name="id" value=<%=id%>>
+						<%=writer%>
+						<input type="hidden" name="id" value=<%=writer%> />
 					</td>
-								
-					<td align="center">비밀번호</td>
+				</tr>
+				<tr>
+					<td align="center" style="width: 30%;">비밀번호</td>
 					<td>
 						<input type="password" name="pw">
-					</td>
+					</td>		
 				</tr>		
 				<tr>
 					<td colspan="4">
-						<textarea rows="10" cols="135" name="content" placeholder="내용을 작성해주세요"></textarea>
+						<textarea rows="10" cols="100%" name="content" placeholder="내용을 작성해주세요"></textarea>
 					</td>
 				</tr>
 				<tr>
@@ -141,11 +149,43 @@
 				</tr>
 			</table>
 		</form>
-	
+	<%	}else{%>
+			<form action="visitorPro.jsp" method="post" onsubmit="return memNullCheck();">
+				<table border="1" style="width: 60%; text-align: center;">
+					<tr>
+						<th colspan="4"><h1><%=owner%>님의 미니페이지</h1>
+							<input type="hidden" name="owner" value=<%=owner%> />
+							<input type="hidden" name="pageNum" value="<%=pageNum%>"/>
+						</th>
+					</tr>					
+					<tr>
+						<td align="center" style="width: 30%;">작성자</td>
+						<td align="center">
+							<%=writer%>
+							<input type="hidden" name="id" value=<%=writer%> />
+						</td>
+					</tr>		
+					<tr>
+						<td colspan="4">
+							<textarea rows="10" cols="100%" name="content" placeholder="내용을 작성해주세요"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4" align="center">
+							<input type="submit" value="등록">
+							<input type="reset" value="다시입력">
+							<input type="button" value="메인으로" onclick="window.location='/team03/main.jsp'">
+						</td>
+					</tr>
+				</table>
+			</form>
+	<%	}
+	%>
+		
 		<br />
 	
 		<form>
-			<table width="1000">
+			<table style="width: 60%;">
 				<tr>
 					<%if(count == 0){%> 
 					<td colspan="4">등록된 글이 없습니다</td>
@@ -153,22 +193,72 @@
 					<%}else{ 
 						
 						 for(VisitorDTO dto : list) {%>
-									<tr>
+								<tr>
 									<td width="100" align="center">
 										<h5><%=dto.getReg()%></h5>
 										<strong><font color="red"><h5>No.<%=number--%></h5></font></strong>
 										<h3><font color="blue"><%=dto.getId()%></font></h3>
 									</td>
-									<th align="left"> <%=dto.getContent()%> </th>
-									<th width="90">
-										<input type="button" value="수정하기" 
-										onclick="window.location='updateForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" >
-										<br /><br />
-										<input type="button" value="삭제하기" 
-										onclick="window.location='deleteForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" >
-										<input type="hidden" name="owner" value="<%=dto.getOwner()%>" />
+										
+									<th align="left">
+										<div>
+											<div style="float: left; padding:5% 0 5% 0;">
+												<%=dto.getContent()%>
+											</div>
+								
+											<div style="float: right; padding:2% 0 2% 0; text-align: right;">
+												<%
+												if(kid == null){
+													if(id == null){
+														if(dto.getPw() != null){%>
+															<input type="button" value="수정하기" 
+															onclick="window.location='updateForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" >
+															<br/><br/>
+															<input type="button" value="삭제하기" 
+															onclick="window.location='deleteForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" >
+															<input type="hidden" name="owner" value="<%=dto.getOwner()%>" />
+														<%}
+													}else{
+														if(writer.equals(dto.getId())){%>
+															<input type="button" value="수정하기" 
+															onclick="window.location='updateForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" >
+															<br/><br/>
+															<input type="button" value="삭제하기" 
+															onclick="window.location='deleteForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" >
+															<input type="hidden" name="owner" value="<%=dto.getOwner()%>" />
+														<%}
+														if(dto.getPw() != null){%>
+															<input type="button" value="수정하기" 
+															onclick="window.location='updateForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" >
+															<br/><br/>
+															<input type="button" value="삭제하기" 
+															onclick="window.location='deleteForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" >
+															<input type="hidden" name="owner" value="<%=dto.getOwner()%>" />
+														<%}
+													}
+												}else{
+													if(writer.equals(dto.getId())){%>
+														<input type="button" value="수정하기" 
+														onclick="window.location='updateForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" >
+														<br/><br/>
+														<input type="button" value="삭제하기" 
+														onclick="window.location='deleteForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" >
+														<input type="hidden" name="owner" value="<%=dto.getOwner()%>" />
+													<%}
+													if(dto.getPw() != null){%>
+														<input type="button" value="수정하기" 
+														onclick="window.location='updateForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" >
+														<br/><br/>
+														<input type="button" value="삭제하기" 
+														onclick="window.location='deleteForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" >
+														<input type="hidden" name="owner" value="<%=dto.getOwner()%>" />
+													<%}
+												}
+											%>
+											</div>
+										</div>
 									</th>
-								 </tr>
+								</tr>
 						<%}%>	
 					<%}%>
 					

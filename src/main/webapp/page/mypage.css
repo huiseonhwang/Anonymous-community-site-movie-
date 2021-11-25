@@ -60,6 +60,17 @@
            margin-top: 50px;
            padding:10px
         }
+        input[value = "비밀번호수정"]{
+           text-align:center;
+           width: 40%; 
+           color: #808080;
+           font-size: 13px;
+           font-weight: bold;
+           margin: 20px; 
+           margin-top: 50px;
+           padding:10px
+        }
+        
         
          input[value = "홈으로 가기"]{
             width: 100%;

@@ -66,6 +66,15 @@ if(admin == null){
 	number = count - (currentPage-1) * pageSize;
 %>
 
+<center>
+	<input type="button" value="메인으로 돌아가기"
+		onclick="window.location='/team03/main.jsp'" />
+	<input type="button" value="관리자페이지로 돌아가기"
+		onclick="window.location='/team03/admin/adminMain.jsp'" />
+</center>
+
+<br/>
+
 <form>
 			<table width="700">
 				<tr>

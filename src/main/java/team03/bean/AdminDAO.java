@@ -306,7 +306,7 @@ public class AdminDAO {
 			pstmt = conn.prepareStatement(
 					"select * from "
 					+ " (select boardNum, num, writer, pw, content, reg, re_step, re_level, rownum r from "
-					+ " (select * from boardComment order by num desc)) "
+					+ " (select * from boardComment order by num desc, reg desc)) "
 					+ " where r >= ? and r <= ?");
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
@@ -336,14 +336,16 @@ public class AdminDAO {
 	}
 	
 	// 자유게시판 내 특정 게시글의 댓글을 번호로 찾아 지우는 메서드
-	public int deleteComment(int CboardNum, int Cnum) {
+	public int deleteComment(int CboardNum, int Cnum, int Cre_step, int Cre_level) {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement(
-					"delete from boardComment where boardNum = ? and num = ?");
+					"delete from boardComment where boardNum = ? and num = ? and re_step = ? and re_level = ?");
 			pstmt.setInt(1, CboardNum);
 			pstmt.setInt(2, Cnum);
+			pstmt.setInt(3, Cre_step);
+			pstmt.setInt(4, Cre_level);
 			
 			result = pstmt.executeUpdate();
 			
@@ -406,7 +408,7 @@ public class AdminDAO {
 			pstmt = conn.prepareStatement(
 					"select * from "
 						+ " (select boardNum, num, writer, content, reg, re_step, re_level, rownum r from "
-						+ " (select * from localBoardComment order by num desc)) "
+						+ " (select * from localBoardComment order by num desc, reg desc)) "
 						+ " where r >= ? and r <= ?");
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
@@ -436,14 +438,16 @@ public class AdminDAO {
 	}
 	
 	// 지역게시판 내 특정 게시글의 댓글을 번호로 찾아 지우는 메서드
-	public int localDeleteComment(int LboardNum, int Lnum) {
+	public int localDeleteComment(int LboardNum, int Lnum, int Lre_step, int Lre_level) {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement(
-					"delete from localBoardComment where boardNum = ? and num = ?");
+					"delete from localBoardComment where boardNum = ? and num = ? and re_step = ? and re_level = ?");
 			pstmt.setInt(1, LboardNum);
 			pstmt.setInt(2, Lnum);
+			pstmt.setInt(3, Lre_step);
+			pstmt.setInt(4, Lre_level);
 			
 			result = pstmt.executeUpdate();
 			
@@ -506,7 +510,7 @@ public class AdminDAO {
 			pstmt = conn.prepareStatement(
 					"select * from "
 						+ " (select boardNum, num, writer, pw, content, reg, re_step, re_level, rownum r from "
-						+ " (select * from MovieComment order by num desc)) "
+						+ " (select * from MovieComment order by num desc, reg desc)) "
 						+ " where r >= ? and r <= ?");
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
@@ -537,14 +541,16 @@ public class AdminDAO {
 	}
 	
 	// 영화게시판 내 특정 게시글의 댓글을 번호로 찾아 지우는 메서드
-	public int movieDeleteComment(int MboardNum, int Mnum) {
+	public int movieDeleteComment(int MboardNum, int Mnum, int Mre_step, int Mre_level) {
 		int result = 0;
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement(
-					"delete from movieComment where boardNum = ? and num = ?");
+					"delete from movieComment where boardNum = ? and num = ? and re_step = ? and re_level = ?");
 			pstmt.setInt(1, MboardNum);
 			pstmt.setInt(2, Mnum);
+			pstmt.setInt(3, Mre_step);
+			pstmt.setInt(4, Mre_level);
 			
 			result = pstmt.executeUpdate();
 			

@@ -13,17 +13,28 @@
 	
 	VisitorDAO dao = new VisitorDAO();
 
-	int check = dao.VisitorDelete(owner, pw, num);  
-	
-	if(check  == 1) {
-%> 
-	<script>
-		alert("삭제되었습니다");
-		window.location="visitorForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&pageNum=<%=pageNum%>";
-   </script>
-<%}else{%>
-	<script>
-		alert("비밀번호가 맞지 않습니다");
-		history.go(-1);
-	</script>
-<%}%>
+	if(pw != null){
+		int check = dao.VisitorDelete(owner, pw, num);  
+		
+		if(check  == 1) {
+		%> 
+			<script>
+				alert("삭제되었습니다");
+				window.location="visitorForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&pageNum=<%=pageNum%>";
+		   </script>
+		<%}else{%>
+			<script>
+				alert("비밀번호가 맞지 않습니다");
+				history.go(-1);
+			</script>
+		<%}
+	}else{
+		int check = dao.memDeleteConetent(owner, num);
+		
+		if(check  == 1) {%> 
+			<script>
+				alert("삭제되었습니다");
+				window.location="visitorForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&pageNum=<%=pageNum%>";
+		   </script>
+		<%}
+	}%>

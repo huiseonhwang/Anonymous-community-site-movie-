@@ -62,6 +62,14 @@ if(admin == null){
 	}
 	
 %>
+
+<center>
+	<input type="button" value="메인으로 돌아가기"
+		onclick="window.location='/team03/main.jsp'" />
+	<input type="button" value="관리자페이지로 돌아가기"
+		onclick="window.location='/team03/admin/adminMain.jsp'" />
+</center>
+
 <div style="float: left; width: 48%; padding: 10px;">
 	<table>
 		<tr>

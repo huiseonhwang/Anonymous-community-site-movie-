@@ -40,7 +40,7 @@
 		var sessionKid = '<%=(String)session.getAttribute("kid")%>';
 		
 		// 세션의 여부를 판단하여 익명 사용자일 때와 로그인 된 사용자일 때를 구분
-		if(sessionId == null || sessionKid == null){
+		if(sessionId == null && sessionKid == null){
 			// 익명 사용자일 때
 			pwVal = document.getElementsByName("pw")[0].value;
 			contentVal = document.getElementsByName("content")[0].value;

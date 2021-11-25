@@ -35,7 +35,7 @@
 		writer = id;
 	}
 	if(kid != null){
-		writer = kid;
+		writer = "카카오" + kid;
 	}
 		
 %>

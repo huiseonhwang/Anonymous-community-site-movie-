@@ -24,6 +24,9 @@
 		<% 
 			request.setCharacterEncoding("UTF-8");
 		
+			String id = (String)session.getAttribute("id"); 
+			String kid = (String)session.getAttribute("kid"); 
+		
 			String num = request.getParameter("num");
 			String pageNum=request.getParameter("pageNum");
 			String owner = request.getParameter("owner");
@@ -34,12 +37,14 @@
 		
 		<form action="deletePro.jsp" method="post" >
 			<table>	
-				<tr>	
-					<td width="300">
-						<div style="text-align: center;">
-							<input type="password" name="pw" placeholder="삭제를 원하시면, 비밀번호를 입력해주세요" style="width:280">
-						</div>				
-					</td>
+				<tr>
+					<%if(kid == null && id == null){%>
+						<td width="300">
+							<div style="text-align: center;">
+								<input type="password" name="pw" placeholder="삭제를 원하시면, 비밀번호를 입력해주세요" style="width:280">
+							</div>				
+						</td>
+					<%} %>
 				</tr>
 				<tr>
 					<td width="300">

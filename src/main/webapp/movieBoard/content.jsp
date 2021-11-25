@@ -30,7 +30,7 @@
 		border: 2px solid black;
 		padding: 10px;
 	}
-	*{
+	#center{
 		text-align: center;
 	}
 </style>
@@ -59,37 +59,29 @@
 	
 }
 	
-	// 댓글 작성시 내용, 비밀번호 입력값이 없을 시 띄우는 경고창 (유효성 검사)
+	// 제목, 내용, 비밀번호 입력값이 없을 시 띄우는 경고창 (유효성 검사)
+	function memNullCheck(){
+		contentVal = document.getElementsByName("content")[0].value;
+		
+		if(contentVal == ""){
+			alert("내용을 작성해주세요.");
+			return false;
+		}	
+	}
+	
+	// 제목, 내용, 비밀번호 입력값이 없을 시 띄우는 경고창 (유효성 검사)
 	function nullCheck(){
+		contentVal = document.getElementsByName("content")[0].value;
+		pwVal = document.getElementsByName("pw")[0].value;
 		
-		// 세션값을 각각의 변수명에 대입
-		var sessionId = '<%=(String)session.getAttribute("id")%>';
-		var sessionKid = '<%=(String)session.getAttribute("kid")%>';
-		
-		// 세션의 여부를 판단하여 익명 사용자일 때와 로그인 된 사용자일 때를 구분
-		if(sessionId == null || sessionKid == null){
-			// 익명 사용자일 때
-			pwVal = document.getElementsByName("pw")[0].value;
-			contentVal = document.getElementsByName("content")[0].value;
-			
-			if(pwVal == ""){
-				alert("비밀번호를 입력해주세요.");
-				return false;
-			}
-			if(contentVal == ""){
-				alert("내용을 작성해주세요.");
-				return false;
-			}
-		} else {
-			// 로그인 된 사용자일 때
-			contentVal = document.getElementsByName("content")[0].value;
-			
-			if(contentVal == ""){
-				alert("내용을 작성해주세요.");
-				return false;
-			}
+		if(contentVal == ""){
+			alert("내용을 작성해주세요.");
+			return false;
 		}
-		
+		if(pwVal == ""){
+			alert("비밀번호를 입력해주세요.");
+			return false;
+		}
 	}
 	
 </script>
@@ -118,27 +110,27 @@
 	dto = dao.getContent(dto);
 %>
 
-<table id="center">
+<table style="width: 50%;">
 	<tr>
 		<th colspan="4"> <a href="list.jsp"> 게시글 </a> </th>
 	</tr>
 	<tr>
-		<td> 작성자 </td>
+		<td id="center" style="width: 15%"> 작성자 </td>
 		<td> <%= dto.getWriter() %> </td>
-		<td> 조회수 </td>
+		<td id="center" style="width: 15%"> 조회수 </td>
 		<td> <%= dto.getReadcount() %> </td>
 	</tr>
 	<tr>
-		<td> 카테고리 </td>
+		<td id="center" style="width: 15%"> 카테고리 </td>
 		<td colspan = "4"> <%=dto.getKategorie() %></td>
 	</tr>
 	<tr>
-		<td> 제목 </td>
+		<td id="center" style="width: 15%"> 제목 </td>
 		<td colspan="4"> <%= dto.getSubject() %> </td>
 	</tr>
 	<tr>
-		<td style="padding-bottom: 300px;"> 내용 </td>
-		<td colspan="4" style="padding-bottom: 300px;"> <%= dto.getContent() %> </td>
+		<td style="padding-bottom: 300px; width: 10%" id="center"> 내용 </td>
+		<td colspan="4" style="padding-bottom: 300px; width: 85%;"> <%= dto.getContent() %> </td>
 	</tr>
 	<%if(dto.getFilename() != null){ %>
 		<tr>
@@ -157,12 +149,12 @@
 		</tr>
 <%	} %>
 	<tr>
-		<td> <input type="button" value="공감"
-				onclick="window.location='goodPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>&boardName=<%="movieBoard" %>'" /> </td>
-		<td> <%= dto.getGood() %> </td>
-		<td> <input type="button" value="비공감"
-				onclick="window.location='badPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>&boardName=<%="movieBoard" %>'" /> </td>
-		<td> <%= dto.getBad() %> </td>
+		<td style="width: 2%;"> <input type="button" value="공감"
+				onclick="window.location='goodPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>&boardName=<%="freeBoard" %>'" /> </td>
+		<td style="width: 48%;"> <%= dto.getGood() %> </td>
+		<td style="width: 2%;"> <input type="button" value="비공감"
+				onclick="window.location='badPro.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>&boardName=<%="freeBoard" %>'" /> </td>
+		<td style="width: 48%;"> <%= dto.getBad() %> </td>
 	</tr>
 	
 <%
@@ -284,8 +276,15 @@
 	}
 	
 	// 페이징 처리
-	int pageSize = 20;
-	int currentPage = Integer.parseInt(pageNum);
+	int pageSize = 10;
+	
+	String CMpageNum = request.getParameter("CMpageNum");
+	
+	if(CMpageNum == null){
+		CMpageNum = "1";
+	}
+	
+	int currentPage = Integer.parseInt(CMpageNum);
 	int start = (currentPage - 1) * pageSize + 1; // 결과 = 11
 	int end = currentPage * pageSize; // 결과 = 20
 	int count = 0;
@@ -302,55 +301,88 @@
 	}
 %>
 
-<%-- 게시글에서 댓글을 작성할 수 있는 폼을 작성하고 값(피아미터)를 넘김 --%>
-<form action = "commentPro.jsp" method = "post" onsubmit="return nullCheck();">
-	<table style="width: 50%;">
-		<tr>
-			<th colspan = "5">
-				댓글 작성
-				<input type = "hidden" name = "num" value = "<%=num %>" />
-				<input type = "hidden" name = "pageNum" value = "<%=pageNum %>"/>
-			</th>
-		</tr>
-		<tr>
-			<td> 작성자 </td>
-			<td colspan = "3" >
-				<%= writer%>
-				<input type = "hidden" name = "writer" value = "<%=writer %>" />
-			</td>
-		</tr>
-		<%-- kid랑 id가 null 일때 처리(익명사용자) --%>
-		<% if (kid == null && id == null ) { %>
-			<tr>
-				<td> 비밀번호 </td>
-				<td colspan = "3" >
-				<input type = "password" name = "pw" /> 
-				</td>
-			</tr>
-		<% } %>
-			<tr>
-				<td colspan = "5" >
-					<textarea style="width: 100%;" name="content" placeholder="내용을 작성해주세요!"></textarea>
-				<br/>
-					<input type = "submit" value = "댓글작성" />
-				</td>
-			</tr>
-	</table>
-</form>
+<%
+	if(kid == null && id == null){%>
+		<%-- 게시글에서 댓글을 작성할 수 있는 폼을 작성하고 값(피아미터)를 넘김 --%>
+		<form action = "commentPro.jsp" method = "post" onsubmit="return nullCheck();">
+			<table style="width: 50%;">
+				<tr>
+					<th colspan = "5">
+						댓글 작성
+						<input type = "hidden" name = "num" value = "<%=num %>" />
+						<input type = "hidden" name = "pageNum" value = "<%=pageNum %>"/>
+					</th>
+				</tr>
+				<tr>
+					<td> 작성자 </td>
+					<td colspan = "3" >
+						<%= writer%>
+						<input type = "hidden" name = "writer" value = "<%=writer %>" />
+					</td>
+				</tr>
+				<tr>
+					<td> 비밀번호 </td>
+					<td colspan = "3" >
+					<input type = "password" name = "pw" /> 
+					</td>
+				</tr>
+				<tr>
+					<td colspan = "5" >
+						<textarea style="width: 100%;" name="content" placeholder="내용을 작성해주세요!"></textarea>
+					<br/><br/>
+						<div id="center">
+							<input type = "submit" value = "댓글작성" />
+						</div>
+					</td>
+				</tr>
+			</table>
+		</form>
+<%	}else{%>
+		<form action = "commentPro.jsp" method = "post" onsubmit="return memNullCheck();">
+			<table style="width: 50%;">
+				<tr>
+					<th colspan = "5">
+						댓글 작성
+						<input type = "hidden" name = "num" value = "<%=num %>" />
+						<input type = "hidden" name = "pageNum" value = "<%=pageNum %>"/>
+					</th>
+				</tr>
+				<tr>
+					<td> 작성자 </td>
+					<td colspan = "3" >
+						<%= writer%>
+						<input type = "hidden" name = "writer" value = "<%=writer %>" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan = "5" >
+						<textarea style="width: 100%;" name="content" placeholder="내용을 작성해주세요!"></textarea>
+					<br/><br/>
+						<div id="center">
+							<input type = "submit" value = "댓글작성" />
+						</div>
+					</td>
+				</tr>
+			</table>
+		</form>
+<%	}
+%>
+
+
 <br/>
 
-<table style="text-align: left;">
+<table style="text-align: left; width: 50%;">
 	<tr>
 		<% if ( count == 0) { %>
-			<td colspan = "5" > 댓글이 없습니다. </td>
+			<td colspan = "3" > 댓글이 없습니다. </td>
 	</tr>
 		<% } else { %>
 	<tr>
-		<th colspan = "5"> 댓글 </th>
+		<th colspan = "3"> 댓글 </th>
 	</tr>
 	<tr>
 		<% for (MovieCommentDTO MCdto : list) { %>
-				<td>
+				<td style="font-size: 13;">
 					<div>
 							<% if(MCdto.getRe_level() > 0){ 
 								for(int i=0; i<MCdto.getRe_level(); i++) { %>
@@ -367,15 +399,12 @@
 								<% } %>
 					</div>
 				</td>
-				<td>
-					<%=MCdto.getReg() %>
-				</td>
-				<td width = "2oo">
+				<td style="width: 70%;">
 					<div>
 						<%= MCdto.getContent()%>
 					</div>
 				</td>
-					<td height="80" style="font-size: 13;">
+					<td style="font-size: 13; width: 10%; height: 80;" id="center">
 						<div>
 							<%if(kid != null){
 								if(kid.equals(MCdto.getWriter())){ %>
@@ -400,10 +429,11 @@
 								</a></p>
 					</div>
 				</td>
-			</tr>
+		</tr>
 		<% } 
 		}%>
-	</table>
+</table>
+	
 <div id="center">
 <%
 	// 페이지 정렬
@@ -416,14 +446,14 @@
 			endPage = pageCount;
 		}	
 		if(startPage > 10){%>
-			<a href="content.jsp?pageNum=<%=startPage-10%>">[이전]</a>
+			<a href="content.jsp?num=<%=num%>&pageNum=<%=pageNum%>&CMpageNum=<%=startPage-10%>">[이전]</a>
 		<%}
 		for(int i = startPage ; i <= endPage ; i++){
-		%>	<a href="content.jsp?pageNum=<%=i%>">[<%=i%>]</a> 	
+		%>	<a href="content.jsp?num=<%=num%>&pageNum=<%=pageNum%>&CMpageNum=<%=i%>">[<%=i%>]</a> 	
 	  <%}
 		if(endPage < pageCount){%>
-		<a href="content.jsp?pageNum=<%=startPage + 10%>">[다음]</a>
-	  <%}	
+		<a href="content.jsp?num=<%=num%>&pageNum=<%=pageNum%>&CMpageNum=<%=startPage + 10%>">[다음]</a>
+	  <%}
 	}
 %>
 </div>

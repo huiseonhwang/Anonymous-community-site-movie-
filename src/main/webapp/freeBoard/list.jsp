@@ -6,6 +6,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="team03.bean.BoardDTO" %>
 <%@ page import="team03.bean.BoardDAO" %>
+<%@ page import="team03.bean.CommentDAO" %>
 
 <head>
 	<meta charset="UTF-8">
@@ -32,9 +33,9 @@
 	SimpleDateFormat sdf = 
 		new SimpleDateFormat("yy-MM-dd HH:mm");
 
-	String kid = (String)session.getAttribute("kid");
-	
+	String kid = (String)session.getAttribute("kid");	
 	String id = (String)session.getAttribute("id");
+	
 	String pageNum = request.getParameter("pageNum"); // null 값 대입
 	String my = request.getParameter("my");
 	
@@ -76,6 +77,7 @@
 	}
 	
 	number = count-(currentPage-1)*pageSize;
+	
 %>
 
 <h1 style="text-align: center;">
@@ -128,8 +130,6 @@
 						<a href="/team03/visitor/visitorForm.jsp?owner=<%=URLEncoder.encode(dto.getWriter(), "UTF-8")%>">
 								<%= dto.getWriter() %>
 						</a>
-						
-						
 					<%} else { %>
 						<%= dto.getWriter() %>
 					<%}%>
@@ -138,6 +138,16 @@
 					<a href="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>">
 						<%= dto.getSubject() %>
 					</a>
+					<% 
+						// 게시글에 달려있는 댓글이 있을 때 게시글 제목 옆에 댓글 갯수를 표기해주는 코드
+						CommentDAO CMdao = CommentDAO.getInstance();
+						int commentCount = CMdao.countComment(dto.getNum());
+						
+						if(commentCount > 0){%>
+							&nbsp;
+							<font>[<%=commentCount %>]</font>
+						<%}
+					%>
 				</td>
 				<td> <%= sdf.format(dto.getReg()) %> </td>
 				<td> <%= dto.getReadcount() %> </td>
@@ -159,16 +169,29 @@
 			int endPage = startPage + pageBlock-1;
 			if(endPage > pageCount){
 				endPage = pageCount;
-			}	
-			if(startPage > 10){%>
-				<a href="list.jsp?pageNum=<%=startPage-10%>">[이전]</a>
-			<%}
-			for(int i = startPage ; i <= endPage ; i++){
-			%>	<a href="list.jsp?pageNum=<%=i%>">[<%=i%>]</a> 	
-		  <%}
-			if(endPage < pageCount){%>
-			<a href="list.jsp?pageNum=<%=startPage + 10%>">[다음]</a>
-		  <%}	
+			}
+			
+			if(my == null){
+				if(startPage > 10){%>
+					<a href="list.jsp?pageNum=<%=startPage-10%>">[이전]</a>
+				<%}
+				for(int i = startPage ; i <= endPage ; i++){%>
+					<a href="list.jsp?pageNum=<%=i%>">[<%=i%>]</a> 	
+			  	<%}
+				if(endPage < pageCount){%>
+				<a href="list.jsp?pageNum=<%=startPage + 10%>">[다음]</a>
+			  	<%}
+			} else {
+				if(startPage > 10){%>
+					<a href="list.jsp?pageNum=<%=startPage-10%>&my=<%=my%>">[이전]</a>
+				<%}
+				for(int i = startPage ; i <= endPage ; i++){%>
+					<a href="list.jsp?pageNum=<%=i%>&my=<%=my%>">[<%=i%>]</a> 	
+			  	<%}
+				if(endPage < pageCount){%>
+				<a href="list.jsp?pageNum=<%=startPage + 10%>&my=<%=my%>">[다음]</a>
+			 	 <%}
+			}
 		}
 	%>
 </div>

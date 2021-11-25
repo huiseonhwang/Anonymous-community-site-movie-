@@ -5,6 +5,7 @@
 <jsp:setProperty property="num" name="dto" />
 
 <head>
+<link href="https://cdn.discordapp.com/attachments/902120345748774922/912167936536481842/My_Post_Copy_1.jpg" rel="shortcut icon" type="image/x-icon">
 <title>지역게시판 게시물 삭제</title>
 </head>
 

@@ -1,4 +1,5 @@
 
+<%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -79,7 +80,7 @@
 		<tr>
 			<th> 아이디 </th>
 			<td>
-				<input type = "text" name = "id" />
+				<input type = "text" name = "<%=URLEncoder.encode("id", "UTF-8")%>" />
 				<input type = "button" value = "id중복확인" onclick="confirm();" />
 				<label id="idCheck"></label>
 			</td>
@@ -112,7 +113,7 @@
 		</tr>
 		<tr>
 			<th colspan="2">
-		 		<input type = "button" value = "메인으로 돌아가기" onclick = 'window.location ="/team03/login/loginform.jsp"' />
+		 		<input type = "button" value = "메인으로 돌아가기" onclick = "window.location='/team03/main.jsp'"/>
 			</th>
 		</tr>
 	</table>

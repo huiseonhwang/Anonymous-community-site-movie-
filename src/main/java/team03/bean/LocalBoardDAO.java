@@ -22,7 +22,7 @@ public class LocalBoardDAO {
 	private LocalBoardDAO() {}
 
 	
-	//°Ô½Ã¹° °¹¼ö
+	//ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int LgetCount() {
 		int result = 0;
 		try {
@@ -44,7 +44,7 @@ public class LocalBoardDAO {
 		}
 		return result;
 	}
-	//°Ô½Ã¹° Á¤·Ä, Ãâ·Â
+	//ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½
 	public List<LocalBoardDTO> LgetAllList(int start, int end){
 		List<LocalBoardDTO> list = null;
 		try {
@@ -82,7 +82,7 @@ public class LocalBoardDAO {
 		}
 		return list;
 	}
-	//³»°¡ ¾´±Û °¹¼ö
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int LgetMyCount(String writer) {
 		int result = 0;
 		try {
@@ -105,7 +105,7 @@ public class LocalBoardDAO {
 		}
 		return result;
 	}
-	//³» °Ô½Ã¹° Á¤·Ä,Ãâ·Â
+	//ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½
 	public List<LocalBoardDTO> LgetMyList(String writer, int start, int end){
 		List<LocalBoardDTO> list = null;
 		try {
@@ -144,7 +144,7 @@ public class LocalBoardDAO {
 		}
 		return list;
 	}
-	//±Û¾²±â
+	//ï¿½Û¾ï¿½ï¿½ï¿½
 	public int LinsertContentMem(LocalBoardDTO dto) {
 		int result = 0;
 		try {
@@ -169,7 +169,7 @@ public class LocalBoardDAO {
 		}
 		return result;
 	}
-	//Á¶È¸¼ö Áõ°¡
+	//ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void LreadcountUp(LocalBoardDTO dto) {
 		try {
 			conn = OracleDB.getConnection();
@@ -186,7 +186,7 @@ public class LocalBoardDAO {
 			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
 		}
 	}
-	//°Ô½Ã±Û ÆäÀÌÁö 
+	//ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	public LocalBoardDTO LgetContent(LocalBoardDTO dto) {
 		try {
 			conn = OracleDB.getConnection();
@@ -218,7 +218,7 @@ public class LocalBoardDAO {
 		}
 		return dto;
 	}
-	//°Ô½Ã¹° ¼öÁ¤
+	//ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int LupdateContent(LocalBoardDTO dto) {
 		int result = 0;
 		try {
@@ -238,7 +238,7 @@ public class LocalBoardDAO {
 		}
 		return result;
 	}
-	//°Ô½Ã¹° »èÁ¦
+	//ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int LdeleteMemContent(LocalBoardDTO dto) {
 		int result = 0;
 		try {
@@ -258,7 +258,7 @@ public class LocalBoardDAO {
 		}
 		return result;
 	}
-	//ÁÁÀÌ¿ä Áõ°¡
+	//ï¿½ï¿½ï¿½Ì¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int LgoodCountUp(LocalBoardDTO dto) {
 		int result = 0;
 		try {
@@ -277,7 +277,7 @@ public class LocalBoardDAO {
 		}
 		return result;
 	}
-	//½È¾î¿ä Áõ°¡
+	//ï¿½È¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int LbadCountUp(LocalBoardDTO dto) {
 		int result = 0;
 		try {
@@ -297,9 +297,9 @@ public class LocalBoardDAO {
 		return result;
 	}
 	
-	// °³½Ã±Û °Ë»ö
+	// ï¿½ï¿½ï¿½Ã±ï¿½ ï¿½Ë»ï¿½
 		public List<LocalBoardDTO> LgetSearchList (String colum, String search, int start, int end){
-			List<LocalBoardDTO> list = null;//°´Ã¼ ¾øÀ¸¸é °ª ¾Èµé¾î°¨
+			List<LocalBoardDTO> list = null;//ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Èµï¿½î°¨
 			try {
 				conn=OracleDB.getConnection();
 				pstmt=conn.prepareStatement("select * from "
@@ -335,7 +335,7 @@ public class LocalBoardDAO {
 			return list;
 			}
 		
-		// °Ë»öÇÑ °³½Ã±Û °¹¼ö
+		// ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 		public int LgetSearchCount(String colum, String search) {
 			int result = 0;
 			try {
@@ -356,13 +356,14 @@ public class LocalBoardDAO {
 			}
 			return result;
 		}
-		//°Ë»öÇÑ Áö¿ªº° °Ô½Ã¹° °¹¼ö
+		//ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 		public int LLgetSearchCount(String local) {
 			int result = 0;
 			try {
 				conn=OracleDB.getConnection();
 				pstmt = conn.prepareStatement(
-						"select count(*) from localBoard where"+local);
+						"select count(*) from localBoard where local = ?");
+				pstmt.setString(1, local);
 				
 				rs=pstmt.executeQuery();
 				if(rs.next()) {
@@ -378,9 +379,9 @@ public class LocalBoardDAO {
 			return result;
 		}
 		
-		 //°³½Ã±Û °Ë»ö
+		 //ï¿½ï¿½ï¿½Ã±ï¿½ ï¿½Ë»ï¿½
 			public List<LocalBoardDTO> LLgetSearchList (String local, int start, int end){
-				List<LocalBoardDTO> list = null;//°´Ã¼ ¾øÀ¸¸é °ª ¾Èµé¾î°¨
+				List<LocalBoardDTO> list = null;//ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Èµï¿½î°¨
 				try {
 					conn=OracleDB.getConnection();
 					pstmt=conn.prepareStatement("select * from "

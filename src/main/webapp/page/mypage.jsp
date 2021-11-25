@@ -1,7 +1,3 @@
-
-
-
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import ="team03.bean.MemberDAO" %>
@@ -11,6 +7,7 @@
 
 <link rel="stylesheet" type="text/css" href="mypage.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 
 	
 	<%
@@ -26,8 +23,8 @@
 	%>
      
     
-   
-<title>마이페이지</title>
+<link href="https://cdn.discordapp.com/attachments/902120345748774922/912167936536481842/My_Post_Copy_1.jpg" rel="shortcut icon" type="image/x-icon">  
+<title>시네톡-마이페이지</title>
  <div id="containAll">
 	<div id="container">
    		<h1>마이페이지 </h1>

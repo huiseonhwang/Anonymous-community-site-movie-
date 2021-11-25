@@ -20,7 +20,7 @@
 
 		<style>
 		  table {
-		    width: 70%;
+		    width: 50%;
 		    border-top: 1px solid #444444;
 		    border-collapse: collapse;
 		  }
@@ -43,27 +43,27 @@
 		%>
 		
 		<form action="q&a_UpdatePro.jsp" method="post">
-			<table width="750" align="center">
+			<table width="700" align="center">
 				<input type="hidden" name="num" value=<%=dto.getNum()%>>
 				<input type="hidden" name="pageNum" value=<%=pageNum%>>
 				
 				<tr>
-					<td width="85" align="center">제목</td> 
+					<td width="100" align="center">제목</td> 
 					<td>
 						<select name="subject"><option><%=dto.getSubject()%></option></select>
 					</td>
 				</tr>
 				<tr>
-					<td width="85" align="center">작성자</td>
+					<td width="100" align="center">작성자</td>
 					<td><%=dto.getId()%></td>
 				</tr>
-				<tr><td width="85" align="center">내용</td>
+				<tr><td width="100" align="center">내용</td>
 					<td>
 						<textarea rows="10" cols="80" name="content"><%=dto.getContent()%></textarea>
 					</td>
 				</tr>
 			 	<tr>
-			 		<td width="85" align="center">비밀번호</td> 
+			 		<td width="100" align="center">비밀번호</td> 
 			 		<td>
 			 			<input type="password" name="pw"><br/>
 			 		</td>

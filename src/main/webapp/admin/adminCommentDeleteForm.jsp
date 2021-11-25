@@ -36,23 +36,23 @@
 <script type="text/javascript">
 	
 	// 자유게시판 댓글 삭제 함수
-	function deleteComment(CboardNum, Cnum, pageNum){
+	function deleteComment(CboardNum, Cnum, Cre_step, Cre_level, pageNum){
 		window.name="ParentForm";
-		window.open("adminCommentDeletePro.jsp?CboardNum="+CboardNum+"&Cnum="+Cnum+"&pageNum"+pageNum,
+		window.open("adminCommentDeletePro.jsp?CboardNum="+CboardNum+"&Cnum="+Cnum+"&Cre_step="+Cre_step+"&Cre_level="+Cre_level+"&pageNum"+pageNum,
 					"CdeleteForm", "width=300, height=150, resizable = no, scrollbars = no");
 	}
 	
 	// 지역게시판 댓글 삭제 함수
-	function localDeleteComment(LboardNum, Lnum, pageNum){
+	function localDeleteComment(LboardNum, Lnum, Lre_step, Lre_level, pageNum){
 		window.name="ParentForm";
-		window.open("adminCommentDeletePro.jsp?LboardNum="+LboardNum+"&Lnum="+Lnum+"&pageNum"+pageNum,
+		window.open("adminCommentDeletePro.jsp?LboardNum="+LboardNum+"&Lnum="+Lnum+"&Lre_step="+Lre_step+"&Lre_level="+Lre_level+"&pageNum"+pageNum,
 					"LdeleteForm", "width=300, height=150, resizable = no, scrollbars = no");
 	}
 	
 	// 영화게시판 댓글 삭제 함수
-	function movieDeleteComment(MboardNum, Mnum, pageNum){
+	function movieDeleteComment(MboardNum, Mnum, Mre_step, Mre_level, pageNum){
 		window.name="ParentForm";
-		window.open("adminCommentDeletePro.jsp?MboardNum="+MboardNum+"&Mnum="+Mnum+"&pageNum"+pageNum,
+		window.open("adminCommentDeletePro.jsp?MboardNum="+MboardNum+"&Mnum="+Mnum+"&Mre_step="+Mre_step+"&Mre_level="+Mre_level+"&pageNum"+pageNum,
 					"MdeleteForm", "width=300, height=150, resizable = no, scrollbars = no");
 	}
 	
@@ -91,9 +91,9 @@ if(admin == null){
 	
 %>
 <center>
-		<input type="button" value="메인으로 돌아가기"
+	<input type="button" value="메인으로 돌아가기"
 		onclick="window.location='/team03/main.jsp'" />
-		<input type="button" value="관리자페이지로 돌아가기"
+	<input type="button" value="관리자페이지로 돌아가기"
 		onclick="window.location='/team03/admin/adminMain.jsp'" />
 </center>
 <div id = "parent">
@@ -137,7 +137,7 @@ if(admin == null){
 						
 							<td height="80" style="font-size: 13;">
 								<div>
-									<p><a href="#" onclick="deleteComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=pageNum%>)">댓글 삭제</a></p>
+									<p><a href="#" onclick="deleteComment(<%=Cdto.getBoardNum()%>, <%=Cdto.getNum()%>, <%=Cdto.getRe_step()%>, <%=Cdto.getRe_level()%>, <%=pageNum%>)">댓글 삭제</a></p>
 							</div>
 						</td>
 					</tr>
@@ -221,7 +221,7 @@ if(admin == null){
 						
 							<td height="80" style="font-size: 13;">
 								<div>
-									<p><a href="#" onclick="localDeleteComment(<%=dto.getBoardNum()%>, <%=dto.getNum()%>, <%=pageNum%>)">댓글 삭제</a></p>
+									<p><a href="#" onclick="localDeleteComment(<%=dto.getBoardNum()%>, <%=dto.getNum()%>, <%=dto.getRe_step()%>, <%=dto.getRe_level()%>, <%=pageNum%>)">댓글 삭제</a></p>
 							</div>
 						</td>
 					</tr>
@@ -305,7 +305,7 @@ if(admin == null){
 						
 							<td height="80" style="font-size: 13;">
 								<div>
-									<p><a href="#" onclick="movieDeleteComment(<%=dto.getBoardNum()%>, <%=dto.getNum()%>, <%=pageNum%>)">댓글 삭제</a></p>
+									<p><a href="#" onclick="movieDeleteComment(<%=dto.getBoardNum()%>, <%=dto.getNum()%>, <%=dto.getRe_step()%>, <%=dto.getRe_level()%>, <%=pageNum%>)">댓글 삭제</a></p>
 							</div>
 						</td>
 					</tr>

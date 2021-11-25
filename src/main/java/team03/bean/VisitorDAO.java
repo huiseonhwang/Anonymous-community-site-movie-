@@ -243,5 +243,48 @@ public class VisitorDAO {
 		}
 		return result;
 	}
+	
+	// 회원 글 수정
+	public int memUpdateContent(VisitorDTO dto) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"update visitor set content = ? where owner = ? and num = ?");
+			pstmt.setString(1, dto.getContent());
+			pstmt.setString(2, dto.getOwner());
+			pstmt.setInt(3, dto.getNum());
+			
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+		}
+		return result;
+	}
+	
+	// 회원 글 삭제
+	public int memDeleteConetent(String owner, int num) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareCall(
+					"delete from visitor where owner = ? and num = ?");
+			pstmt.setString(1, owner);
+			pstmt.setInt(2, num);
+			
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+		}
+		return result;
+	}
 }	
 		

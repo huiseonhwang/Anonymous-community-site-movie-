@@ -453,7 +453,7 @@ public class MovieDAO {
 		try {
 			conn = OracleDB.getConnection();
 			pstmt = conn.prepareStatement
-					("select count (*) from MovieBoard where kategorie =? ");
+					("select count (*) from MovieBoard where kategorie = ?");
 			pstmt.setString(1, kategorie);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -474,11 +474,11 @@ public class MovieDAO {
 		List<MovieDTO> list = null; // 객체가 없으면 값은 안들어감
 		try {
 			conn = OracleDB.getConnection();
-			pstmt = conn.prepareStatement(
-					"select * from "
-					+ " (select num,writer, kategorie, subject,pw,content,filename,reg,readcount, good, bad, rownum r from " 
-					+ " (select * from movieBoard order by num desc)) "
-					+ " where r >= ? and r <= ?");
+			pstmt = conn.prepareStatement("select * from "
+					+ " (select num,writer,kategorie, subject,pw,content,filename,reg,readcount, good, bad, rownum r from " 
+					+ " (select * from movieBoard where kategorie = ? order by num desc)) "
+					+ " where r >=? and r <=?");
+	
 			pstmt.setString(1, kategorie);
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);

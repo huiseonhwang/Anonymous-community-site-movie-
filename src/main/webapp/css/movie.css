@@ -1,7 +1,18 @@
 @charset "UTF-8";
-
+	
+	img{
+	width: 260px;
+	height: 100px;
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+	
+	}
 	table {
 	border-collapse: collapse;
+	margin-left:auto;
+	margin-right:auto;
+	
 	}
 	#serviceAPISearchForm{
 	padding-top:10px;
@@ -19,9 +30,9 @@
 	#MovieSearchInput{
 		display:inline-block;
 		width:200px;
-		border: 6px solid #fa3246;
+		border: 6px solid #01013f;
 	}
-
+			
 	.wrap{
 		margin-top:20px;
 	}
@@ -35,7 +46,7 @@
 
 
 	#wrap2>tbody>tr:hover {
-		background: #fa3246;
+		background:  #01013f;
 		color:white;
 		cursor:pointer;
 	}
@@ -97,7 +108,7 @@
 
 	.btn{
 		border:none;
-		background-color:#fa3246;
+		background-color:  #01013f;
 		height:48px;
 		color:white;
 		width:60px;
@@ -109,8 +120,9 @@
 	
 	}
 	.login{
-		position: static;
-		text-align: right;	
+		position: absolute;
+		right: 5px;
+		top: 5px;	
 	}
 	#mo_searchBox>h3{
 	padding-top:30px;

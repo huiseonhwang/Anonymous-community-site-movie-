@@ -18,7 +18,7 @@ public class LocalBoardCommentDAO {
 	}
 	private LocalBoardCommentDAO() {}
 	
-	// ´ñ±ÛÀÛ¼º
+	// ï¿½ï¿½ï¿½ï¿½Û¼ï¿½
 	public int LinsertComment(LocalBoardCommentDTO dto, int boardNum) {
 		int result = 0;
 		try {
@@ -40,7 +40,7 @@ public class LocalBoardCommentDAO {
 		}
 		return result;
 	}
-	// ´ñ±Û¼ýÀÚ
+	// ï¿½ï¿½Û¼ï¿½ï¿½ï¿½
 	public int LcountComment(int boardNum) {
 		int result = 0;
 		try {
@@ -64,7 +64,7 @@ public class LocalBoardCommentDAO {
 		return result;
 	}
 	
-	// ´ñ±Û ³»¿ë Ãâ·Â
+	// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		public List<LocalBoardCommentDTO> LgetAllComment(int boardNum, int start, int end){
 			List<LocalBoardCommentDTO> list = null;
 			try {
@@ -72,7 +72,7 @@ public class LocalBoardCommentDAO {
 				pstmt = conn.prepareStatement(
 						"select * from "
 							+ " (select boardNum, num, writer, content, reg, re_step, re_level, rownum r from " 
-							+ " (select * from localboardComment where boardNum = ? order by num asc, re_step asc)) "
+							+ " (select * from localboardComment where boardNum = ? order by num asc, reg asc)) "
 							+ " where r >= ? and r <= ?");
 				pstmt.setInt(1, boardNum);
 				pstmt.setInt(2, start);
@@ -102,7 +102,7 @@ public class LocalBoardCommentDAO {
 			return list;
 		}
 
-		// ÀÌ¹Ì ÀÛ¼ºµÈ ´ñ±Û Á¤º¸ Ãâ·Â
+		// ï¿½Ì¹ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		public LocalBoardCommentDTO LgetContent(LocalBoardCommentDTO dto, int re_step, int re_level) {
 			try {
 				conn = OracleDB.getConnection();
@@ -135,7 +135,7 @@ public class LocalBoardCommentDAO {
 			return dto;
 		}
 		
-		// È¸¿ø ´ñ±Û ¼öÁ¤
+		// È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		public int LupdateMemComment(LocalBoardCommentDTO dto, int re_step, int re_level) {
 			int result = 0;
 			try {
@@ -160,7 +160,7 @@ public class LocalBoardCommentDAO {
 			return result;
 		}
 		
-		// È¸¿ø ´ñ±Û »èÁ¦
+		// È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		public int LdeleteMemComment(LocalBoardCommentDTO dto, int re_step, int re_level) {
 			int result = 0;
 			try {
@@ -184,7 +184,7 @@ public class LocalBoardCommentDAO {
 			return result;
 		}
 		
-		// ´ñ±Û¿¡ ´ëÇÑ ´ä±Û ÀÛ¼º
+		// ï¿½ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½
 		public int LinsertReComment(LocalBoardCommentDTO dto, int boardNum, int num) {
 			int result = 0;
 			int re_step = dto.getRe_step();

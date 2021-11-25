@@ -34,9 +34,9 @@
 		
 		if(result == true){
 			str = "사용불가능";
-	%>		<jsp:getProperty property="id" name="dto" />는 이미 사용중인 아이디입니다.
+	%>		<jsp:getProperty property="id" name="dto" />는(은) 이미 사용중인 아이디입니다.
 	  <%} else {%>
-			<jsp:getProperty property="id" name="dto" />는 사용 가능한 아이디입니다.
+			<jsp:getProperty property="id" name="dto" />는(은) 사용 가능한 아이디입니다.
 	  <%}
 	%>
 

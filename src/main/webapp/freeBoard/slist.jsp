@@ -5,6 +5,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="team03.bean.BoardDAO" %>
 <%@ page import="team03.bean.BoardDTO" %>
+<%@ page import="team03.bean.CommentDAO" %>
 
 <head>
 	<meta charset="UTF-8">
@@ -55,17 +56,16 @@
 	List<BoardDTO> list = null;
 	BoardDAO dao = BoardDAO.getInstance();
 	
-	if(my==null){
-		count=dao.getSearchCount(colum, search);
-		if(count > 0){
-			list = dao.getSearchList(colum, search, start, end);
-		}
-	} 
+	count=dao.getSearchCount(colum, search);
+	if(count > 0){
+		list = dao.getSearchList(colum, search, start, end);
+	}
+	
 	number = count-(currentPage-1)*pageSize;
 	%>
 
 <h1 style="text-align: center;">
-	<a href="list.jsp">게시판</a>
+	<a href="list.jsp">자유게시판</a>
 </h1>
 
 <table style="width: 90%;">
@@ -124,6 +124,16 @@
 					<a href="content.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>">
 						<%= dto.getSubject() %>
 					</a>
+					<% 
+						// 게시글에 달려있는 댓글이 있을 때 게시글 제목 옆에 댓글 갯수를 표기해주는 코드
+						CommentDAO CMdao = CommentDAO.getInstance();
+						int commentCount = CMdao.countComment(dto.getNum());
+						
+						if(commentCount > 0){%>
+							&nbsp;
+							<font>[<%=commentCount %>]</font>
+						<%}
+					%>
 				</td>
 				<td> <%= sdf.format(dto.getReg()) %> </td>
 				<td> <%= dto.getReadcount() %> </td>

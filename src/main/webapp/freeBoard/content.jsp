@@ -55,37 +55,29 @@
 		
 	}
 	
-	// 댓글 작성시 내용, 비밀번호 입력값이 없을 시 띄우는 경고창 (유효성 검사)
+	// 제목, 내용, 비밀번호 입력값이 없을 시 띄우는 경고창 (유효성 검사)
+	function memNullCheck(){
+		contentVal = document.getElementsByName("content")[0].value;
+		
+		if(contentVal == ""){
+			alert("내용을 작성해주세요.");
+			return false;
+		}	
+	}
+	
+	// 제목, 내용, 비밀번호 입력값이 없을 시 띄우는 경고창 (유효성 검사)
 	function nullCheck(){
+		contentVal = document.getElementsByName("content")[0].value;
+		pwVal = document.getElementsByName("pw")[0].value;
 		
-		// 세션값을 각각의 변수명에 대입
-		var sessionId = '<%=(String)session.getAttribute("id")%>';
-		var sessionKid = '<%=(String)session.getAttribute("kid")%>';
-		
-		// 세션의 여부를 판단하여 익명 사용자일 때와 로그인 된 사용자일 때를 구분
-		if(sessionId == null || sessionKid == null){
-			// 익명 사용자일 때
-			pwVal = document.getElementsByName("pw")[0].value;
-			contentVal = document.getElementsByName("content")[0].value;
-			
-			if(pwVal == ""){
-				alert("비밀번호를 입력해주세요.");
-				return false;
-			}
-			if(contentVal == ""){
-				alert("내용을 작성해주세요.");
-				return false;
-			}
-		} else {
-			// 로그인 된 사용자일 때
-			contentVal = document.getElementsByName("content")[0].value;
-			
-			if(contentVal == ""){
-				alert("내용을 작성해주세요.");
-				return false;
-			}
+		if(contentVal == ""){
+			alert("내용을 작성해주세요.");
+			return false;
 		}
-		
+		if(pwVal == ""){
+			alert("비밀번호를 입력해주세요.");
+			return false;
+		}
 	}
 	
 </script>
@@ -108,7 +100,7 @@
 
 <table style="width: 50%;">
 	<tr>
-		<th colspan="4"> 게시글 </th>
+		<th colspan="4"> <a href="list.jsp"> 게시글 </a> </th>
 	</tr>
 	<tr>
 		<td id="center"> 작성자 </td>
@@ -162,28 +154,28 @@
 					</td>
 				</tr>
 			<%} else {%>
-					<tr id="center">
-						<td colspan="4">
-							<input type="button" value="글 목록"
-								onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
-						</td>
-					</tr>
+				<tr id="center">
+					<td colspan="4">
+						<input type="button" value="글 목록"
+							onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
+					</td>
+				</tr>
 			<%}
 		} else {
 			// 게시글 작성자가 회원이고, 회원의 id세션이 작성자와 같을 때 표시되는 항목
 			if(id.equals(dto.getWriter())){ %>
-					<tr id="center">
-						<td style="width: 5%;" colspan="2">
-							<input type="button" value="글 수정"
-								onclick="window.location='updateForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" />
-							<input type="button" value="글 삭제"
-								onclick="window.location='deleteForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" />
-						</td>
-						<td style="width: 90%;" colspan="2">
-							<input type="button" value="글 목록"
-								onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
-						</td>
-					</tr>
+				<tr id="center">
+					<td style="width: 5%;" colspan="2">
+						<input type="button" value="글 수정"
+							onclick="window.location='updateForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" />
+						<input type="button" value="글 삭제"
+							onclick="window.location='deleteForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" />
+					</td>
+					<td style="width: 90%;" colspan="2">
+						<input type="button" value="글 목록"
+							onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
+					</td>
+				</tr>
 			<%} else { 
 			// 게시글 작성자가 회원이지만, 회원의 id세션이 작성자와 같이 않을 때 표시되는 항목 %>
 				<tr id="center">
@@ -197,18 +189,18 @@
 	} else {
 		// 게시글 작성자가 카카오 회원이고, 카카오 회원의 kid세션이 작성자와 같을 때 표시되는 항목
 		if(kid.equals(dto.getWriter())){ %>
-		<tr id="center">
-			<td style="width: 5%;" colspan="2">
-				<input type="button" value="글 수정"
-					onclick="window.location='updateForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" />
-				<input type="button" value="글 삭제"
-					onclick="window.location='deleteForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" />
-			</td>
-			<td style="width: 90%;" colspan="2">
-				<input type="button" value="글 목록"
-					onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
-			</td>
-		</tr>
+			<tr id="center">
+				<td style="width: 5%;" colspan="2">
+					<input type="button" value="글 수정"
+						onclick="window.location='updateForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" />
+					<input type="button" value="글 삭제"
+						onclick="window.location='deleteForm.jsp?num=<%=dto.getNum()%>&pageNum=<%=pageNum%>'" />
+				</td>
+				<td style="width: 90%;" colspan="2">
+					<input type="button" value="글 목록"
+						onclick="window.location='list.jsp?pageNum=<%=pageNum%>'" />
+				</td>
+			</tr>
 	<%} else { 
 	// 게시글 작성자가 카카오 회원이지만, 카카오 회원의 kid세션이 작성자와 같이 않을 때 표시되는 항목 %>
 		<tr id="center">
@@ -248,41 +240,70 @@
 %>
 
 <%-- 컨텐츠 페이지 내에 폼태그를 작성하여 컨텐츠 페이지 내에서 댓글을 작성하고 commentPro.jsp로 작성된 파라미터를 넘김 --%>
-<form action="commentPro.jsp" method="post" onsubmit="return nullCheck();">
-	<table style="width: 50%;">
-		<tr>
-			<th colspan="2">
-				댓글 작성
-				<input type="hidden" name="num" value="<%=dto.getNum()%>" />
-				<input type="hidden" name="pageNum" value="<%=pageNum%>" />
-			</th>
-		</tr>
-		<tr>
-			<td> 작성자 </td>
-			<td style="width: 80%;">
-				<%= writer %>
-				<input type="hidden" name="writer" value="<%=writer%>" />
-			</td>
-		</tr>
-		<%-- kid가 null이고 id가 null일 때 (익명 사용자일 때) --%>
-		<%if(kid == null && id == null){ %>
-			<tr>
-				<td> 비밀번호 </td>
-				<td> <input type="password" name="pw" /> </td>
-			</tr>
-		<%} %>
-			<tr>
-				<td colspan="2">
-					<textarea style="width: 100%;" name="content" placeholder="내용을 작성해주세요!"></textarea>
-				</td>
-			</tr>
-			<tr>
-				<th colspan="2">
-					<input type="submit" value="댓글작성"/>
-				</th>
-			</tr>
-	</table>
-</form>
+<%
+	if(kid == null && id == null){%>
+		<form action="commentPro.jsp" method="post" onsubmit="return nullCheck();">
+			<table style="width: 50%;">
+				<tr>
+					<th colspan="2">
+						댓글 작성
+						<input type="hidden" name="num" value="<%=dto.getNum()%>" />
+						<input type="hidden" name="pageNum" value="<%=pageNum%>" />
+					</th>
+				</tr>
+				<tr>
+					<td> 작성자 </td>
+					<td style="width: 80%;">
+						<%= writer %>
+						<input type="hidden" name="writer" value="<%=writer%>" />
+					</td>
+				</tr>
+				<tr>
+					<td> 비밀번호 </td>
+					<td> <input type="password" name="pw" /> </td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<textarea style="width: 100%;" name="content" placeholder="내용을 작성해주세요!"></textarea>
+					<br/><br/>
+						<div id="center">
+							<input type = "submit" value = "댓글작성" />
+						</div>
+					</td>
+				</tr>
+			</table>
+		</form>
+	<%}else{%>
+		<form action="commentPro.jsp" method="post" onsubmit="return memNullCheck();">
+			<table style="width: 50%;">
+				<tr>
+					<th colspan="2">
+						댓글 작성
+						<input type="hidden" name="num" value="<%=dto.getNum()%>" />
+						<input type="hidden" name="pageNum" value="<%=pageNum%>" />
+					</th>
+				</tr>
+				<tr>
+					<td> 작성자 </td>
+					<td style="width: 80%;">
+						<%= writer %>
+						<input type="hidden" name="writer" value="<%=writer%>" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<textarea style="width: 100%;" name="content" placeholder="내용을 작성해주세요!"></textarea>
+					<br/><br/>
+						<div id="center">
+							<input type = "submit" value = "댓글작성" />
+						</div>
+					</td>
+				</tr>
+			</table>
+		</form>
+	<%}
+%>
+
 
 <br/>
 
@@ -292,7 +313,13 @@
 	// 페이징 처리
 	int pageSize = 10;
 	
-	int currentPage = Integer.parseInt(pageNum);
+	String CMpageNum = request.getParameter("CMpageNum");
+	
+	if(CMpageNum == null){
+		CMpageNum = "1";
+	}
+
+	int currentPage = Integer.parseInt(CMpageNum);
 	int start = (currentPage - 1) * pageSize + 1; // 결과 = 11
 	int end = currentPage * pageSize; // 결과 = 20
 	int count = 0;
@@ -309,7 +336,7 @@
 	
 %>
 
-<table style="text-align: left; width: 50%;" >
+<table style="text-align: left; width: 50%;">
 	<tr>
 		<% if(count == 0){ %>
 			<th colspan="3">댓글이 없습니다.</th>
@@ -347,7 +374,7 @@
 						</div>
 					</td>
 				
-					<td style="font-size: 13; width: 10%;" id="center">
+					<td style="font-size: 13; width: 10%; height: 80;" id="center">
 						<div>
 							<%-- 카카오 로그인이 된 사용자 일 때 표시되는 항목 --%>
 							<%if(kid != null){
@@ -394,13 +421,13 @@
 			endPage = pageCount;
 		}	
 		if(startPage > 10){%>
-			<a href="content.jsp?num=<%=num%>&pageNum=<%=startPage-10%>">[이전]</a>
+			<a href="content.jsp?num=<%=num%>&pageNum=<%=pageNum%>&CMpageNum=<%=startPage-10%>">[이전]</a>
 		<%}
 		for(int i = startPage ; i <= endPage ; i++){
-		%>	<a href="content.jsp?num=<%=num%>&pageNum=<%=i%>">[<%=i%>]</a> 	
+		%>	<a href="content.jsp?num=<%=num%>&pageNum=<%=pageNum%>&CMpageNum=<%=i%>">[<%=i%>]</a> 	
 	  <%}
 		if(endPage < pageCount){%>
-		<a href="content.jsp?num=<%=num%>&pageNum=<%=startPage + 10%>">[다음]</a>
+		<a href="content.jsp?num=<%=num%>&pageNum=<%=pageNum%>&CMpageNum=<%=startPage + 10%>">[다음]</a>
 	  <%}	
 	}
 %>

@@ -18,18 +18,30 @@
 	dto.setNum(num);
 	dto.setPw(pw);
 	dto.setContent(content);
-	
+
 	VisitorDAO dao = new VisitorDAO();
-	int check = dao.updateContent(dto);
-			
-	if(check == 1){%>
-		<script>
-			alert("수정되었습니다.");
-			window.location="visitorForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&pageNum=<%=pageNum%>";
-		</script>
-	<%}else{%>
-		<script>
-			alert("비밀번호를 확인해주세요.");
-			history.go(-1);
-		</script>
-	<%}%>
+	
+	if(pw != null){
+		int check = dao.updateContent(dto);
+				
+		if(check == 1){%>
+			<script>
+				alert("수정되었습니다.");
+				window.location="visitorForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&pageNum=<%=pageNum%>";
+			</script>
+		<%}else{%>
+			<script>
+				alert("비밀번호를 확인해주세요.");
+				history.go(-1);
+			</script>
+		<%}
+	} else {
+		int check = dao.memUpdateContent(dto);
+		if(check == 1){%>
+			<script>
+				alert("수정되었습니다.");
+				window.location="visitorForm.jsp?owner=<%=URLEncoder.encode(owner, "UTF-8")%>&pageNum=<%=pageNum%>";
+			</script>
+		<%}
+	}%>
+	

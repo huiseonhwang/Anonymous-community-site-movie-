@@ -16,7 +16,7 @@
 
 		<style>
 		  table {
-		    width: 70%;
+		    width: 50%;
 		    border-top: 1px solid #444444;
 		    border-collapse: collapse;
 		  }

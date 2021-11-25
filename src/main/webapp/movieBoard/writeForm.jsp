@@ -43,6 +43,21 @@
 			return false;
 		}
 	}
+	
+	// 제목, 내용, 비밀번호 입력값이 없을 시 띄우는 경고창 (유효성 검사)
+	function memNullCheck(){
+		subjectVal = document.getElementsByName("subject")[0].value;
+		contentVal = document.getElementsByName("content")[0].value;
+		
+		if(subjectVal == ""){
+			alert("제목을 작성해주세요.");
+			return false;
+		}
+		if(contentVal == ""){
+			alert("내용을 작성해주세요.");
+			return false;
+		}
+	}
 </script>
 
 <%
@@ -112,7 +127,7 @@
 			</table>
 		</form>
 	<% } else { %>
-		<form action = "writePro.jsp" method = "post" enctype="multipart/form-data">
+		<form action = "writePro.jsp" method = "post" enctype="multipart/form-data" onsubmit="return memNullCheck();">
 			<table>
 				<tr>
 					<th colspan = "3"> <h1> 게시글 작성 </h1> </th>
@@ -166,7 +181,7 @@
 		</form>
 		<% }
 		} else { %>
-		<form action = "writePro.jsp" method = "post" enctype="multipart/form-data">
+		<form action = "writePro.jsp" method = "post" enctype="multipart/form-data" onsubmit="return memNullCheck();">
 			<table>
 				<tr>
 					<th colspan = "3"> <h1> 게시글 작성 </h1> </th>

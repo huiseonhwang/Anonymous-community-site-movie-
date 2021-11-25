@@ -19,7 +19,7 @@
 <style>
 	#parent{
 		margin: 5px auto;
-		width: 90%;
+		width: 95%;
 	}
 
    	table {
@@ -142,7 +142,7 @@ if(admin == null){
 	
 
 %>
-	<table style="float: left; width: 30%; margin-left: 5%; margin-right: 5%;">
+	<table style="float: left; width: 30%; margin-left: 3%; margin-right: 3%;">
 		<tr>
 			<th colspan="6"> 지역게시판 최신글 </th>
 		</tr>
