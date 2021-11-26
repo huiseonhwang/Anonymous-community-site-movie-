@@ -26,6 +26,12 @@
 	#center{
 		text-align: center;
 	}
+	#left{
+		text-align: left;
+	}
+	#right{
+		text-align: right;
+	}
 </style>
 
 <%
@@ -69,22 +75,34 @@
 </h1>
 
 <table style="width: 90%;">
-	<tr style="text-align: right;">
+	<tr>
 		<% if(id != null || kid != null){ %>
 			<td colspan="7"> 
-				<input type="button" value="글쓰기"
-					onclick="window.location='writeForm.jsp'" />
-				<input type="button" value="내 작성글"
-					onclick="window.location='list.jsp?my=1'" />
+				<div id="left" style="float: left;">
+					<input type="button" value="전체글 보기" 
+						onclick="window.location='list.jsp'" />
+				</div>
+				<div id="right" style="float: right;">
+					<input type="button" value="글쓰기"
+						onclick="window.location='writeForm.jsp'" />
+					<input type="button" value="내 작성글"
+						onclick="window.location='list.jsp?my=1'" />
 					<input type="button" value="메인으로 돌아가기"
-					onclick="window.location='/team03/main.jsp'" />
+						onclick="window.location='/team03/main.jsp'" />
+				</div>
 			</td>
 		<%} else { %>
 			<td colspan="7">
-				<input type="button" value="글쓰기"
-					onclick="window.location='writeForm.jsp'" />
+				<div id="left" style="float: left;">
+					<input type="button" value="전체글 보기" 
+						onclick="window.location='list.jsp'" />
+				</div>
+				<div id="right" style="float: right;">
+					<input type="button" value="글쓰기"
+						onclick="window.location='writeForm.jsp'" />
 					<input type="button" value="메인으로 돌아가기"
-					onclick="window.location='/team03/main.jsp'" />
+						onclick="window.location='/team03/main.jsp'" />
+				</div>
 			</td>
 	 <%	 } %>
 	</tr>

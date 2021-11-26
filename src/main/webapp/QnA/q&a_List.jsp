@@ -179,6 +179,9 @@
 				<td align="center">
 					<input type="button" value="작성하기"  onclick="window.location='q&a_WriteForm.jsp'">
 					<input type="button" value="메인으로"  onclick="window.location='/team03/main.jsp'">
+					<%if(admin != null){%>
+						<input type="button" value="관리자 페이지로"  onclick="window.location='/team03/admin/adminMain.jsp'">
+					<%} %>
 				</td>
 			</tr>
 		</table>

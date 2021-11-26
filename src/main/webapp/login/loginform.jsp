@@ -22,6 +22,20 @@
 			   return false;
 		   }
 	   }
+	   
+	//아이디 찾기 창 여는 함수
+	function findID(){
+		window.name = "ParentForm";
+		window.open("findId.jsp",
+					"updateForm", "width=570, height=350, resizable = no, scrollbars = no");
+	}
+	
+	//비밀번호 찾기 창 여는 함수
+	function findPW(){
+		window.name = "ParentForm";
+		window.open("findPw.jsp",
+					"updateForm", "width=570, height=350, resizable = no, scrollbars = no");
+	}
    </script>
    
    <style>
@@ -61,6 +75,12 @@
     			<th colspan="2">
     				<input type = "submit" value = "로그인"/>
     				<input type = "button" value = "회원가입" onclick = "window.location = '/team03/signUp/signUpForm.jsp'"/>
+    			</th>
+    		</tr>
+    		<tr>
+    			<th colspan="2">
+    				<input type = "button" value = "아이디 찾기" onclick = "findID()"/>
+    				<input type = "button" value = "비밀번호 찾기" onclick = "findPW()"/>
     			</th>
     		</tr>
     	</table>

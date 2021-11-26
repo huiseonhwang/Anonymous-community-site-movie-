@@ -115,7 +115,7 @@ if(admin == null){
 					</a>
 				</td>
 				<td> <%= sdf.format(dto.getReg()) %> </td>
-				<td> <input type="button" value="게시글 삭제" onclick="window.location='adminDeleteContentConfirm.jsp?Lnum=<%=dto.getNum()%>&pageNum=<%=pageNum%>'"/></td>
+				<td id="center"> <input type="button" value="게시글 삭제" onclick="window.location='adminDeleteContentConfirm.jsp?Lnum=<%=dto.getNum()%>&pageNum=<%=pageNum%>'"/></td>
 			</tr>
 	<%	} %>
 <%	} %>

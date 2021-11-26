@@ -27,6 +27,12 @@
 	#center{
 		text-align: center;
 	}
+	#left{
+		text-align: left;
+	}
+	#right{
+		text-align: right;
+	}
 </style>
 
 <%! 
@@ -98,23 +104,36 @@
 <a href = "list.jsp"> 영화게시판 </a> </h1>
 
 <table style="width: 95%;">
-<tr style="text-align: right;">
-<% if(id != null || kid != null){ %>
-	<td colspan = "8"> 
-	<input type = "button" value = "글쓰기" 
-		onclick = "window.location='writeForm.jsp'"/>
-	<input type="button" value="내 작성글"
-		onclick="window.location='list.jsp?my=1'" />
-	<input type = "button" value = "메인으로 돌아가기" 
-		onclick = "window.location='/team03/main.jsp'"/>
-
-	</td>
-	<%} else {%>
-		<td colspan = "8">
-		<input type = "button" value = "글쓰기" onclick = "window.location='writeForm.jsp'"/>
-		<input type = "button" value = "메인으로 돌아가기" onclick = "window.location='/team03/main.jsp'"/>
-		</td>
-		<%} %>
+	<tr>
+		<% if(id != null || kid != null){ %>
+			<td colspan="8"> 
+				<div id="left" style="float: left;">
+					<input type="button" value="전체글 보기" 
+						onclick="window.location='list.jsp'" />
+				</div>
+				<div id="right" style="float: right;">
+					<input type="button" value="글쓰기"
+						onclick="window.location='writeForm.jsp'" />
+					<input type="button" value="내 작성글"
+						onclick="window.location='list.jsp?my=1'" />
+					<input type="button" value="메인으로 돌아가기"
+						onclick="window.location='/team03/main.jsp'" />
+				</div>
+			</td>
+		<%} else { %>
+			<td colspan="8">
+				<div id="left" style="float: left;">
+					<input type="button" value="전체글 보기" 
+						onclick="window.location='list.jsp'" />
+				</div>
+				<div id="right" style="float: right;">
+					<input type="button" value="글쓰기"
+						onclick="window.location='writeForm.jsp'" />
+					<input type="button" value="메인으로 돌아가기"
+						onclick="window.location='/team03/main.jsp'" />
+				</div>
+			</td>
+	 <%	 } %>
 	</tr>
 	<tr>
 	<th> 글 번호</th>
@@ -232,7 +251,5 @@
 		</select>
 		<input type = "text" name = "search" />
 		<input type = "submit" value = "검색" />
-		<input type = "button" value = "목록" 
-			onclick = "window.location='list.jsp'"/>
 	</form>
 </div>

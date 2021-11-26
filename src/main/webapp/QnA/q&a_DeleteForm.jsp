@@ -44,9 +44,9 @@
 				</tr>
 				<tr>
 					<td align="center">
-						<input type="button" value="뒤로가기" 
-						onclick="window.location='/team03/QnA/q&a_Content.jsp?num=<%=num%>&pageNum=<%=pageNum%>'">
 						<input type="submit" value="삭제하기">
+						<input type="button" value="뒤로가기" 
+							onclick="window.location='/team03/QnA/q&a_Content.jsp?num=<%=num%>&pageNum=<%=pageNum%>'">
 					</td>  
 				</tr>
 			</table> 

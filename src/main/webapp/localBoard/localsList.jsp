@@ -25,6 +25,12 @@
 	#center{
 		text-align: center;
 	}
+	#left{
+		text-align: left;
+	}
+	#right{
+		text-align: right;
+	}
 </style>
 
 <%
@@ -78,12 +84,18 @@ window.location = "/team03/main.jsp";
 	<tr style="text-align: right;">
 		<% if(id != null || kid != null){ %>
 			<td colspan="8"> 
-				<input type="button" value="글쓰기"
-					onclick="window.location='localwriteForm.jsp'" />
-				<input type="button" value="내 작성글"
-					onclick="window.location='localList.jsp?my=1'" />
+				<div id="left" style="float: left;">
+					<input type="button" value="전체글 보기" 
+						onclick="window.location='localList.jsp'" />
+				</div>
+				<div id="right" style="float: right;">
+					<input type="button" value="글쓰기"
+						onclick="window.location='localwriteForm.jsp'" />
+					<input type="button" value="내 작성글"
+						onclick="window.location='localList.jsp?my=1'" />
 					<input type="button" value="메인으로 돌아가기"
-					onclick="window.location='/team03/main.jsp'" />
+						onclick="window.location='/team03/main.jsp'" />
+				</div>
 			</td>
 		<%} else { %>
 			<script>

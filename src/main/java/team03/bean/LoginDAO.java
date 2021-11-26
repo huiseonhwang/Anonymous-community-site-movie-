@@ -63,4 +63,75 @@ public class LoginDAO {
 		}
 		return dto;
 	}
+	
+	// 아이디 찾기
+	public String getMemberID(String name) {
+		String result = null;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"select id from member where name = ?");
+			pstmt.setString(1, name);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				result = rs.getString("id");
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try{rs.close();}catch(SQLException s) {}}
+			if(pstmt !=null) {try {rs.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return result;
+	}
+	
+	// 비밀번호 찾기
+	public int getMemberPW(String id) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"select count(pw) from member where id = ?");
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try{rs.close();}catch(SQLException s) {}}
+			if(pstmt !=null) {try {rs.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return result;
+	}
+	
+	// 비밀번호 변경
+	public int updatePw(String pw, String id) {
+		int result = 0;
+		try {
+			conn = OracleDB.getConnection();
+			pstmt = conn.prepareStatement(
+					"update member set pw = ? where id = ?");
+			pstmt.setString(1, pw);
+			pstmt.setString(2, id);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {try{rs.close();}catch(SQLException s) {}}
+			if(pstmt !=null) {try {rs.close();}catch(SQLException s) {}}
+			if(conn != null) {try {conn.close();}catch(SQLException s) {}}
+		}
+		return result;
+	}
 }
